@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Selecionar</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    </head>    
+    <body>
+        <nav class="teal lighten-1">
+            <div class="nav-wrapper container ">
+                <a href="index.html" class="brand-logo right">CRUD</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="Cadastro.html">Cadastro</a></li>
+                <li><a href="Update.html">Update</a></li>
+                <li><a href="Selecionar.html">Selecionar</a></li>
+                <li><a href="Deleta.html">Deletar</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="parallax-container">
+            <div class="parallax"><img src="https://joy.org.au/owls/wp-content/uploads/sites/347/2017/03/Sad-Owl.jpg"></div>
+        </div>
+        <div class="container section"> 
+            <h1 class="center-align">Falhou :(</h1>
+            <pre>
+<span class="red-text">Erro: </span><span id="me"></span>
+            </pre>       
+        </div>
+    </body>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.parallax').parallax();
+        });
+
+    	var url_string = window.location.href;
+		var url = new URL(url_string);
+		var e = url.searchParams.get("msg");
+		var span = document.getElementById("me");
+		span.appendChild( document.createTextNode(e) );
+    </script>   
+</html>
