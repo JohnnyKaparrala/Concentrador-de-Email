@@ -85,15 +85,15 @@
 <div class="app-email">
   <div class="content-area content-right">
     <div class="app-wrapper">
-      <div>
-        <div class="app-search" style="display: inline-block; width: 70%">
+      <div style="display: grid; grid-template-columns: 'search_bar buttons'">
+        <div id="search_bar" class="app-search" style="display: grid">
           <i class="material-icons mr-2 search-icon">search</i>
           <input type="text" placeholder="Procurar email" class="app-filter" id="email_filter">
         </div>
-        <div class="right" style="display: inline-block;">
-          <a class="waves-effect waves-light btn btn-large green btn tooltipped" data-position="bottom" data-tooltip="Trocar conta"><i class="large material-icons">supervisor_account</i></a>
-          <a class="waves-effect waves-light btn btn-large green btn tooltipped" data-position="bottom" data-tooltip="Configurações"><i class="large material-icons">settings_applications</i></a>
-          <a class="waves-effect waves-light btn btn-large green btn tooltipped" data-position="bottom" data-tooltip="Sair"><i class="large material-icons">power_settings_new</i></a>
+        <div id="buttons" style="display: grid">
+          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalTrocar" data-position="bottom" data-tooltip="Trocar conta"><i class="large material-icons">supervisor_account</i></a>
+          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalConfi" data-position="bottom" data-tooltip="Configurações"><i class="large material-icons">settings_applications</i></a>
+          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#" data-position="bottom" data-tooltip="Sair"><i class="large material-icons">power_settings_new</i></a>
         </div>
       </div>
       <div class="card card card-default scrollspy border-radius-6 fixed-width">
@@ -559,8 +559,66 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a class="btn modal-close waves-effect waves-light mr-2">
-      <i class="material-icons">send</i> Send
+    <a class="btn modal-close waves-effect waves-light mr-2 green">
+      <i class="material-icons">send</i> Enviar
+    </a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalTrocar" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content" style="min-height:300px">
+    <h5 class="mt-0">Trocar de email</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12">
+        <div class="">
+            <select class="container" >
+                <option value="" disabled selected>Escolha o email</option>
+                <option value="1" class="green-text">jaoo.22@gmail.com</option>
+                <option value="2" class="green-text">jodh@gmail.com</option>
+                <option value="3" class="green-text">firon@gmail.com</option>
+              </select>
+              <label>Email</label>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn modal-close waves-effect waves-light mr-2 green">
+      <i class="material-icons">send</i> Enviar
+    </a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalConfi" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content">
+    <h5 class="mt-0">Configurações</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix"> person_outline </i>
+            <input id="email" type="email" class="validate">
+            <label for="email">Recipients</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix"> title </i>
+            <input id="subject" type="text" class="validate">
+            <label for="subject">Subject</label>
+          </div>
+          <div class="input-field col s12">
+            <textarea name="content" id="editor"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn modal-close waves-effect waves-light mr-2 green">
+      <i class="material-icons">send</i> Enviar
     </a>
   </div>
 </div>

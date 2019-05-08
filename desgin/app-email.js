@@ -111,3 +111,5 @@ function resizetable() {
    });
 }
 resizetable();
+
+$(".dropdown-content>li>a").css("color", "#4caf50");
