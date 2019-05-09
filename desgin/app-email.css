@@ -1,6 +1,7 @@
 /*----------------------------------------
   Email App
 ------------------------------------------*/
+
 .app-email .content-area
 {
     width: -webkit-calc(100% - 280px);
@@ -323,4 +324,14 @@ body.dragging *
 
 #buttons {
     display: none;
+}
+
+li > span {
+    color: #00796b  !important;
+}
+
+input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default):focus:not([readonly]), input[type="password"]:not(.browser-default):focus:not([readonly]), input[type="email"]:not(.browser-default):focus:not([readonly]), input[type="url"]:not(.browser-default):focus:not([readonly]), input[type="time"]:not(.browser-default):focus:not([readonly]), input[type="date"]:not(.browser-default):focus:not([readonly]), input[type="datetime"]:not(.browser-default):focus:not([readonly]), input[type="datetime-local"]:not(.browser-default):focus:not([readonly]), input[type="tel"]:not(.browser-default):focus:not([readonly]), input[type="number"]:not(.browser-default):focus:not([readonly]), input[type="search"]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #004d40 ;
+    -webkit-box-shadow: 0 1px 0 0 #004d40;
+    box-shadow: 0 1px 0 0 #004d40;
 }

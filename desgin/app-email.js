@@ -9,6 +9,24 @@ $(document).ready(function() {
       $("#email-sidenav").removeClass("sidenav");
    }
 
+   
+      // Toggle class of sidenav
+      $("#email-sidenav").sidenav({
+            onOpenStart: function() {
+               $("#sidebar-list").addClass("sidebar-show");
+            },
+            onCloseEnd: function() {
+               $("#sidebar-list").removeClass("sidebar-show");
+            }
+         });
+      
+         //  Notifications & messages scrollable
+         if ($("#sidebar-list").length > 0) {
+            var ps_sidebar_list = new PerfectScrollbar("#sidebar-list", {
+               theme: "dark"
+            });
+         }
+
    if ($(".app-email .collection").length > 0) {
       var ps_email_collection = new PerfectScrollbar(".app-email .collection", {
          theme: "dark"
@@ -86,7 +104,7 @@ $(window).on("resize", function() {
 });
 function resizetable() {
    $(".app-email .collection").css({
-      maxHeight: $(window).height() - 310 + "px"
+      maxHeight: $(window).height() - 305 + "px"
    });
 }
 resizetable();
