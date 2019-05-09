@@ -91,7 +91,8 @@
           <input type="text" placeholder="Procurar email" class="app-filter" id="email_filter">
         </div>
         <div id="buttons" class="fadeUp animate">
-          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalTrocar" data-position="bottom" data-tooltip="Trocar conta"><i class="large material-icons">supervisor_account</i></a>
+          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalTrocar" data-position="bottom" data-tooltip="Trocar Email"><i class="large material-icons">supervisor_account</i></a>
+          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalNova" data-position="bottom" data-tooltip="Adicionar Email"><i class="large material-icons">person_add</i></a>
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalConfi" data-position="bottom" data-tooltip="Configurações"><i class="large material-icons">settings_applications</i></a>
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#" data-position="bottom" data-tooltip="Sair"><i class="large material-icons">power_settings_new</i></a>
         </div>
@@ -536,7 +537,7 @@
 <!-- Modal Structure -->
 <div id="modal1" class="modal border-radius-6" tabindex="0">
   <div class="modal-content">
-    <h5 class="mt-0">New Message</h5>
+    <h5 class="mt-0">Nova Mensagem</h5>
     <hr>
     <div class="row">
       <form class="col s12">
@@ -584,7 +585,7 @@
   </div>
   <div class="modal-footer">
     <a class="btn modal-close waves-effect waves-light mr-2 green">
-      <i class="material-icons">send</i> Trocar
+      <i class="material-icons">group</i> Trocar Email
     </a>
   </div>
 </div>
@@ -617,6 +618,45 @@
   <div class="modal-footer">
     <a class="btn modal-close waves-effect waves-light mr-2 green">
       <i class="material-icons">send</i> Enviar
+    </a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalNova" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content">
+    <h5 class="mt-0">Adicionar Email</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> mail </i>
+            <input placeholder="Email" type="text" class="validate">
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> lock </i>
+            <input placeholder="Senha" type="password" class="validate">
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> cloud </i>
+            <input placeholder="Servidor" type="password" class="validate">
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> free_breakfast </i>
+            <input placeholder="Porta" type="password" class="validate">
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> language </i>
+            <input placeholder="Protocolo" type="password" class="validate">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn modal-close waves-effect waves-light mr-2 green">
+      <i class="material-icons">person_add</i> Adicionar Email
     </a>
   </div>
 </div>
