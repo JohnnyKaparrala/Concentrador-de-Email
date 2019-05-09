@@ -85,12 +85,12 @@
 <div class="app-email">
   <div class="content-area content-right">
     <div class="app-wrapper">
-      <div style="display: grid; grid-template-columns: 'search_bar buttons'">
+      <div id="jerj">
         <div id="search_bar" class="app-search" style="display: grid">
           <i class="material-icons mr-2 search-icon">search</i>
           <input type="text" placeholder="Procurar email" class="app-filter" id="email_filter">
         </div>
-        <div id="buttons" style="display: grid">
+        <div id="buttons" class="fadeUp animate">
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalTrocar" data-position="bottom" data-tooltip="Trocar conta"><i class="large material-icons">supervisor_account</i></a>
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalConfi" data-position="bottom" data-tooltip="Configurações"><i class="large material-icons">settings_applications</i></a>
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#" data-position="bottom" data-tooltip="Sair"><i class="large material-icons">power_settings_new</i></a>
@@ -655,9 +655,10 @@
     <script src="app-email.js" type="text/javascript"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );</script>
+      ClassicEditor
+      .create( document.querySelector( '#editor' ) )
+      .catch( error => {
+          console.error( error );
+      } );
+    </script>
     <!-- END PAGE LEVEL JS-->

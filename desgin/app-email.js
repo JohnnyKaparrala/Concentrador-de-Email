@@ -9,27 +9,6 @@ $(document).ready(function() {
       $("#email-sidenav").removeClass("sidenav");
    }
 
-   // TinyMCE Editor
-   tinymce.init({
-      selector: "#editor"
-   });
-
-   // Toggle class of sidenav
-   $("#email-sidenav").sidenav({
-      onOpenStart: function() {
-         $("#sidebar-list").addClass("sidebar-show");
-      },
-      onCloseEnd: function() {
-         $("#sidebar-list").removeClass("sidebar-show");
-      }
-   });
-
-   //  Notifications & messages scrollable
-   if ($("#sidebar-list").length > 0) {
-      var ps_sidebar_list = new PerfectScrollbar("#sidebar-list", {
-         theme: "dark"
-      });
-   }
    if ($(".app-email .collection").length > 0) {
       var ps_email_collection = new PerfectScrollbar(".app-email .collection", {
          theme: "dark"
@@ -111,5 +90,9 @@ function resizetable() {
    });
 }
 resizetable();
+
+$("#buttons").css("visibility", "visible");
+$("#buttons").css("display", "none");
+$("#buttons").fadeIn(500);
 
 $(".dropdown-content>li>a").css("color", "#4caf50");

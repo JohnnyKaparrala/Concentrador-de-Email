@@ -314,3 +314,13 @@ body.dragging *
         top: 87px;
     }
 }
+
+#jerj {
+    display: grid;
+    grid-template-columns: auto 255px;
+    grid-gap: 10px;
+}
+
+#buttons {
+    display: none;
+}
