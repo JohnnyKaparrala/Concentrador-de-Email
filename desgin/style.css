@@ -45,3 +45,17 @@ footer {
     -webkit-box-shadow: 0 0 8px 0 #2196f3;
     box-shadow: 0 0 8px 0 #c3c3c3;
 }
+
+.bold {
+    font-weight : bold;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: normal;
+}
+
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .list-title {
+    font-weight: normal;
+    color: #424242;
+}
