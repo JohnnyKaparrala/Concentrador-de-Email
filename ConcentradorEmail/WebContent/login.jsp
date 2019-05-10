@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -5,16 +7,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>MaliBox | Cadastro</title>
+        <title>MaliBox | Login</title>
         <link rel="shortcut icon" type="image/x-icon" href="tartaruga.png">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- BEGIN: VENDOR CSS-->
-        <link rel="stylesheet" type="text/css" href="vendors.min.css">
+        <link rel="stylesheet" type="text/css" href="files/vendors.min.css">
         <!-- END: VENDOR CSS-->
         <!-- BEGIN: Page Level CSS-->
-        <link rel="stylesheet" type="text/css" href="materialize.css">
-        <link rel="stylesheet" type="text/css" href="style_mat.css">
-        <link rel="stylesheet" type="text/css" href="login.css">
+        <link rel="stylesheet" type="text/css" href="files/materialize.css">
+        <link rel="stylesheet" type="text/css" href="files/style_mat.css">
+        <link rel="stylesheet" type="text/css" href="files/login.css">
         <!-- END: Page Level CSS-->
         <!-- BEGIN: Custom CSS-->
         <!-- END: Custom CSS-->
@@ -27,21 +29,14 @@
   <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
     <form class="login-form">
       <div class="row">
-            <div class="input-field col s12">
-            <h5 class="ml-4">Cadastro</h5>
-            <p class="ml-4">A malignitude o aguarda!</p>
-            </div>
-      </div>
-      <div class="row margin">
         <div class="input-field col s12">
-          <i class="material-icons prefix pt-2">person_outline</i>
-          <input placeholder="Usuário" id="first_name" type="text" class="validate">
+          <h5 class="ml-4">Entrar</h5>
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
-          <i class="material-icons prefix pt-2">mail</i>
-          <input placeholder="Email" id="first_name" type="text" class="validate">
+          <i class="material-icons prefix pt-2">person_outline</i>
+          <input placeholder="Usu�rio" id="first_name" type="text" class="validate">
         </div>
       </div>
       <div class="row margin">
@@ -50,21 +45,15 @@
           <input placeholder="Senha" id="first_name" type="password" class="validate">
         </div>
       </div>
-      <div class="row margin">
-        <div class="input-field col s12">
-          <i class="material-icons prefix pt-2">lock_outline</i>
-          <input placeholder="Senha novamente" id="first_name" type="password" class="validate">
-        </div>
-      </div>
       <div class="row">
         <div class="input-field col s12">
           <a href="adm_email.html" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
-          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Cadastrar</a>
+          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Login</a>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6 m6 l6">
-          <p class="margin medium-small"><a href="login.html">Já tem uma conta? Entre aqui!</a></p>
+          <p class="margin medium-small"><a href="cadastro.html">Registre-se agora!</a></p>
         </div>
       </div>
     </form>
@@ -75,16 +64,16 @@
     </div>
 
     <!-- BEGIN VENDOR JS-->
-    <script src="vendors.min.js" type="text/javascript"></script>
+    <script src="files/vendors.min.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
-    <script src="jquery-sortable-min.js"></script>
-    <script src="jquery.waypoints.min.js"></script>
+    <script src="files/jquery-sortable-min.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN THEME  JS-->
-    <script src="plugins.js" type="text/javascript"></script>
-    <script src="custom-script.js" type="text/javascript"></script>
-    <script src="customizer.js" type="text/javascript"></script>
+    <script src="files/plugins.js" type="text/javascript"></script>
+    <script src="files/custom-script.js" type="text/javascript"></script>
+    <script src="files/customizer.js" type="text/javascript"></script>
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->

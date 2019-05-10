@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -5,36 +7,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>MaliBox | lawrence.collins@xyz.com</title>
-    <link rel="shortcut icon" type="image/x-icon" href="tartaruga.png">
+    <link rel="shortcut icon" type="image/x-icon" href="files/tartaruga.png">
     <link href="icon" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="flag-icon.min.css">
+    <link rel="stylesheet" type="text/css" href="files/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="files/flag-icon.min.css">
     <!-- END: VENDOR CSS-->
     <!-- BEGIN: Page Level CSS-->
-    <link rel="stylesheet" type="text/css" href="materialize.css">
-    <link rel="stylesheet" type="text/css" href="style_mat.css">
-    <link rel="stylesheet" type="text/css" href="app-sidebar.css">
-    <link rel="stylesheet" type="text/css" href="app-email.css">
+    <link rel="stylesheet" type="text/css" href="files/materialize.css">
+    <link rel="stylesheet" type="text/css" href="files/style_mat.css">
+    <link rel="stylesheet" type="text/css" href="files/app-sidebar.css">
+    <link rel="stylesheet" type="text/css" href="files/app-email.css">
     <!-- END: Page Level CSS-->
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="files/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- END: Custom CSS-->
     </head>
   <!-- END: Head-->
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 2-columns  app-page" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
-
-    <!-- BEGIN: Header-->
-    
-    <!-- END: Header-->
-
-
-
-    <!-- BEGIN: SideNav-->
-    
-    <!-- END: SideNav-->
-
     <!-- BEGIN: Page Main-->
     <div id="main">
       <div class="row">
@@ -47,7 +38,7 @@
     <div class="sidebar-content">
       <div class="sidebar-header">
         <div class="sidebar-details">
-          <h5 class="m-0 sidebar-title"><img src="tartaruga.png" height="25"> MaliBox</h5>
+          <h5 class="m-0 sidebar-title"><img src="files/tartaruga.png" height="25"> MaliBox</h5>
           <div class="row valign-wrapper mt-10 pt-2 animate fadeLeft">
             <div class="col s2 media-image">
               <img src="12.jpg" alt="" class="circle z-depth-2 responsive-img">
@@ -545,7 +536,7 @@
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix"> person_outline </i>
-            <input placeholder="DestinatÃ¡rio(s)" type="text" class="validate">
+            <input placeholder="Destinatário(s)" type="text" class="validate">
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix"> title </i>
@@ -695,26 +686,25 @@
 
     <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
       <div class="footer-copyright">
-        <div class="container"><span>Â© 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
+        <div class="container"><span>© 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
 
     <!-- END: Footer-->
     <!-- BEGIN VENDOR JS-->
-    <script src="vendors.min.js" type="text/javascript"></script>
+    <script src="files/vendors.min.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
-    <script src="jquery-sortable-min.js"></script>
-    <script src="tinymce.min.js"></script>
-    <script src="jquery.waypoints.min.js"></script>
+    <script src="files/jquery-sortable-min.js"></script>
+    <script src="files/tinymce.min.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN PAGE LEVEL JS-->
-    <script src="app-email.js" type="text/javascript"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+    <script src="files/app-email.js" type="text/javascript"></script>
+    <script src="files/https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
       ClassicEditor
-      .create( document.querySelector( '#editor' ) )
-      .catch( error => {
+      .create( document.querySelector( '#editor' ) ).catch( error => {
           console.error( error );
       } );
 
