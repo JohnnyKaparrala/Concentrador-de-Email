@@ -126,15 +126,6 @@
 	          Message[] messages = inbox.search(
 	              new FlagTerm(new Flags(Flags.Flag.SEEN), false));
 	
-	          // Sort messages from recent to oldest
-	          Arrays.sort( messages, ( m1, m2 ) -> {
-	            try {
-	              return m2.getSentDate().compareTo( m1.getSentDate() );
-	            } catch ( MessagingException e ) {
-	              throw new RuntimeException( e );
-	            }
-	          } );
-	
 	          for ( Message message : messages ) {
 	       	%>
 	       	<a href="#" class="collection-item animate fadeUp delay-1">
