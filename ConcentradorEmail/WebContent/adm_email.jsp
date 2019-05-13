@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*"%>
 <!DOCTYPE html>
+ <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -114,7 +115,29 @@
             </div>
           </div>
           <div id="emails" class="collection email-collection ps ps--active-y" style="max-height: 454px !important;">
-            <a href="#" class="collection-item animate fadeUp delay-1">
+          <%
+	          Session s = Session.getDefaultInstance(new Properties( ));
+	          Store store = s.getStore("imaps");
+	          store.connect("imap.googlemail.com", 993, "lucas.da.silva00101@gmail.com", "12345senha");
+	          Folder inbox = store.getFolder( "INBOX" );
+	          inbox.open( Folder.READ_ONLY );
+	
+	          // Fetch unseen messages from inbox folder
+	          Message[] messages = inbox.search(
+	              new FlagTerm(new Flags(Flags.Flag.SEEN), false));
+	
+	          // Sort messages from recent to oldest
+	          Arrays.sort( messages, ( m1, m2 ) -> {
+	            try {
+	              return m2.getSentDate().compareTo( m1.getSentDate() );
+	            } catch ( MessagingException e ) {
+	              throw new RuntimeException( e );
+	            }
+	          } );
+	
+	          for ( Message message : messages ) {
+	       	%>
+	       	<a href="#" class="collection-item animate fadeUp delay-1">
               <div class="list-left">
                 <label>
                   <input type="checkbox" name="foo">
@@ -131,7 +154,7 @@
                 <div class="list-title-area">
                   <div class="user-media">
                     <img src="2.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Gorge Fernandis</div>
+                    <div class="list-title"><%= message.getAllRecipients()[0].toString() %></div>
                   </div>
                   <div class="title-right">
                     <span class="attach-file">
@@ -139,246 +162,17 @@
                     </span>
                   </div>
                 </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
+                <div class="list-desc"><%= message.getContent().toString() %></div>
               </div>
               <div class="list-right">
-                <div class="list-date"> 2:03 PM </div>
+                <div class="list-date"> <%= message.getSentDate().getHours() + ":" + message.getSentDate().getMinutes() %> </div>
               </div>
             </a>
-            <a href="#" class="collection-item animate fadeUp delay-2">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="10.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Pari Kalin</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 12:47 PM </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp delay-3">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="4.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Alin Kystal</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 8:18 AM </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp delay-4">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="8.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Amy berry</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> Yesterday </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp delay-5">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="1.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">John Doe</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> Yesterday </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="9.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Kellin Blue</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> Yesterday </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="5.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Albert Henry</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 25 Jan </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="11.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Kim Catty</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 25 Jan </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
+
+	                
+	      	<%
+	          }
+          	%>
               <div class="list-left">
                 <label>
                   <input type="checkbox" name="foo">
