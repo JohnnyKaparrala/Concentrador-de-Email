@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*"%>
+    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*"%>
 <!DOCTYPE html>
- <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -115,18 +114,17 @@
             </div>
           </div>
           <div id="emails" class="collection email-collection ps ps--active-y" style="max-height: 454px !important;">
-          <%
+          <%         
 	          Session s = Session.getDefaultInstance(new Properties( ));
 	          Store store = s.getStore("imaps");
-	          store.connect("imap.googlemail.com", 993, "lucas.da.silva00101@gmail.com", "12345senha");
+	          store.connect("imap.googlemail.com", 993, "teste.rip.luquinhas@gmail.com", "123456senha");
 	          Folder inbox = store.getFolder( "INBOX" );
 	          inbox.open( Folder.READ_ONLY );
 	
 	          // Fetch unseen messages from inbox folder
-	          Message[] messages = inbox.search(
-	              new FlagTerm(new Flags(Flags.Flag.SEEN), false));
-	
-	          for ( Message message : messages ) {
+	          Message[] messages = inbox.getMessages();
+	          for ( int i = messages.length-1; i<=0; i-- ) {
+	        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
 	       	%>
 	       	<a href="#" class="collection-item animate fadeUp delay-1">
               <div class="list-left">
@@ -145,7 +143,7 @@
                 <div class="list-title-area">
                   <div class="user-media">
                     <img src="2.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title"><%= message.getAllRecipients()[0].toString() %></div>
+                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
                   </div>
                   <div class="title-right">
                     <span class="attach-file">
@@ -153,10 +151,10 @@
                     </span>
                   </div>
                 </div>
-                <div class="list-desc"><%= message.getContent().toString() %></div>
+                <div class="list-desc"><%= content.toString() %></div>
               </div>
               <div class="list-right">
-                <div class="list-date"> <%= message.getSentDate().getHours() + ":" + message.getSentDate().getMinutes() %> </div>
+                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + message.getSentDate().getMinutes() %> </div>
               </div>
             </a>
 
@@ -164,137 +162,6 @@
 	      	<%
 	          }
           	%>
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="7.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Lina Shalin</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 17 Jan </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="3.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Peter Patric</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 14 Jan </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="12.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Colin Phelin</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 9 Jan </div>
-              </div>
-            </a>
-            <a href="#" class="collection-item animate fadeUp">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="6.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title">Jack Hawk</div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc">There are many variations of passages of Lorem Ipsum available, but the majority
-                  have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                  slightly believable. If you are going to use a passage of Lorem Ipsum</div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> 30 Dec </div>
-              </div>
-            </a>
           <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 377px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 104px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 328px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 78px;"></div></div></div>
         </div>
       </div>
