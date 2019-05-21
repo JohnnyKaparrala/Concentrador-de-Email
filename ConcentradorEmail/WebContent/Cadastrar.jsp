@@ -19,10 +19,10 @@
 				  					request.getParameter("email"));
 			try{
 				Usuarios.incluir(usu);
+				session.setAttribute("usuario",usu);
 				response.sendRedirect("adm_email.jsp");
 			}catch(Exception ex){
-				ex.printStackTrace();
-				response.sendRedirect("cadastro.jsp");
+				response.sendRedirect("cadastro.jsp?erro=Email+ja+cadastrado");
 			}
 		}
 	%>

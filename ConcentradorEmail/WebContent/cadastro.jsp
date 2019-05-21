@@ -64,6 +64,11 @@
           background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Cadastrar</input>
         </div>
       </div>
+      <%
+      	if(request.getParameter("erro")!=null){
+      		%><%=request.getParameter("erro")%><%
+      	}
+      %>
       <div class="row">
         <div class="input-field col s6 m6 l6">
           <p class="margin medium-small"><a href="login.html">Já tem uma conta? Entre aqui!</a></p>

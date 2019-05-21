@@ -40,9 +40,9 @@ public class Usuarios {
             */
             
             //verifica se já existe um usuário com o mesmo email
-            try{
-                Usuario teste = getUsuarioEmail(usu.getEmail());
-                //se chegou aqui, é porque existe um usuario com o mesmo email
+        	try{
+        		Usuario teste = getUsuarioEmail(usu.getEmail());
+        		//se chegou aqui, é porque existe um usuario com o mesmo email
             }catch(Exception ex){
 	            String sql;
 	            
@@ -57,7 +57,9 @@ public class Usuarios {
 	
 	            BDSQLServer.COMANDO.executeUpdate ();
 	            BDSQLServer.COMANDO.commit        ();
-            }       
+	            return;
+            }   
+        	throw new Exception ("Email j� cadastrado");
             
         }
         catch (SQLException erro)
