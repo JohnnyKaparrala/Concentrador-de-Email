@@ -182,7 +182,7 @@ public class Emails {
         return em;
     }
     
-    public static Email getEmailDonos (int id) throws Exception
+    public static MeuResultSet getEmailDonos (int id) throws Exception
     {
         MeuResultSet resultado;
         Email em;
@@ -201,23 +201,14 @@ public class Emails {
 
             if (!resultado.first())
                 throw new Exception ("Nao cadastrado");  
-             
-            em = new Email (resultado.getInt("id"),
-                            resultado.getInt("id_dono"),
-                            resultado.getString("email"),
-                            resultado.getString("protocolo"),
-                            resultado.getString("host"),
-                            resultado.getString("porta"),
-                            resultado.getString("senha"),
-                            resultado.getBoolean("tem_ssl")
-            );
+            
         }
         catch (SQLException erro)
         {
             throw new Exception (erro.getMessage());
         }
 
-        return em;
+        return resultado;
     }
 
 }

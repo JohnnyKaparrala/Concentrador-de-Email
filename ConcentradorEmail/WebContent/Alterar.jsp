@@ -16,13 +16,11 @@
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
 		String nome = request.getParameter("nome");
 		Float preco = Float.parseFloat(request.getParameter("preco")); 
-		Livro livro = new Livro(codigo,nome,preco);
 		
-		Livros.alterar(livro);
 	%>
 	
-	<p>Nome: <%= livro.getNome()  %> </p>
-	<p>Preco:<%= livro.getPreco() %> </p>
+	<p>Nome: <%=   %> </p>
+	<p>Preco:<%= %> </p>
 	<p>Alterado com sucesso</p>
 
 </body>
