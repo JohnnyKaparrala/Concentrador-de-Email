@@ -185,7 +185,6 @@ public class Emails {
     public static MeuResultSet getEmailDonos (int id) throws Exception
     {
         MeuResultSet resultado;
-        Email em;
         
         try
         {

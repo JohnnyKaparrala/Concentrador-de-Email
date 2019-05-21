@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*"%>
+    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
+<%
+session.setAttribute("usuario", new Usuario(19, "admin", "admin", "admin"));
+MeuResultSet emails = Emails.getEmailDonos(((Usuario)session.getAttribute("usuario")).getId());
+emails.first();
+Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emails.getString(3),(String)emails.getString(4),(String)emails.getString(5),(String)emails.getString(6),(String)emails.getString(7),(boolean)emails.getBoolean(8));
+%>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>MaliBox | lawrence.collins@xyz.com</title>
+    <title>MaliBox | <%= atual.getEmail() %></title>
     <link rel="shortcut icon" type="image/x-icon" href="files/tartaruga.png">
     <link href="icon" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
@@ -45,8 +51,8 @@
               <!-- notice the "circle" class -->
             </div>
             <div class="col s10">
-              <p class="m-0 font-weight-700">John Smith</p>
-              <p class="m-0 text-muted">lawrence.collins@xyz.com</p>
+              <p class="m-0 font-weight-700 text-white"><%= ((Usuario)session.getAttribute("usuario")).getNick() %></p>
+              <p class="m-0 font-weight-700"><%= atual.getEmail() %></p>
             </div>
           </div>
         </div>
@@ -213,15 +219,21 @@
 </div>
 <div id="modalTrocar" class='modal modal-fixed-footer'>
   <div class='modal-content'>
-    <h5 class="mt-0">Nova Mensagem</h5>
+    <h5 class="mt-0">Trocar email</h5>
     <hr>
     <div class="row">
       <form class="col s12">
 		<div class="">
           <select>
-              <option value="1">Email@email.com</option>
+	          <%
+	           do {
+		      %>
+              <option value="<%= (int)emails.getInt("id") %>"><%=  (String)emails.getString("email") %></option>
+              <%
+	          } while (emails.next());
+              %>
           </select>
-          <label>Optgroups</label>
+          <label>Email</label>
         </div>
       </form>
     </div>
