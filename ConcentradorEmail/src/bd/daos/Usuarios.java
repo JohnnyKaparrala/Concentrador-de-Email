@@ -15,7 +15,11 @@ import java.sql.*;
  * @author u17182
  */
 public class Usuarios {
-         
+
+    public Usuarios() {
+    }        
+    
+    
     public static void incluir (Usuario usu) throws Exception
     {
         if (usu==null)
@@ -43,14 +47,14 @@ public class Usuarios {
             }catch(Exception ex){
                 String sql;
             
-            sql = "insert into USUARIO values" +
+            sql = "insert into USUARIO (nick,senha,email)values" +
                   "(?,?,?)";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
 
             BDSQLServer.COMANDO.setString(1, usu.getNick()); 
-            BDSQLServer.COMANDO.setString(2, usu.getEmail());
-            BDSQLServer.COMANDO.setString(3, usu.getSenha());
+            BDSQLServer.COMANDO.setString(2, usu.getSenha());
+            BDSQLServer.COMANDO.setString(3, usu.getEmail());
 
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
@@ -96,24 +100,23 @@ public class Usuarios {
         {
             String sql;
 
-            sql = "update USUARIO set id=?, nick=?, email=?, senha=?"
+            sql = "update USUARIO set nick=?, email=?, senha=? "
                     + "where id = ?";
                                     
 
             BDSQLServer.COMANDO.prepareStatement (sql);
 
-            BDSQLServer.COMANDO.setInt    (1, usu.getId());
-            BDSQLServer.COMANDO.setString (2, usu.getNick());
-            BDSQLServer.COMANDO.setString (3, usu.getEmail());
-            BDSQLServer.COMANDO.setString (4, usu.getSenha());
-            BDSQLServer.COMANDO.setInt    (5, usu.getId()); 
+            BDSQLServer.COMANDO.setString (1, usu.getNick());
+            BDSQLServer.COMANDO.setString (2, usu.getEmail());
+            BDSQLServer.COMANDO.setString (3, usu.getSenha());
+            BDSQLServer.COMANDO.setInt    (4, usu.getId()); 
 
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao atualizar dados do usuario");
+            throw new Exception (erro.getMessage());
         }
     }
 
@@ -215,27 +218,5 @@ public class Usuarios {
 
         return usu;
     }   
-
-    public static MeuResultSet getUsuarios () throws Exception
-    {
-        MeuResultSet resultado = null;
-
-        try
-        {
-            String sql;
-
-            sql = "select * from USUARIOS order by id";
-
-            BDSQLServer.COMANDO.prepareStatement (sql);
-
-            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
-        }
-        catch (SQLException erro)
-        {
-            throw new Exception ("Erro ao recuperar usuarios");
-        }
-
-        return resultado;
-    }
        
 }

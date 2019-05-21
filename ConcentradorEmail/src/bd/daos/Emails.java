@@ -46,7 +46,11 @@ public class Emails {
             throw new Exception ("Erro ao inserir email");
         }
     }
+
+    public Emails() {
+    }
         
+    
     public static void excluir (int id) throws Exception
     {
         try
@@ -128,7 +132,7 @@ public class Emails {
                             resultado.getString("email"),
                             resultado.getString("protocolo"),
                             resultado.getString("host"),
-                            resultado.getString("port"),
+                            resultado.getString("porta"),
                             resultado.getString("senha"),
                             resultado.getBoolean("tem_ssl"));
         }
@@ -140,10 +144,10 @@ public class Emails {
         return em;
     }
     
-    public static MeuResultSet getEmail (String email) throws Exception
+    public static Email getEmail (String email) throws Exception
     {
         MeuResultSet resultado;
-        
+        Email em;
         try
         {
             String sql;
@@ -158,20 +162,30 @@ public class Emails {
 
             if (!resultado.first())
                 throw new Exception ("Nao cadastrado");
+            
+            em = new Email (resultado.getInt("id"),
+                            resultado.getInt("id_dono"),
+                            resultado.getString("email"),
+                            resultado.getString("protocolo"),
+                            resultado.getString("host"),
+                            resultado.getString("porta"),
+                            resultado.getString("senha"),
+                            resultado.getBoolean("tem_ssl"));
 
             
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar email");
+            throw new Exception (erro.getMessage());
         }
 
-        return resultado;
+        return em;
     }
     
-    public static MeuResultSet getEmailDonos (int id) throws Exception
+    public static Email getEmailDonos (int id) throws Exception
     {
         MeuResultSet resultado;
+        Email em;
         
         try
         {
@@ -186,36 +200,24 @@ public class Emails {
             resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("Nao cadastrado");            
+                throw new Exception ("Nao cadastrado");  
+             
+            em = new Email (resultado.getInt("id"),
+                            resultado.getInt("id_dono"),
+                            resultado.getString("email"),
+                            resultado.getString("protocolo"),
+                            resultado.getString("host"),
+                            resultado.getString("porta"),
+                            resultado.getString("senha"),
+                            resultado.getBoolean("tem_ssl")
+            );
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar email");
+            throw new Exception (erro.getMessage());
         }
 
-        return resultado;
+        return em;
     }
 
-    public static MeuResultSet getEmails () throws Exception
-    {
-        MeuResultSet resultado = null;
-
-        try
-        {
-            String sql;
-
-            sql = "select * from email order by email";
-
-            BDSQLServer.COMANDO.prepareStatement (sql);
-
-            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
-        }
-        catch (SQLException erro)
-        {
-            throw new Exception ("Erro ao recuperar emails");
-        }
-
-        return resultado;
-    }
-    
 }
