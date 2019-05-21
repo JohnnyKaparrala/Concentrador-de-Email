@@ -211,24 +211,15 @@
     </a>
   </div>
 </div>
-
-<!-- Modal Structure -->
-<div id="modalTrocar" class="modal border-radius-6" tabindex="0">
-  <div class="modal-content" style="min-height:300px">
-    <h5 class="mt-0">Trocar de email</h5>
+<div id="modalTrocar" class='modal modal-fixed-footer'>
+  <div class='modal-content'>
+    <h5 class="mt-0">Nova Mensagem</h5>
     <hr>
     <div class="row">
       <form class="col s12">
-        <div class="input-field">
+		<div class="">
           <select>
-            <optgroup label="team 1">
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-            </optgroup>
-            <optgroup label="team 2">
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-            </optgroup>
+              <option value="1">Email@email.com</option>
           </select>
           <label>Optgroups</label>
         </div>
@@ -240,7 +231,7 @@
       <i class="material-icons">cancel</i> Cancelar
     </a>
     <a class="btn modal-close waves-effect waves-light mr-2 green">
-      <i class="material-icons">group</i> Trocar Email
+      <i class="material-icons">send</i> Enviar
     </a>
   </div>
 </div>
@@ -356,6 +347,9 @@
     <script src="files/app-email.js" type="text/javascript"></script>
     <script src="files/https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
+    $('select').formSelect();
+    $('select').material_select();
+    
       ClassicEditor
       .create( document.querySelector( '#editor' ) ).catch( error => {
           console.error( error );
