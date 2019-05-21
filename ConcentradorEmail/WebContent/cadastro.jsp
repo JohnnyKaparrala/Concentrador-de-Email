@@ -27,7 +27,7 @@
       <div class="col s12">
         <div class="container"><div id="login-page" class="row">
   <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
-    <form class="login-form">
+    <form class="login-form" action="Cadastrar.jsp" method="GET">
       <div class="row">
             <div class="input-field col s12">
             <h5 class="ml-4">Cadastro</h5>
@@ -37,31 +37,31 @@
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">person_outline</i>
-          <input placeholder="Usuário" id="nick" type="text" class="validate">
+          <input placeholder="Usuário" name="nick" id="nick" type="text" class="validate">
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">mail</i>
-          <input placeholder="Email" id="email" type="text" class="validate">
+          <input placeholder="Email" name="email" id="email" type="text" class="validate">
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">lock_outline</i>
-          <input placeholder="Senha" id="senha" type="password" class="validate">
+          <input placeholder="Senha" name="senha" id="senha" type="password" class="validate">
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">lock_outline</i>
-          <input placeholder="Confirmar senha" id="senha_cnf" type="password" class="validate">
+          <input placeholder="Confirmar senha" name="senha_cnf" id="senha_cnf" type="password" class="validate">
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <a href="cadastrar.jsp" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
-          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Cadastrar</a>
+          <input type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
+          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Cadastrar</input>
         </div>
       </div>
       <div class="row">

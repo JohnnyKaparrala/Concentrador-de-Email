@@ -11,21 +11,21 @@
 <body>
   
 	<%
-		if(request.getParameter("senha")!=request.getParameter("senha_cnf")){
+		if(!request.getParameter("senha").equals(request.getParameter("senha_cnf"))){
 			%><b>Senhas diferem!</b><%
 	    }else{
 			Usuario usu = new Usuario(request.getParameter("nick"),
-				  					request.getParameter("nome"),
-				  					request.getParameter("senha"));
-			Usuarios.incluir(usu);
-			%><b>foi!</b><%
-	    }
+				  					request.getParameter("senha"),
+				  					request.getParameter("email"));
+			try{
+				Usuarios.incluir(usu);
+				response.sendRedirect("adm_email.jsp");
+			}catch(Exception ex){
+				ex.printStackTrace();
+				response.sendRedirect("cadastro.jsp");
+			}
+		}
 	%>
-	
-	<p>Nome: <%= usu.getNome()  %> </p>
-	<p>Email:<%= usu.getEmail() %> </p>
-	<p>Senha:<%= usu.getSenha() %> </p>
-	<p>Cadastrado com sucesso</p>
 
 </body>
 </html>

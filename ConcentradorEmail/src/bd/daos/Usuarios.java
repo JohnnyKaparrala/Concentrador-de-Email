@@ -43,27 +43,26 @@ public class Usuarios {
             try{
                 Usuario teste = getUsuarioEmail(usu.getEmail());
                 //se chegou aqui, é porque existe um usuario com o mesmo email
-                throw new Exception("tentativa de cadastro de email já cadastrado. . .");
             }catch(Exception ex){
-                String sql;
-            
-            sql = "insert into USUARIO (nick,senha,email)values" +
-                  "(?,?,?)";
-
-            BDSQLServer.COMANDO.prepareStatement (sql);
-
-            BDSQLServer.COMANDO.setString(1, usu.getNick()); 
-            BDSQLServer.COMANDO.setString(2, usu.getSenha());
-            BDSQLServer.COMANDO.setString(3, usu.getEmail());
-
-            BDSQLServer.COMANDO.executeUpdate ();
-            BDSQLServer.COMANDO.commit        ();
+	            String sql;
+	            
+	            sql = "insert into USUARIO (nick,senha,email)values" +
+	                  "(?,?,?)";
+	
+	            BDSQLServer.COMANDO.prepareStatement (sql);
+	
+	            BDSQLServer.COMANDO.setString(1, usu.getNick()); 
+	            BDSQLServer.COMANDO.setString(2, usu.getSenha());
+	            BDSQLServer.COMANDO.setString(3, usu.getEmail());
+	
+	            BDSQLServer.COMANDO.executeUpdate ();
+	            BDSQLServer.COMANDO.commit        ();
             }       
             
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao inserir usuario");
+            throw new Exception (erro.getMessage());
         }
     }
         
