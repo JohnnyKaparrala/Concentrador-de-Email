@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" 
-    import=
-    "bd.daos.*,
-    bd.dbos.*"
+    pageEncoding="ISO-8859-1" import="bd.*,bd.daos.*,bd.dbos.*,bd.core.*"
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,18 +9,22 @@
 <title>Consultar</title>
 </head>
 <body>
-
+  
 	<%
-		int codigo = Integer.parseInt(request.getParameter("codigo"));
-		String nome = request.getParameter("nome");
-		Float preco = Float.parseFloat(request.getParameter("preco")); 
-		Livro livro = new Livro(codigo,nome,preco);
-		
-		Livros.incluir(livro);
+		if(request.getParameter("senha")!=request.getParameter("senha_cnf")){
+			%><b>Senhas diferem!</b><%
+	    }else{
+			Usuario usu = new Usuario(request.getParameter("nick"),
+				  					request.getParameter("nome"),
+				  					request.getParameter("senha"));
+			Usuarios.incluir(usu);
+			%><b>foi!</b><%
+	    }
 	%>
 	
-	<p>Nome: <%= livro.getNome()  %> </p>
-	<p>Preco:<%= livro.getPreco() %> </p>
+	<p>Nome: <%= usu.getNome()  %> </p>
+	<p>Email:<%= usu.getEmail() %> </p>
+	<p>Senha:<%= usu.getSenha() %> </p>
 	<p>Cadastrado com sucesso</p>
 
 </body>

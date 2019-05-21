@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="bd.*,bd.daos.*,bd.dbos.*,bd.core.*"%>
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +21,7 @@
         <!-- BEGIN: Custom CSS-->
         <!-- END: Custom CSS-->
     </head>
-  <!-- END: Head-->
+  <!-- END: Head-->  
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 1-column login-bg  blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
     <div class="row">
       <div class="col s12">
@@ -37,30 +37,30 @@
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">person_outline</i>
-          <input placeholder="Usuário" id="first_name" type="text" class="validate">
+          <input placeholder="Usuário" id="nick" type="text" class="validate">
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">mail</i>
-          <input placeholder="Email" id="first_name" type="text" class="validate">
+          <input placeholder="Email" id="email" type="text" class="validate">
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">lock_outline</i>
-          <input placeholder="Senha" id="first_name" type="password" class="validate">
+          <input placeholder="Senha" id="senha" type="password" class="validate">
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">lock_outline</i>
-          <input placeholder="Senha novamente" id="first_name" type="password" class="validate">
+          <input placeholder="Confirmar senha" id="senha_cnf" type="password" class="validate">
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <a href="adm_email.html" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
+          <a href="cadastrar.jsp" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
           background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Cadastrar</a>
         </div>
       </div>
