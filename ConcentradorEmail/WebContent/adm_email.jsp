@@ -41,7 +41,7 @@
           <h5 class="m-0 sidebar-title"><img src="files/tartaruga.png" height="25"> MaliBox</h5>
           <div class="row valign-wrapper mt-10 pt-2 animate fadeLeft">
             <div class="col s2 media-image">
-              <img src="12.jpg" alt="" class="circle z-depth-2 responsive-img">
+              <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img">
               <!-- notice the "circle" class -->
             </div>
             <div class="col s10">
@@ -100,7 +100,7 @@
                 </label>
               </span>
               <span class="action-icons">
-                <i class="material-icons">refresh</i>
+                <i class="material-icons" onclick="window.location.reload();">refresh</i>
                 <i class="material-icons">mail_outline</i>
                 <i class="material-icons">label_outline</i>
                 <i class="material-icons">folder_open</i>
@@ -123,7 +123,8 @@
 	
 	          // Fetch unseen messages from inbox folder
 	          Message[] messages = inbox.getMessages();
-	          for ( int i = messages.length-1; i<=0; i-- ) {
+	          
+	          for ( int i = messages.length-1; i>=0; i-- ) {
 	        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
 	       	%>
 	       	<a href="#" class="collection-item animate fadeUp delay-1">
@@ -142,7 +143,7 @@
               <div class="list-content">
                 <div class="list-title-area">
                   <div class="user-media">
-                    <img src="2.jpg" alt="" class="circle z-depth-2 responsive-img avtar">
+                    <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
                     <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
                   </div>
                   <div class="title-right">
@@ -151,10 +152,10 @@
                     </span>
                   </div>
                 </div>
-                <div class="list-desc"><%= content.toString() %></div>
+                <div class="list-desc"><span class="emailcoisa"><%= content.toString() %></span></div>
               </div>
               <div class="list-right">
-                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + message.getSentDate().getMinutes() %> </div>
+                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
               </div>
             </a>
 
