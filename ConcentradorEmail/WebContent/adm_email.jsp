@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <%
-session.setAttribute("usuario", new Usuario(19, "admin", "admin", "admin"));
 MeuResultSet emails = Emails.getEmailDonos(((Usuario)session.getAttribute("usuario")).getId());
 emails.first();
 Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emails.getString(3),(String)emails.getString(4),(String)emails.getString(5),(String)emails.getString(6),(String)emails.getString(7),(boolean)emails.getBoolean(8));
@@ -296,39 +295,39 @@ Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emai
     <h5 class="mt-0">Adicionar Email</h5>
     <hr>
     <div class="row">
-      <form class="col s12">
+      <form class="col s12" method="POST" action="add_email.jsp">
         <div class="row">
           <div class="input-field col s6">
             <i class="material-icons prefix"> mail </i>
-            <input placeholder="Email" type="text" class="validate">
+            <input id="email" placeholder="Email" type="text" class="validate">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> lock </i>
-            <input placeholder="Senha" type="password" class="validate">
+            <input id="email_senha" placeholder="Senha" type="password" class="validate">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> cloud </i>
-            <input placeholder="Servidor" type="password" class="validate">
+            <input id="servidor" placeholder="Servidor" type="password" class="validate">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> free_breakfast </i>
-            <input placeholder="Porta" type="password" class="validate">
+            <input id="porta" placeholder="Porta" type="password" class="validate">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> language </i>
-            <input placeholder="Protocolo" type="password" class="validate">
+            <input id="protocolo" placeholder="Protocolo" type="password" class="validate">
           </div>
         </div>
+		  <div class="modal-footer">
+		    <a class="btn modal-close waves-effect waves-light mr-2 red">
+		      <i class="material-icons">cancel</i> Cancelar
+		    </a>
+		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
+		      <i class="material-icons">person_add</i> Adicionar Email
+		    </a>
+		  </div>
       </form>
     </div>
-  </div>
-  <div class="modal-footer">
-    <a class="btn modal-close waves-effect waves-light mr-2 red">
-      <i class="material-icons">cancel</i> Cancelar
-    </a>
-    <a class="btn modal-close waves-effect waves-light mr-2 green">
-      <i class="material-icons">person_add</i> Adicionar Email
-    </a>
   </div>
 </div>
 
