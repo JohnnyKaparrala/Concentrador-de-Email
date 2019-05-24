@@ -20,6 +20,23 @@
         <!-- END: Page Level CSS-->
         <!-- BEGIN: Custom CSS-->
         <!-- END: Custom CSS-->
+        
+        <!-- Mudei isso de lugar -->
+		    <!-- BEGIN VENDOR JS-->
+		    <script src="files/vendors.min.js" type="text/javascript"></script>
+		    <!-- BEGIN VENDOR JS-->
+		    <!-- BEGIN PAGE VENDOR JS-->
+		    <script src="files/jquery-sortable-min.js"></script>
+		    <script src="files/jquery.waypoints.min.js"></script>
+		    <!-- END PAGE VENDOR JS-->
+		    <!-- BEGIN THEME  JS-->
+		    <script src="files/plugins.js" type="text/javascript"></script>
+		    <script src="files/custom-script.js" type="text/javascript"></script>
+		    <script src="files/customizer.js" type="text/javascript"></script>
+		    <!-- END THEME  JS-->
+		    
+    		<script src="files/https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+        <!-- ------------------- -->
     </head>
   <!-- END: Head-->  
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 1-column login-bg  blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
@@ -61,12 +78,12 @@
       <div class="row">
         <div class="input-field col s12">
           <input type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
-          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Cadastrar</input>
+          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" value="Desculpa, value"/>
         </div>
       </div>
       <%
       	if(request.getParameter("erro")!=null){
-      		%><%=request.getParameter("erro")%><%
+      		%><script>M.toast({html: '<%=request.getParameter("erro")%>'})</script><%
       	}
       %>
       <div class="row">
@@ -81,17 +98,6 @@
       </div>
     </div>
 
-    <!-- BEGIN VENDOR JS-->
-    <script src="vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="files/jquery-sortable-min.js"></script>
-    <script src="files/jquery.waypoints.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN THEME  JS-->
-    <script src="files/plugins.js" type="text/javascript"></script>
-    <script src="files/custom-script.js" type="text/javascript"></script>
-    <script src="files/customizer.js" type="text/javascript"></script>
-    <!-- END THEME  JS-->
+    
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->
