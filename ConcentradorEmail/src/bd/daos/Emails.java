@@ -43,7 +43,7 @@ public class Emails {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao inserir email");
+            throw new Exception (erro.getMessage());
         }
     }
 
@@ -69,7 +69,7 @@ public class Emails {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao excluir email");
+            throw new Exception (erro.getMessage());
         }    
     }
     
@@ -104,7 +104,7 @@ public class Emails {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao atualizar dados do email");
+            throw new Exception (erro.getMessage());
         }
     }
 
@@ -138,7 +138,7 @@ public class Emails {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar email");
+            throw new Exception (erro.getMessage());
         }
 
         return em;
@@ -182,7 +182,7 @@ public class Emails {
         return em;
     }
     
-    public static MeuResultSet getEmailDonos (int id) throws Exception
+    public static MeuResultSet getEmailsDono (int id) throws Exception
     {
         MeuResultSet resultado;
         
@@ -198,8 +198,6 @@ public class Emails {
 
             resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
-            if (!resultado.first())
-                throw new Exception ("Nao cadastrado");  
             
         }
         catch (SQLException erro)

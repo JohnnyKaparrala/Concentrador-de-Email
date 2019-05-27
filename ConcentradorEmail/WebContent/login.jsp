@@ -27,6 +27,11 @@
       <div class="col s12">
         <div class="container"><div id="login-page" class="row">
   <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
+    <%
+      	if(request.getParameter("erro")!=null){
+      		%><script>M.toast({html: '<%=request.getParameter("erro")%>'})</script><%
+      	}
+      %>
     <form class="login-form"  action="Logar.jsp" method="GET">
       <div class="row">
         <div class="input-field col s12">
@@ -47,7 +52,7 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <a href="adm_email.html" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
+          <input type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
           background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Login</a>
         </div>
       </div>

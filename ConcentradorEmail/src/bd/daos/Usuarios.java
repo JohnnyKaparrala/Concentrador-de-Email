@@ -86,7 +86,7 @@ public class Usuarios {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao excluir usuario");
+            throw new Exception (erro.getMessage());
         }    
     }
     
@@ -147,7 +147,7 @@ public class Usuarios {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar usuario");
+            throw new Exception (erro.getMessage());
         }
 
         return usu;
@@ -180,7 +180,7 @@ public class Usuarios {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar usuario");
+            throw new Exception (erro.getMessage());
         }
 
         return usu;
@@ -214,7 +214,7 @@ public class Usuarios {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar usuario");
+            throw new Exception (erro.getMessage());
         }
 
         return usu;
