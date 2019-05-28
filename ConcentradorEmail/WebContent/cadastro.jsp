@@ -88,7 +88,7 @@
       %>
       <div class="row">
         <div class="input-field col s6 m6 l6">
-          <p class="margin medium-small"><a href="login.html">Já tem uma conta? Entre aqui!</a></p>
+          <p class="margin medium-small"><a href="login.jsp">Já tem uma conta? Entre aqui!</a></p>
         </div>
       </div>
     </form>

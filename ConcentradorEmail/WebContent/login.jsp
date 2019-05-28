@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%
+if(session.getAttribute("usuario") != null)
+{
+	response.sendRedirect("adm_email.jsp");
+}
+else{
+%>
+
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,7 +17,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
         <title>MaliBox | Login</title>
-        <link rel="shortcut icon" type="image/x-icon" href="tartaruga.png">
+        <link rel="shortcut icon" type="image/x-icon" href="files/tartaruga.png">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- BEGIN: VENDOR CSS-->
         <link rel="stylesheet" type="text/css" href="files/vendors.min.css">
@@ -20,6 +29,22 @@
         <!-- END: Page Level CSS-->
         <!-- BEGIN: Custom CSS-->
         <!-- END: Custom CSS-->
+        
+        
+        <!-- BEGIN VENDOR JS-->
+	    <script src="files/vendors.min.js" type="text/javascript"></script>
+	    <!-- BEGIN VENDOR JS-->
+	    <!-- BEGIN PAGE VENDOR JS-->
+	    <script src="files/jquery-sortable-min.js"></script>
+	    <script src="files/jquery.waypoints.min.js"></script>
+	    <!-- END PAGE VENDOR JS-->
+	    <!-- BEGIN THEME  JS-->
+	    <script src="files/plugins.js" type="text/javascript"></script>
+	    <script src="files/custom-script.js" type="text/javascript"></script>
+	    <script src="files/customizer.js" type="text/javascript"></script>
+	    <!-- END THEME  JS-->
+	    <!-- BEGIN PAGE LEVEL JS-->
+	    <!-- END PAGE LEVEL JS-->
     </head>
   <!-- END: Head-->
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 1-column login-bg  blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
@@ -53,12 +78,12 @@
       <div class="row">
         <div class="input-field col s12">
           <input type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
-          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" >Login</a>
+          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" value="Logar">
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6 m6 l6">
-          <p class="margin medium-small"><a href="cadastro.html">Registre-se agora!</a></p>
+          <p class="margin medium-small"><a href="cadastro.jsp">Registre-se agora!</a></p>
         </div>
       </div>
     </form>
@@ -66,19 +91,4 @@
 </div>
         </div>
       </div>
-    </div>
-
-    <!-- BEGIN VENDOR JS-->
-    <script src="files/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="files/jquery-sortable-min.js"></script>
-    <script src="files/jquery.waypoints.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN THEME  JS-->
-    <script src="files/plugins.js" type="text/javascript"></script>
-    <script src="files/custom-script.js" type="text/javascript"></script>
-    <script src="files/customizer.js" type="text/javascript"></script>
-    <!-- END THEME  JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
-    <!-- END PAGE LEVEL JS-->
+    </div><% } %>

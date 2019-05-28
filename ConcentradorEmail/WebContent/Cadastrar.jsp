@@ -15,8 +15,8 @@
 			response.sendRedirect("cadastro.jsp?erro=Senhas+diferem");
 	    }else{
 			Usuario usu = new Usuario(request.getParameter("nick"),
-				  					request.getParameter("senha"),
-				  					request.getParameter("email"));
+				  					request.getParameter("email"),
+				  					request.getParameter("senha"));
 			try{
 				Usuarios.incluir(usu);
 				session.setAttribute("usuario",usu);

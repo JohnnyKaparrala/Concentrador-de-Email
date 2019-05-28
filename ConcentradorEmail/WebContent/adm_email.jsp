@@ -3,10 +3,35 @@
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <%
-MeuResultSet emails = Emails.getEmailDonos(((Usuario)session.getAttribute("usuario")).getId());
-emails.first();
-Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emails.getString(3),(String)emails.getString(4),(String)emails.getString(5),(String)emails.getString(6),(String)emails.getString(7),(boolean)emails.getBoolean(8));
-%>
+if (session.getAttribute("usuario") == null){
+	response.sendRedirect("login.jsp");
+}
+else{
+	MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
+	Email atual;
+	if(!emails.first()){
+		atual = new Email (-1,
+		        -1,
+		        "Cadastre um email na conta",
+		        "",
+		        "",
+		        "",
+		        "",
+		        false);
+		
+		%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
+	}
+	else{
+		atual = new Email (emails.getInt("id"),
+	        emails.getInt("id_dono"),
+	        emails.getString("email"),
+	        emails.getString("protocolo"),
+	        emails.getString("host"),
+	        emails.getString("porta"),
+	        emails.getString("senha"),
+	        emails.getBoolean("tem_ssl"));
+	}
+	%>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,6 +53,18 @@ Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emai
     <link rel="stylesheet" type="text/css" href="files/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- END: Custom CSS-->
+    
+    
+    <!-- END: Footer-->
+    <!-- BEGIN VENDOR JS-->
+    <script src="files/vendors.min.js" type="text/javascript"></script>
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="files/jquery-sortable-min.js"></script>
+    <script src="files/tinymce.min.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN PAGE LEVEL JS-->
     </head>
   <!-- END: Head-->
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 2-columns  app-page" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
@@ -87,11 +124,11 @@ Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emai
           <i class="material-icons mr-2 search-icon">search</i>
           <input  onkeyup="filtrar()" type="text" placeholder="Procurar email" class="app-filter" id="email_filter">
         </div>
-        <div id="buttons" class="fadeUp animate">
+        <div id="buttons" class="fadeUp animate" style="display: inline">
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalTrocar" data-position="bottom" data-tooltip="Trocar Email"><i class="large material-icons">supervisor_account</i></a>
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalNova" data-position="bottom" data-tooltip="Adicionar Email"><i class="large material-icons">person_add</i></a>
           <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="#modalConfi" data-position="bottom" data-tooltip="Editar Email"><i class="large material-icons">edit</i></a>
-          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="login.html" data-position="bottom" data-tooltip="Sair"><i class="large material-icons">power_settings_new</i></a>
+          <a class="waves-effect waves-light btn btn-large green btn tooltipped modal-trigger" href="Sair.jsp" data-position="bottom" data-tooltip="Sair"><i class="large material-icons">power_settings_new</i></a>
         </div>
       </div>
       <div class="card card card-default scrollspy border-radius-6 fixed-width">
@@ -119,55 +156,60 @@ Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emai
             </div>
           </div>
           <div id="emails" class="collection email-collection ps ps--active-y" style="max-height: 454px !important;">
-          <%         
-	          Session s = Session.getDefaultInstance(new Properties( ));
-	          Store store = s.getStore("imaps");
-	          store.connect("imap.googlemail.com", 993, "teste.rip.luquinhas@gmail.com", "123456senha");
-	          Folder inbox = store.getFolder( "INBOX" );
-	          inbox.open( Folder.READ_ONLY );
+          <%   
+          	if(atual.getId() == -1){
+          		%>Sem conta de email cadastrado<%
+          	}
+          	else{
+		          Session s = Session.getDefaultInstance(new Properties( ));
+		          Store store = s.getStore("imaps");
+		          store.connect("imap.googlemail.com", 993, "teste.rip.luquinhas@gmail.com", "123456senha");
+		          Folder inbox = store.getFolder( "INBOX" );
+		          inbox.open( Folder.READ_ONLY );
+		
+		          // Fetch unseen messages from inbox folder
+		          Message[] messages = inbox.getMessages();
+		          
+		          for ( int i = messages.length-1; i>=0; i-- ) {
+		        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
+		       	%>
+		       	<a href="#" class="collection-item animate fadeUp delay-1">
+	              <div class="list-left">
+	                <label>
+	                  <input type="checkbox" name="foo">
+	                  <span></span>
+	                </label>
+	                <div class="favorite">
+	                  <i class="material-icons">star_border</i>
+	                </div>
+	                <div class="email-label">
+	                  <i class="material-icons">label_outline</i>
+	                </div>
+	              </div>
+	              <div class="list-content">
+	                <div class="list-title-area">
+	                  <div class="user-media">
+	                    <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
+	                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
+	                  </div>
+	                  <div class="title-right">
+	                    <span class="attach-file">
+	                      <i class="material-icons">attach_file</i>
+	                    </span>
+	                  </div>
+	                </div>
+	                <div class="list-desc"><span class="emailcoisa"><%= content.toString() %></span></div>
+	              </div>
+	              <div class="list-right">
+	                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
+	              </div>
+	            </a>
 	
-	          // Fetch unseen messages from inbox folder
-	          Message[] messages = inbox.getMessages();
-	          
-	          for ( int i = messages.length-1; i>=0; i-- ) {
-	        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
-	       	%>
-	       	<a href="#" class="collection-item animate fadeUp delay-1">
-              <div class="list-left">
-                <label>
-                  <input type="checkbox" name="foo">
-                  <span></span>
-                </label>
-                <div class="favorite">
-                  <i class="material-icons">star_border</i>
-                </div>
-                <div class="email-label">
-                  <i class="material-icons">label_outline</i>
-                </div>
-              </div>
-              <div class="list-content">
-                <div class="list-title-area">
-                  <div class="user-media">
-                    <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
-                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
-                  </div>
-                  <div class="title-right">
-                    <span class="attach-file">
-                      <i class="material-icons">attach_file</i>
-                    </span>
-                  </div>
-                </div>
-                <div class="list-desc"><span class="emailcoisa"><%= content.toString() %></span></div>
-              </div>
-              <div class="list-right">
-                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
-              </div>
-            </a>
-
-	                
-	      	<%
-	          }
-          	%>
+		                
+		      	<%
+		          }
+          		}
+	          	%>
           <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 377px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 104px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 328px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 78px;"></div></div></div>
         </div>
       </div>
@@ -344,17 +386,6 @@ Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emai
         <div class="container"><span>© 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
-
-    <!-- END: Footer-->
-    <!-- BEGIN VENDOR JS-->
-    <script src="files/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="files/jquery-sortable-min.js"></script>
-    <script src="files/tinymce.min.js"></script>
-    <script src="files/jquery.waypoints.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
     <script src="files/app-email.js" type="text/javascript"></script>
     <script src="files/https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
@@ -387,3 +418,4 @@ Email atual = new Email((int)emails.getInt(1),(int)emails.getInt(2),(String)emai
     }
     </script>
     <!-- END PAGE LEVEL JS-->
+    <%}%>

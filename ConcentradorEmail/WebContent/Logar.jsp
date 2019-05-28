@@ -10,20 +10,20 @@
 </head>
 <body>
   
-	<%
-		
-		
+	<%		
 		try{
 			Usuario usu = Usuarios.getUsuarioNick(request.getParameter("user"));
 			if(usu.getSenha().equals(request.getParameter("senha"))){
 				session.setAttribute("usuario",usu);
 				response.sendRedirect("adm_email.jsp");				
 			}
-			response.sendRedirect("login.jsp?erro=usuario+sem+cadastro");
+			else{
+				response.sendRedirect("login.jsp?erro=usuario+sem+cadastro");
+			}
 		}catch(Exception ex){
 			response.sendRedirect("login.jsp?erro="+ex.getMessage().replaceAll("\\s+","+"));
+			//response.sendRedirect("login.jsp?erro=deu+erro");
 		}
-		
 	%>
 
 </body>
