@@ -3,35 +3,36 @@
 <!DOCTYPE html>
 <!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <%
-if (session.getAttribute("usuario") == null){
+boolean a = false;
+
+if (session.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 }
+MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
+Email atual;
+if(!emails.first()){
+	atual = new Email (-1,
+	        -1,
+	        "Cadastre um email na conta",
+	        "",
+	        "",
+	        "",
+	        "",
+	        false);
+	
+	a = true;
+}
 else{
-	MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
-	Email atual;
-	if(!emails.first()){
-		atual = new Email (-1,
-		        -1,
-		        "Cadastre um email na conta",
-		        "",
-		        "",
-		        "",
-		        "",
-		        false);
-		
-		%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
-	}
-	else{
-		atual = new Email (emails.getInt("id"),
-	        emails.getInt("id_dono"),
-	        emails.getString("email"),
-	        emails.getString("protocolo"),
-	        emails.getString("host"),
-	        emails.getString("porta"),
-	        emails.getString("senha"),
-	        emails.getBoolean("tem_ssl"));
-	}
-	%>
+	atual = new Email (emails.getInt("id"),
+        emails.getInt("id_dono"),
+        emails.getString("email"),
+        emails.getString("protocolo"),
+        emails.getString("host"),
+        emails.getString("porta"),
+        emails.getString("senha"),
+        emails.getBoolean("tem_ssl"));
+}
+%>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -157,10 +158,12 @@ else{
           </div>
           <div id="emails" class="collection email-collection ps ps--active-y" style="max-height: 454px !important;">
           <%   
-          	if(atual.getId() == -1){
-          		%>Sem conta de email cadastrado<%
+          	if(atual.getId() == -1) {
+          		%>
+          		Sem conta de email cadastrado
+          		<%
           	}
-          	else{
+          	else {
 		          Session s = Session.getDefaultInstance(new Properties( ));
 		          Store store = s.getStore("imaps");
 		          store.connect("imap.googlemail.com", 993, "teste.rip.luquinhas@gmail.com", "123456senha");
@@ -205,12 +208,28 @@ else{
 	              </div>
 	            </a>
 	
-		                
 		      	<%
 		          }
           		}
 	          	%>
-          <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 377px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 104px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 328px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 78px;"></div></div></div>
+          
+          <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+          	<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+          	</div>
+          </div>
+          <div class="ps__rail-y" style="top: 0px; height: 377px; right: 0px;">
+          	<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 104px;">
+          	</div>
+          </div>
+          <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+          	<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+          	</div>
+          </div>
+          <div class="ps__rail-y" style="top: 0px; height: 328px; right: 0px;">
+	          <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 78px;">
+	          </div>
+	      </div>
+	      </div>
         </div>
       </div>
     </div>
@@ -389,8 +408,6 @@ else{
     <script src="files/app-email.js" type="text/javascript"></script>
     <script src="files/https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
-    $('select').formSelect();
-    $('select').material_select();
     
       ClassicEditor
       .create( document.querySelector( '#editor' ) ).catch( error => {
@@ -418,4 +435,12 @@ else{
     }
     </script>
     <!-- END PAGE LEVEL JS-->
-    <%}%>
+    <%
+    
+    if (a){
+    	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
+    }
+    %><script>
+    $('select').formSelect();
+    $('select').material_select();
+    </script>
