@@ -8,6 +8,7 @@ boolean a = false;
 if (session.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 }
+else{
 MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
 Email atual;
 if(!emails.first()){
@@ -39,8 +40,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>MaliBox | <%= atual.getEmail() %></title>
     <link rel="shortcut icon" type="image/x-icon" href="files/tartaruga.png">
-    <link href="icon" rel="stylesheet">
-    <!-- BEGIN: VENDOR CSS-->
+        <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="files/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="files/flag-icon.min.css">
     <!-- END: VENDOR CSS-->
@@ -55,17 +55,6 @@ else{
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- END: Custom CSS-->
     
-    
-    <!-- END: Footer-->
-    <!-- BEGIN VENDOR JS-->
-    <script src="files/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="files/jquery-sortable-min.js"></script>
-    <script src="files/tinymce.min.js"></script>
-    <script src="files/jquery.waypoints.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
     </head>
   <!-- END: Head-->
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 2-columns  app-page" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
@@ -160,6 +149,7 @@ else{
           <%   
           	if(atual.getId() == -1) {
           		%>
+          		
           		Sem conta de email cadastrado
           		<%
           	}
@@ -317,10 +307,6 @@ else{
       <form class="col s12">
         <div class="row">
           <div class="input-field col s6">
-            <i class="material-icons prefix"> mail </i>
-            <input placeholder="Email" type="text" class="validate">
-          </div>
-          <div class="input-field col s6">
             <i class="material-icons prefix"> lock </i>
             <input placeholder="Senha" type="password" class="validate">
           </div>
@@ -396,18 +382,30 @@ else{
         </div>
       </div>
     </div>
-    <!-- END: Page Main-->
-
-    <!-- BEGIN: Footer-->
 
     <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
       <div class="footer-copyright">
         <div class="container"><span>© 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
+</body>
+    
+     <!-- END: Page Main-->
+	   <!-- END: Footer-->
+    <!-- BEGIN VENDOR JS-->
+     <script src="files/vendors.min.js" type="text/javascript"></script>
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="files/jquery-sortable-min.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN PAGE LEVEL JS-->
+    <!-- BEGIN: Footer-->
+    
     <script src="files/app-email.js" type="text/javascript"></script>
-    <script src="files/https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
+    
+    
     
       ClassicEditor
       .create( document.querySelector( '#editor' ) ).catch( error => {
@@ -433,6 +431,13 @@ else{
             }
         }
     }
+      
+      $(document).ready(function(){
+    	    $('.modal').modal();
+
+    	    $('select').formSelect();
+    	    $('select').material_select();
+    	  });
     </script>
     <!-- END PAGE LEVEL JS-->
     <%
@@ -441,6 +446,5 @@ else{
     	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
     }
     %><script>
-    $('select').formSelect();
-    $('select').material_select();
     </script>
+    <%}%>
