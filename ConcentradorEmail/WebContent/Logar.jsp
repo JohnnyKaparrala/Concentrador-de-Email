@@ -9,7 +9,7 @@
 <title>Consultar</title>
 </head>
 <body>
-  
+ 
 	<%		
 		try{
 			Usuario usu = Usuarios.getUsuarioNick(request.getParameter("user"));

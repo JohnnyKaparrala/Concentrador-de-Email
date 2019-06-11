@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
 <!DOCTYPE html>
-<!-- saved from url=(0057)file:///C:/Users/u17186/Desktop/templateConcentrador.html -->
 <%
 boolean a = false;
 
@@ -24,14 +23,31 @@ if(!emails.first()){
 	a = true;
 }
 else{
-	atual = new Email (emails.getInt("id"),
-        emails.getInt("id_dono"),
-        emails.getString("email"),
-        emails.getString("protocolo"),
-        emails.getString("host"),
-        emails.getString("porta"),
-        emails.getString("senha"),
-        emails.getBoolean("tem_ssl"));
+	if (session.getAttribute("atual_id") == null) {
+		atual = new Email (emails.getInt("id"),
+	    emails.getInt("id_dono"),
+	    emails.getString("email"),
+	    emails.getString("protocolo"),
+	    emails.getString("host"),
+	    emails.getString("porta"),
+	    emails.getString("senha"),
+	    emails.getBoolean("tem_ssl"));
+		
+		session.setAttribute("atual_id",emails.getInt("id"));
+	} else {
+		while (emails.getInt("id") != Integer.parseInt(session.getAttribute("atual_id").toString())) {
+			emails.next();
+		}
+		
+		atual = new Email (emails.getInt("id"),
+	    emails.getInt("id_dono"),
+	    emails.getString("email"),
+	    emails.getString("protocolo"),
+	    emails.getString("host"),
+	    emails.getString("porta"),
+	    emails.getString("senha"),
+		emails.getBoolean("tem_ssl"));
+	}
 }
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -156,14 +172,19 @@ else{
           	else {
 		          Session s = Session.getDefaultInstance(new Properties( ));
 		          Store store = s.getStore("imaps");
-		          store.connect("imap.googlemail.com", 993, "teste.rip.luquinhas@gmail.com", "123456senha");
+		          store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
 		          Folder inbox = store.getFolder( "INBOX" );
 		          inbox.open( Folder.READ_ONLY );
 		
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = inbox.getMessages();
 		          
-		          for ( int i = messages.length-1; i>=0; i-- ) {
+		          int tam = messages.length;
+		          if (tam > 10) {
+		        	  tam = 10;
+		          } 
+		          
+		          for ( int i = tam-1; i>=0; i-- ) {
 		        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
 		       	%>
 		       	<a href="#" class="collection-item animate fadeUp delay-1">
@@ -267,35 +288,33 @@ else{
     </a>
   </div>
 </div>
-<div id="modalTrocar" class='modal modal-fixed-footer'>
-  <div class='modal-content'>
-    <h5 class="mt-0">Trocar email</h5>
-    <hr>
-    <div class="row">
-      <form class="col s12">
-		<div class="">
-          <select>
-	          <%
-	           do {
+
+<!-- Modal Structure -->
+<div id="modalTrocar" class="modal border-radius-6" tabindex="0">
+  <form class="col s12" action="Trocar.jsp" method="GET">
+	  <div class="modal-content">
+	    <h5 class="mt-0">Trocar email</h5>
+	    <hr>
+	    <div class="row">
+	       <div class="input-field col s12">
+		    <select class="browser-default" name="emailSelect">
+		      <%
+		      	emails.first();
+		      	do {
+		      	  	%> <option value="<%= emails.getInt("id") %>"><%= emails.getString("email") %></option> <%
+		      	} while (emails.next());
 		      %>
-              <option value="<%= (int)emails.getInt("id") %>"><%=  (String)emails.getString("email") %></option>
-              <%
-	          } while (emails.next());
-              %>
-          </select>
-          <label>Email</label>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a class="btn modal-close waves-effect waves-light mr-2 red">
-      <i class="material-icons">cancel</i> Cancelar
-    </a>
-    <a class="btn modal-close waves-effect waves-light mr-2 green">
-      <i class="material-icons">send</i> Enviar
-    </a>
-  </div>
+		    </select>
+	 		</div>
+	  	</div>
+	  </div>
+	  <div class="modal-footer">
+	    <a class="btn modal-close waves-effect waves-light mr-2 red">
+	      <i class="material-icons">cancel</i> Cancelar
+	    </a>
+	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar"/>
+	 		</div>
+	</form>
 </div>
 
 <!-- Modal Structure -->
@@ -412,7 +431,7 @@ else{
           console.error( error );
       } );
 
-      M.toast({html: 'Bem vindo(a)!'})
+      M.toast({html: 'Bem vindo(a)!'});
 
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;

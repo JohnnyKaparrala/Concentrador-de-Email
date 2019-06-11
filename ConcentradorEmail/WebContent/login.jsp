@@ -57,7 +57,7 @@ else{
       		%><script>M.toast({html: '<%=request.getParameter("erro")%>'})</script><%
       	}
       %>
-    <form class="login-form"  action="Logar.jsp" method="GET">
+    <form class="login-form" action="Logar.jsp" method="GET">
       <div class="row">
         <div class="input-field col s12">
           <h5 class="ml-4">Entrar</h5>
