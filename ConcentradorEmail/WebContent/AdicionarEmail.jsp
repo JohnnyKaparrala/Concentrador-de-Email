@@ -14,8 +14,7 @@
 		try{
 			boolean tem_ssl = request.getParameter("protocolo").contains("s");
 			
-			Email eml = new Email(
-									(((Usuario)session.getAttribute("usuario")).getId()),
+			Email eml = new Email(	(((Usuario)session.getAttribute("usuario")).getId()),
 									request.getParameter("email"),
 				  					request.getParameter("protocolo"),
 				  					request.getParameter("host"),
