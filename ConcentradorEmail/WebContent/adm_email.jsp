@@ -103,30 +103,59 @@ else{
         <div class="sidebar-list-padding app-sidebar" id="email-sidenav">
           <ul class="email-list display-grid">
             <li class="sidebar-title">Pastas</li>
-            <li class="active green"><a href="#" class="text-sub"><i class="material-icons mr-2"> mail_outline </i> Inbox</a></li>
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> send </i> Enviados</a></li>
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> description </i> Rascunhos</a></li>
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> info_outline </i> Span</a></li>
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> delete </i> Lixeira</a></li>
-            <%
-            	if(atual.getId() != -1){           	
-            		Session s = Session.getDefaultInstance(new Properties( ));
-    	            Store store = s.getStore("imaps");
-    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-    	            
-			        Folder[] pastas = store.getDefaultFolder().list();
-		            for(int i=1;i<pastas.length-1;i++)
-		    		{
-		    			%>		    				
-		    				<li><a href="#" class="text-sub"><i class="material-icons mr-2"> folder </i> <%=pastas[i].toString()%></a></li>
-		    			<%
-		    		}
-	            }
-            %>            
+            <li id="Inbox"><a href="#Inbox" class="text-sub"><i class="material-icons mr-2"> mail_outline </i> Inbox</a></li>
+            <li id="Enviados"><a href="#Enviados" class="text-sub"><i class="material-icons mr-2"> send </i> Enviados</a></li>
+            <li id="Rascunhos"><a href="#Rascunhos" class="text-sub"><i class="material-icons mr-2"> description </i> Rascunhos</a></li>
+            <li id="Spam"><a href="#Spam" class="text-sub"><i class="material-icons mr-2"> info_outline </i> Spam</a></li>
+            <li id="Lixeira"><a href="#Lixeira" class="text-sub"><i class="material-icons mr-2"> delete </i> Lixeira</a></li>
+            <script type="text/javascript">
+          		url = window.location.href;
+          		if( url.indexOf("#Inbox") >= 0 ){
+          			document.getElementById("Inbox").className += " active green";
+          		}
+          		if( url.indexOf("#Enviados") >= 0 ){
+          			document.getElementById("Enviados").className += " active green";
+          		}
+          		if( url.indexOf("#Rascunhos") >= 0 ){
+          			document.getElementById("Rascunhos").className += " active green";
+          		}
+          		if( url.indexOf("#Spam") >= 0 ){
+          			document.getElementById("Spam").className += " active green";
+          		}
+          		if( url.indexOf("#Lixeira") >= 0 ){
+          			document.getElementById("Lixeira").className += " active green";
+          		}
+         	</script>  
+	            <%
+	            	if(atual.getId() != -1){           	
+	            		Session s = Session.getDefaultInstance(new Properties( ));
+	    	            Store store = s.getStore("imaps");
+	    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+	    	            
+				        Folder[] pastas = store.getDefaultFolder().list();
+			            for(int i=1;i<pastas.length-1;i++)
+			    		{
+			    			%>		    				
+			    				<li id="<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>"><a href="#<%=pastas[i].toString()%>" class="text-sub"><i class="material-icons mr-2"> folder </i> <%=pastas[i].toString()%></a></li>
+			    				<script type="text/javascript">
+				    				url = window.location.href;
+				              		if(url.indexOf("#<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>") >= 0 ){
+				              			document.getElementById("<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>").className += " active green";
+				              		}
+			    				</script>
+			    			
+			    			<%
+			    		}
+		            }
+	            %>    
+          	      
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> create_new_folder </i> Criar pasta</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
+          	
+          	
+          
           </ul>
         </div>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 432px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 307px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 383px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 238px;"></div></div></div>

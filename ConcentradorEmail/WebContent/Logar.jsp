@@ -15,7 +15,7 @@
 			Usuario usu = Usuarios.getUsuarioNick(request.getParameter("user"));
 			if(usu.getSenha().equals(request.getParameter("senha"))){
 				session.setAttribute("usuario",usu);
-				response.sendRedirect("adm_email.jsp");				
+				response.sendRedirect("adm_email.jsp#Inbox");				
 			}
 			else{
 				response.sendRedirect("login.jsp?erro=usuario+sem+cadastro");

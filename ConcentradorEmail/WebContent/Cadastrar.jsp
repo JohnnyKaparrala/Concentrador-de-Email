@@ -20,7 +20,7 @@
 			try{
 				Usuarios.incluir(usu);
 				session.setAttribute("usuario",usu);
-				response.sendRedirect("adm_email.jsp");
+				response.sendRedirect("adm_email.jsp#Inbox");
 			}catch(Exception ex){
 				response.sendRedirect("cadastro.jsp?erro=Email+ja+cadastrado");
 			}
