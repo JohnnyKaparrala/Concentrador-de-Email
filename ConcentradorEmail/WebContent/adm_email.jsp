@@ -108,6 +108,21 @@ else{
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> description </i> Rascunhos</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> info_outline </i> Span</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> delete </i> Lixeira</a></li>
+            <%
+            	if(atual.getId() != -1){           	
+            		Session s = Session.getDefaultInstance(new Properties( ));
+    	            Store store = s.getStore("imaps");
+    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+    	            
+			        Folder[] pastas = store.getDefaultFolder().list();
+		            for(int i=1;i<pastas.length-1;i++)
+		    		{
+		    			%>		    				
+		    				<li><a href="#" class="text-sub"><i class="material-icons mr-2"> folder </i> <%=pastas[i].toString()%></a></li>
+		    			<%
+		    		}
+	            }
+            %>            
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> create_new_folder </i> Criar pasta</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
@@ -170,12 +185,12 @@ else{
           		<%
           	}
           	else {
-		          Session s = Session.getDefaultInstance(new Properties( ));
+          		  Session s = Session.getDefaultInstance(new Properties( ));
 		          Store store = s.getStore("imaps");
 		          store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
 		          Folder inbox = store.getFolder( "INBOX" );
 		          inbox.open( Folder.READ_ONLY );
-		
+		          		
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = inbox.getMessages();
 		          
