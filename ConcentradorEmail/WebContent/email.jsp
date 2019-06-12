@@ -161,21 +161,21 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
 						if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) 
 						{
 							tamanhoArq = (part.getSize())/1000;
+							part.saveFile((request.getContextPath() + "/anexos/" + part.getFileName()).toString());
+							
+							
 							
                   %>
+                  	<script>console.log("<%= ("/ConcentracorEmail/WebContent/anexos/" + part.getFileName()).toString().replace(" ", "%20") %>");</script>
                     <div class="attachment">
                       <div class="size">
                         <span class="grey-text"><%= part.getFileName() %></span>
                         <span class="grey-text">(<%= tamanhoArq %>Kb)</span>
                       </div>
                       <div class="links">
-                      	<form action="baixar.jsp" method="GET">
-                      		<input name="nome" value="<%= part.getFileName() %>">
-                      		<input name="index" value="<%= i %>">
-                        	<a href="#" class="Right">
-                          		<i class="material-icons">file_download</i>
-                        	</a>
-                        </form>
+                       	<a href="anexos/<%= part.getFileName() %>" class="Right">
+                         	<i class="material-icons">file_download</i>
+                       	</a>
                       </div>
                     </div>
                   <% 
