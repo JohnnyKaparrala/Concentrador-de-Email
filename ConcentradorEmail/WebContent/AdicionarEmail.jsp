@@ -14,20 +14,31 @@
 		try{
 			boolean tem_ssl = request.getParameter("protocolo").contains("s");
 			String email = (String)request.getParameter("email");
+			String protocolo = request.getParameter("protocolo");
+			String host = request.getParameter("host");
+			String porta = request.getParameter("porta");
+			String senha = request.getParameter("senha");
+			
 			
 			if(!(email.contains("@") && email.contains(".")))
-				throw new Exception("Email invalido");
+				response.sendRedirect("adm_email.jsp?erro=Email%20invalido");
+			else
+			if(protocolo.trim().equals("") ||  host.trim().equals("") || porta.trim().equals("") ||
+					senha.trim().equals(""))
+				response.sendRedirect("adm_email.jsp?erro=Digite%20todos%20os%20campos");
+			else{
 			
-			Email eml = new Email(	(((Usuario)session.getAttribute("usuario")).getId()),
-									request.getParameter("email"),
-				  					request.getParameter("protocolo"),
-				  					request.getParameter("host"),
-				  					request.getParameter("porta"),
-				  					request.getParameter("senha"),
-				  					tem_ssl);
-		
-			Emails.incluir(eml);
-			response.sendRedirect("adm_email.jsp");
+				Email eml = new Email(	(((Usuario)session.getAttribute("usuario")).getId()),
+										email,
+					  					protocolo,
+					  					host,
+					  					porta,
+					  					senha,
+					  					tem_ssl);
+			
+				Emails.incluir(eml);
+				response.sendRedirect("adm_email.jsp");
+			}
 		}catch(Exception ex){
 			response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage());
 		}

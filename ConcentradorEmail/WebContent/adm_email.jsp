@@ -494,7 +494,7 @@ else{
     <!-- BEGIN: Footer-->
     <script type="text/javascript">
 
-      M.toast({html: 'Bem vindo(a)!'});
+      M.toast({html: '<%= request.getParameter("erro") %>'});
 
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;
