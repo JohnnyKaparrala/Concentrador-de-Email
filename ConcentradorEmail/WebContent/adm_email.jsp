@@ -438,27 +438,27 @@ else{
     <h5 class="mt-0">Adicionar Email</h5>
     <hr>
     <div class="row">
-      <form class="col s12" method="POST" action="add_email.jsp">
+      <form class="col s12" method="POST" action="AdicionarEmail.jsp">
         <div class="row">
           <div class="input-field col s6">
             <i class="material-icons prefix"> mail </i>
-            <input id="email" placeholder="Email" type="text" class="validate">
+            <input id="email" placeholder="Email" type="text" class="validate" name="email" id="email">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> lock </i>
-            <input id="email_senha" placeholder="Senha" type="password" class="validate">
+            <input id="email_senha" placeholder="Senha" type="password" class="validate" name="senha" id="senha">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> cloud </i>
-            <input id="servidor" placeholder="Servidor" type="password" class="validate">
+            <input id="servidor" placeholder="Servidor" type="text" class="validate" name="host" id="host">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> free_breakfast </i>
-            <input id="porta" placeholder="Porta" type="password" class="validate">
+            <input id="porta" placeholder="Porta" type="text" class="validate" name="porta" id="porta">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> language </i>
-            <input id="protocolo" placeholder="Protocolo" type="password" class="validate">
+            <input id="protocolo" placeholder="Protocolo" type="text" class="validate" name="protocolo" id="protocolo">
           </div>
         </div>
 		  <div class="modal-footer">
@@ -466,7 +466,7 @@ else{
 		      <i class="material-icons">cancel</i> Cancelar
 		    </a>
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-		      <i class="material-icons">person_add</i> Adicionar Email
+		      <i class="material-icons">person_add</i><input type="submit" value="Adicionar Email">
 		    </a>
 		  </div>
       </form>

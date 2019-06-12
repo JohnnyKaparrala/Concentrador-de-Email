@@ -13,6 +13,10 @@
 	<%
 		try{
 			boolean tem_ssl = request.getParameter("protocolo").contains("s");
+			String email = (String)request.getParameter("email");
+			
+			if(!(email.contains("@") && email.contains(".")))
+				throw new Exception("Email invalido");
 			
 			Email eml = new Email(	(((Usuario)session.getAttribute("usuario")).getId()),
 									request.getParameter("email"),
