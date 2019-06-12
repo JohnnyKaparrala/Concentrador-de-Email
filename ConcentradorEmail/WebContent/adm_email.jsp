@@ -52,6 +52,7 @@ else{
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>MaliBox | <%= atual.getEmail() %></title>
@@ -160,8 +161,6 @@ else{
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
           	
-          	
-          
           </ul>
           
           
@@ -239,35 +238,39 @@ else{
 		        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
 		       	%>
 		       	<a href="#" class="collection-item animate fadeUp delay-1">
-	              <div class="list-left">
-	                <label>
-	                  <input type="checkbox" name="foo">
-	                  <span></span>
-	                </label>
-	                <div class="favorite">
-	                  <i class="material-icons">star_border</i>
-	                </div>
-	                <div class="email-label">
-	                  <i class="material-icons">label_outline</i>
-	                </div>
-	              </div>
-	              <div class="list-content">
-	                <div class="list-title-area">
-	                  <div class="user-media">
-	                    <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
-	                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
-	                  </div>
-	                  <div class="title-right">
-	                    <span class="attach-file">
-	                      <i class="material-icons">attach_file</i>
-	                    </span>
-	                  </div>
-	                </div>
-	                <div class="list-desc"><span class="emailcoisa"><%= content.toString() %></span></div>
-	              </div>
-	              <div class="list-right">
-	                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
-	              </div>
+		              <div class="list-left">
+		                <label>
+		                  <input type="checkbox" name="foo">
+		                  <span></span>
+		                </label>
+		                <div class="favorite">
+		                  <i class="material-icons">star_border</i>
+		                </div>
+		                <div class="email-label">
+		                  <i class="material-icons">label_outline</i>
+		                </div>
+		              </div>
+		              <div class="list-content">
+		                <div class="list-title-area">
+		                  <div class="user-media">
+		                    <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
+		                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
+		                  </div>
+		                  <div class="title-right">
+		                    <span class="attach-file">
+		                      <i class="material-icons">attach_file</i>
+		                    </span>
+		                  </div>
+		                </div>
+		                <div class="list-desc"><span class="emailcoisa"><%= content.toString() %></span></div>
+		              </div>
+		              <div class="list-right">
+		                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
+		              </div>
+		       		<form  action="email.jsp" method="GET">
+		              <input name="id_email" style="display:none" value="<%= i %>">
+		              <input type="submit" class="inpot" value="Abrir email">
+		           </form>
 	            </a>
 	
 		      	<%
@@ -464,23 +467,9 @@ else{
 	   <!-- END: Footer-->
     <!-- BEGIN VENDOR JS-->
      <script src="files/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="files/jquery-sortable-min.js"></script>
-    <script src="files/jquery.waypoints.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- BEGIN: Footer-->
-    
-    <script src="files/app-email.js" type="text/javascript"></script>
     <script type="text/javascript">
-    
-    
-    
-      ClassicEditor
-      .create( document.querySelector( '#editor' ) ).catch( error => {
-          console.error( error );
-      } );
 
       M.toast({html: 'Bem vindo(a)!'});
 
@@ -507,8 +496,25 @@ else{
 
     	    $('select').formSelect();
     	    $('select').material_select();
+    	    
+    	    $('.emailBimba').click(function(e) {
+    	    	var a = e.target;
+    	    	var b = a.find('.inpot')[0];
+    	    	
+    	    	b.click();
+    	    });
     	  });
+      
+      ClassicEditor.create( document.querySelector( '#editor' ) ).catch( error => {
+          console.error( error );
+      } );
     </script>
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="files/jquery-sortable-min.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <!-- END PAGE VENDOR JS-->    
+    <script src="files/app-email.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS-->
     <%
     
