@@ -1,3 +1,4 @@
+<%@page import="com.sun.corba.se.pept.protocol.MessageMediator"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
 <!DOCTYPE html>
 <%
@@ -6,7 +7,7 @@ boolean a = false;
 if (session.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 }
-else{
+else {
 MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
 Email atual;
 if(!emails.first()){
@@ -21,7 +22,7 @@ if(!emails.first()){
 	
 	a = true;
 }
-else{
+else {
 	if (session.getAttribute("atual_id") == null) {
 		atual = new Email (emails.getInt("id"),
 	    emails.getInt("id_dono"),
@@ -48,6 +49,18 @@ else{
 		emails.getBoolean("tem_ssl"));
 	}
 }
+Session s = Session.getDefaultInstance(new Properties( ));
+Store store = s.getStore("imaps");
+store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+Folder inbox = store.getFolder( "INBOX" );
+inbox.open( Folder.READ_ONLY );
+		
+// Fetch unseen messages from inbox folder
+Message[] messages = inbox.getMessages();
+
+int index = Integer.parseInt(request.getParameter("id_email"));
+
+Message mensagem = messages[index];
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -115,26 +128,18 @@ else{
                   <div class="user-media">
                     <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
                     <div class="list-title">
-                      <span class="name">Pari Kalin</span>
+                      <span class="name"><%= (mensagem.getFrom()[0]).toString() %></span>
                       <span class="to-person">to me</span>
                     </div>
                   </div>
                   <div class="title-right">
-                    <span class="mail-time">Fri, Jan 11, 9:01 AM(4 days ago)</span>
+                    <span class="mail-time"><%= mensagem.getSentDate().getHours() + ":" + mensagem.getSentDate().getMinutes() + " em " + mensagem.getSentDate().getDay() + "/" + mensagem.getSentDate().getMonth() + "/" +mensagem.getSentDate().getYear() %></span>
                     <i class="material-icons">reply</i>
                     <i class="material-icons">more_vert</i>
                   </div>
                 </div>
                 <div class="email-desc">
-                  <p>Fruitcake lemon drops jelly-o marshmallow cake dragée. Pie pudding cookie candy canes chocolate
-                    bar. Cookie cheesecake carrot cake jelly-o jelly cupcake. Sweet roll icing dragée croissant tart
-                    marshmallow icing marshmallow. Sweet roll jujubes cheesecake. Soufflé croissant bear claw
-                    marshmallow macaroon sweet. <strong>Sweet roll</strong> macaroon topping cake jelly-o halvah chupa
-                    chups.</p>
-                  <p>Lollipop carrot cake gummies. Croissant lemon drops cotton candy. Candy canes sesame snaps
-                    macaroon pie pie fruitcake cupcake danish marshmallow. Topping jelly donut liquorice oat cake sugar
-                    plum cake dragée. Sweet cheesecake marshmallow. Gummies brownie lemon drops marshmallow oat cake
-                    bear claw pudding.</p>
+                  <p><%= mensagem.getContent().toString() %></p>
                 </div>
               </div>
               <!-- Email Content Ends -->

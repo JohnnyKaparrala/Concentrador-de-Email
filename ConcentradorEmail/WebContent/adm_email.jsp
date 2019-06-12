@@ -155,8 +155,6 @@ else{
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
           	
-          	
-          
           </ul>
         </div>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 432px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 307px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 383px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 238px;"></div></div></div>
@@ -263,7 +261,7 @@ else{
 		                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
 		              </div>
 		       		<form  action="email.jsp" method="GET">
-		              <span name="id_email" style="display:none"><%= i %></span>
+		              <input name="id_email" style="display:none" value="<%= i %>">
 		              <input type="submit" class="inpot" value="Abrir email">
 		           </form>
 	            </a>
