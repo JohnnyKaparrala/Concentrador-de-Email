@@ -61,6 +61,7 @@ Message[] messages = inbox.getMessages();
 int index = Integer.parseInt(request.getParameter("id_email"));
 
 Message mensagem = messages[index];
+String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)mensagem.getContent());
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -109,7 +110,7 @@ Message mensagem = messages[index];
                   <div class="back-to-mails">
                     <a href="app-email.html"><i class="material-icons">arrow_back</i></a>
                   </div>
-                  <div class="email-title">Fruitcake sweet jelly-o sweet ice cream donut ice cream</div>
+                  <div class="email-title"><%= mensagem.getSubject() %></div>
                 </div>
                 <div class="header-action">
                   <div class="favorite">
@@ -129,7 +130,7 @@ Message mensagem = messages[index];
                     <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
                     <div class="list-title">
                       <span class="name"><%= (mensagem.getFrom()[0]).toString() %></span>
-                      <span class="to-person">to me</span>
+                      <span class="to-person">para mim</span>
                     </div>
                   </div>
                   <div class="title-right">
@@ -139,7 +140,7 @@ Message mensagem = messages[index];
                   </div>
                 </div>
                 <div class="email-desc">
-                  <p><%= mensagem.getContent().toString() %></p>
+                  <p><%= content.toString() %></p>
                 </div>
               </div>
               <!-- Email Content Ends -->
