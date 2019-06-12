@@ -103,26 +103,26 @@ else{
         <div class="sidebar-list-padding app-sidebar" id="email-sidenav">
           <ul class="email-list display-grid">
             <li class="sidebar-title">Pastas</li>
-            <li id="Inbox"><a href="#Inbox" class="text-sub"><i class="material-icons mr-2"> mail_outline </i> Inbox</a></li>
-            <li id="Enviados"><a href="#Enviados" class="text-sub"><i class="material-icons mr-2"> send </i> Enviados</a></li>
-            <li id="Rascunhos"><a href="#Rascunhos" class="text-sub"><i class="material-icons mr-2"> description </i> Rascunhos</a></li>
-            <li id="Spam"><a href="#Spam" class="text-sub"><i class="material-icons mr-2"> info_outline </i> Spam</a></li>
-            <li id="Lixeira"><a href="#Lixeira" class="text-sub"><i class="material-icons mr-2"> delete </i> Lixeira</a></li>
+            <li id="Inbox"><a href="?pasta=INBOX" class="text-sub"><i class="material-icons mr-2"> mail_outline </i> Inbox</a></li>
+            <li id="Enviados"><a href="?pasta=[Gmail]/E-mails enviados" class="text-sub"><i class="material-icons mr-2"> send </i> Enviados</a></li>
+            <li id="Rascunhos"><a href="?pasta=[Gmail]/Rascunhos" class="text-sub"><i class="material-icons mr-2"> description </i> Rascunhos</a></li>
+            <li id="Spam"><a href="?pasta=[Gmail]/Spam" class="text-sub"><i class="material-icons mr-2"> info_outline </i> Spam</a></li>
+            <li id="Lixeira"><a href="?pasta=[Gmail]/Lixeira" class="text-sub"><i class="material-icons mr-2"> delete </i> Lixeira</a></li>
             <script type="text/javascript">
           		url = window.location.href;
-          		if( url.indexOf("#Inbox") >= 0 ){
+          		if( url.indexOf("?pasta=INBOX") >= 0 ){
           			document.getElementById("Inbox").className += " active green";
           		}
-          		if( url.indexOf("#Enviados") >= 0 ){
+          		if( url.indexOf("?pasta=[Gmail]/E-mails%20enviados") >= 0 ){
           			document.getElementById("Enviados").className += " active green";
           		}
-          		if( url.indexOf("#Rascunhos") >= 0 ){
+          		if( url.indexOf("?pasta=[Gmail]/Rascunhos") >= 0 ){
           			document.getElementById("Rascunhos").className += " active green";
           		}
-          		if( url.indexOf("#Spam") >= 0 ){
+          		if( url.indexOf("?pasta=[Gmail]/Spam") >= 0 ){
           			document.getElementById("Spam").className += " active green";
           		}
-          		if( url.indexOf("#Lixeira") >= 0 ){
+          		if( url.indexOf("?pasta=[Gmail]/Lixeira") >= 0 ){
           			document.getElementById("Lixeira").className += " active green";
           		}
          	</script>  
@@ -135,20 +135,26 @@ else{
 				        Folder[] pastas = store.getDefaultFolder().list();
 			            for(int i=1;i<pastas.length-1;i++)
 			    		{
-			    			%>		    				
-			    				<li id="<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>"><a href="#<%=pastas[i].toString()%>" class="text-sub"><i class="material-icons mr-2"> folder </i> <%=pastas[i].toString()%></a></li>
+			    			%>		   
+			    								
+			    				<li id="<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>">
+			    					<a href="?pasta=<%=pastas[i].toString()%>" class="text-sub">
+			    						<i class="material-icons mr-2"> folder 
+			    						</i> <%=pastas[i].toString()%>
+		    						</a>
+	    						</li>
 			    				<script type="text/javascript">
 				    				url = window.location.href;
-				              		if(url.indexOf("#<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>") >= 0 ){
+				              		if(url.indexOf("?pasta=<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>") >= 0 ){
 				              			document.getElementById("<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>").className += " active green";
 				              		}
 			    				</script>
 			    			
 			    			<%
 			    		}
+			            
 		            }
 	            %>    
-          	      
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> create_new_folder </i> Criar pasta</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
@@ -157,6 +163,8 @@ else{
           	
           
           </ul>
+          
+          
         </div>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 432px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 307px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 383px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 238px;"></div></div></div>
       <a href="#" data-target="email-sidenav" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>
@@ -217,9 +225,8 @@ else{
           		  Session s = Session.getDefaultInstance(new Properties( ));
 		          Store store = s.getStore("imaps");
 		          store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-		          Folder inbox = store.getFolder( "INBOX" );
+		          Folder inbox = store.getFolder(request.getParameter("pasta").replace("%20", " "));
 		          inbox.open( Folder.READ_ONLY );
-		          		
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = inbox.getMessages();
 		          

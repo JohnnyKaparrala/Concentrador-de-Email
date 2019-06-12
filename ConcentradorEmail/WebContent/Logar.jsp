@@ -15,6 +15,7 @@
 			Usuario usu = Usuarios.getUsuarioNick(request.getParameter("user"));
 			if(usu.getSenha().equals(request.getParameter("senha"))){
 				session.setAttribute("usuario",usu);
+				session.setAttribute("pasta","INBOX");
 				response.sendRedirect("adm_email.jsp#Inbox");				
 			}
 			else{
