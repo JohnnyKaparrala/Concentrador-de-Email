@@ -104,30 +104,50 @@ else{
         <div class="sidebar-list-padding app-sidebar" id="email-sidenav">
           <ul class="email-list display-grid">
             <li class="sidebar-title">Pastas</li>
-            <li id="Inbox"><a href="?pasta=INBOX" class="text-sub"><i class="material-icons mr-2"> mail_outline </i> Inbox</a></li>
-            <li id="Enviados"><a href="?pasta=[Gmail]/E-mails enviados" class="text-sub"><i class="material-icons mr-2"> send </i> Enviados</a></li>
-            <li id="Rascunhos"><a href="?pasta=[Gmail]/Rascunhos" class="text-sub"><i class="material-icons mr-2"> description </i> Rascunhos</a></li>
-            <li id="Spam"><a href="?pasta=[Gmail]/Spam" class="text-sub"><i class="material-icons mr-2"> info_outline </i> Spam</a></li>
-            <li id="Lixeira"><a href="?pasta=[Gmail]/Lixeira" class="text-sub"><i class="material-icons mr-2"> delete </i> Lixeira</a></li>
-            <script type="text/javascript">
-          		url = window.location.href;
-          		if( url.indexOf("?pasta=INBOX") >= 0 ){
-          			document.getElementById("Inbox").className += " active green";
-          		}
-          		if( url.indexOf("?pasta=[Gmail]/E-mails%20enviados") >= 0 ){
-          			document.getElementById("Enviados").className += " active green";
-          		}
-          		if( url.indexOf("?pasta=[Gmail]/Rascunhos") >= 0 ){
-          			document.getElementById("Rascunhos").className += " active green";
-          		}
-          		if( url.indexOf("?pasta=[Gmail]/Spam") >= 0 ){
-          			document.getElementById("Spam").className += " active green";
-          		}
-          		if( url.indexOf("?pasta=[Gmail]/Lixeira") >= 0 ){
-          			document.getElementById("Lixeira").className += " active green";
-          		}
-         	</script>  
+            <li id="Inbox">
+	           	<form method="post" class="text-sub">
+	           	<input type="hidden" name="pasta" value="INBOX">
+	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Inbox</a></button>
+	           	</form>
+           	</li>
+            <li id="Enviados">
+	           	<form method="post" class="text-sub">
+	           	<input type="hidden" name="pasta" value="[Gmail]/E-mails enviados">
+	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> send </i>Enviados</a></button>
+	           	</form>
+           	</li>
+            <li id="Rascunhos">
+	           	<form method="post" class="text-sub">
+	           	<input type="hidden" name="pasta" value="[Gmail]/Rascunhos">
+	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> description </i>Rascunhos</a></button>
+	           	</form>
+           	</li>
+            <li id="Spam">
+	           	<form method="post" class="text-sub">
+	           	<input type="hidden" name="pasta" value="[Gmail]/Spam">
+	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Spam</a></button>
+	           	</form>
+           	</li>
+            <li id="Lixeira">
+	           	<form method="post" class="text-sub">
+	           	<input type="hidden" name="pasta" value="[Gmail]/Lixeira">
+	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> delete </i>Lixeira</a></button>
+	           	</form>
+           	</li>
 	            <%
+	            if( request.getParameter("pasta").equals("INBOX") ){
+	            	%><script>document.getElementById("Inbox").className += " active green";</script><%
+          		}else if( request.getParameter("pasta").equals("[Gmail]/E-mails enviados")){
+	            	%><script>document.getElementById("Enviados").className += " active green";</script><%
+          		}else if( request.getParameter("pasta").equals("[Gmail]/Rascunhos")){
+	            	%><script>document.getElementById("Rascunhos").className += " active green";</script><%
+          		}else if( request.getParameter("pasta").equals("[Gmail]/Spam")){
+	            	%><script>document.getElementById("Spam").className += " active green";</script><%
+          		}else if( request.getParameter("pasta").equals("[Gmail]/Lixeira")){
+	            	%><script>document.getElementById("Lixeira").className += " active green";</script><%
+          		}
+	            
+	            
 	            	if(atual.getId() != -1){           	
 	            		Session s = Session.getDefaultInstance(new Properties( ));
 	    	            Store store = s.getStore("imaps");
@@ -136,22 +156,18 @@ else{
 				        Folder[] pastas = store.getDefaultFolder().list();
 			            for(int i=1;i<pastas.length-1;i++)
 			    		{
-			    			%>		   
-			    								
+			    			%>		
 			    				<li id="<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>">
-			    					<a href="?pasta=<%=pastas[i].toString()%>" class="text-sub">
-			    						<i class="material-icons mr-2"> folder 
-			    						</i> <%=pastas[i].toString()%>
-		    						</a>
-	    						</li>
-			    				<script type="text/javascript">
-				    				url = window.location.href;
-				              		if(url.indexOf("?pasta=<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>") >= 0 ){
-				              			document.getElementById("<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>").className += " active green";
-				              		}
-			    				</script>
-			    			
+						           	<form method="post" class="text-sub">
+						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
+						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
+						           	</form>
+					           	</li>  
+			    				
 			    			<%
+			    			if( request.getParameter("pasta").equals(pastas[i].toString())){
+				            	%><script>document.getElementById("<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>").className += " active green";</script><%
+			          		}
 			    		}
 			            
 		            }
