@@ -169,9 +169,13 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
                         <span class="grey-text">(<%= tamanhoArq %>Kb)</span>
                       </div>
                       <div class="links">
-                        <a href="#" class="Right">
-                          <i class="material-icons">file_download</i>
-                        </a>
+                      	<form action="baixar.jsp" method="GET">
+                      		<input name="nome" value="<%= part.getFileName() %>">
+                      		<input name="index" value="<%= i %>">
+                        	<a href="#" class="Right">
+                          		<i class="material-icons">file_download</i>
+                        	</a>
+                        </form>
                       </div>
                     </div>
                   <% 
