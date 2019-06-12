@@ -55,7 +55,7 @@ else{
   	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>MaliBox | <%= atual.getEmail() %></title>
+    <title>Malibox | <%=atual.getEmail() %></title>
     <link rel="shortcut icon" type="image/x-icon" href="files/tartaruga.png">
         <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="files/vendors.min.css">
@@ -106,7 +106,7 @@ else{
             <li class="sidebar-title">Pastas</li>
             <li id="Inbox">
 	           	<form method="post" class="text-sub">
-	           	<input type="hidden" name="pasta" value="INBOX">
+	           	<input type="hidden" name="pasta" value="inbox">
 	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Inbox</a></button>
 	           	</form>
            	</li>
@@ -135,15 +135,21 @@ else{
 	           	</form>
            	</li>
 	            <%
-	            if( request.getParameter("pasta").equals("INBOX") ){
+	            if(request.getParameter("pasta") != null) {
+	            	session.setAttribute("pasta_atual", request.getParameter("pasta"));
+	            } else {
+	            	session.setAttribute("pasta_atual", "inbox");
+	            }
+	            
+	            if( session.getAttribute("pasta_atual").equals("inbox") ){
 	            	%><script>document.getElementById("Inbox").className += " active green";</script><%
-          		}else if( request.getParameter("pasta").equals("[Gmail]/E-mails enviados")){
+          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/E-mails enviados")){
 	            	%><script>document.getElementById("Enviados").className += " active green";</script><%
-          		}else if( request.getParameter("pasta").equals("[Gmail]/Rascunhos")){
+          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/Rascunhos")){
 	            	%><script>document.getElementById("Rascunhos").className += " active green";</script><%
-          		}else if( request.getParameter("pasta").equals("[Gmail]/Spam")){
+          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/Spam")){
 	            	%><script>document.getElementById("Spam").className += " active green";</script><%
-          		}else if( request.getParameter("pasta").equals("[Gmail]/Lixeira")){
+          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/Lixeira")){
 	            	%><script>document.getElementById("Lixeira").className += " active green";</script><%
           		}
 	            
@@ -152,12 +158,12 @@ else{
 	            		Session s = Session.getDefaultInstance(new Properties( ));
 	    	            Store store = s.getStore("imaps");
 	    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-	    	            
+	    	            	
 				        Folder[] pastas = store.getDefaultFolder().list();
 			            for(int i=1;i<pastas.length-1;i++)
 			    		{
 			    			%>		
-			    				<li id="<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>">
+			    				<li id="<%=pastas[i].toString()%>">
 						           	<form method="post" class="text-sub">
 						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
 						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
@@ -165,8 +171,9 @@ else{
 					           	</li>  
 			    				
 			    			<%
-			    			if( request.getParameter("pasta").equals(pastas[i].toString())){
-				            	%><script>document.getElementById("<%=pastas[i].toString().replace("\\+", "%20").replace(" ", "%20")%>").className += " active green";</script><%
+			    			
+			    			if( session.getAttribute("pasta_atual").equals(pastas[i].toString())){
+				            	%><script>document.getElementById("<%=pastas[i].toString()%>").className += " active green";</script><%
 			          		}
 			    		}
 			            
@@ -240,10 +247,10 @@ else{
           		  Session s = Session.getDefaultInstance(new Properties( ));
 		          Store store = s.getStore("imaps");
 		          store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-		          Folder inbox = store.getFolder(request.getParameter("pasta").replace("%20", " "));
-		          inbox.open( Folder.READ_ONLY );
+		          Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
+		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
-		          Message[] messages = inbox.getMessages();
+		          Message[] messages = pasta.getMessages();
 		          
 		          int tam = messages.length;
 		          if (tam > 10) {

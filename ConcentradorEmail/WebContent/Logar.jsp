@@ -8,32 +8,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Logando. . .</title>
 </head>
-<body>
-
-	<form method="post" action="adm_email.jsp" style="display:none">
-		<input type="hidden" name="pasta" value="INBOX">
-		<input type="submit" id="envialogin" >
-	</form>
-	Você está sendo redirecionado. Aguarde. . .
- 
+<body> 
 	<%		
 		try{
 			Usuario usu = Usuarios.getUsuarioNick(request.getParameter("user"));
 			if(usu.getSenha().equals(request.getParameter("senha"))){
 				session.setAttribute("usuario",usu);				
-				//response.sendRedirect("adm_email.jsp");	
-				%>
-					<script>
-						document.getElementById("envialogin").click();
-					</script>							
-				<%
+				response.sendRedirect("adm_email.jsp");
+				session.setAttribute("pasta_atual", "inbox");
 			}
 			else{
 				response.sendRedirect("login.jsp?erro=usuario+sem+cadastro");
 			}
 		}catch(Exception ex){
 			response.sendRedirect("login.jsp?erro="+ex.getMessage().replaceAll("\\s+","+"));
-			//response.sendRedirect("login.jsp?erro=deu+erro");
+			response.sendRedirect("login.jsp?erro=deu+erro");
 		}
 	%>
 
