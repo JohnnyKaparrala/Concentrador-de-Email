@@ -49,6 +49,11 @@ else{
 		emails.getBoolean("tem_ssl"));
 	}
 }
+
+session.setAttribute("email_atual", atual.getEmail());
+session.setAttribute("host_atual", atual.getHost());
+session.setAttribute("porta_atual", atual.getPorta());
+session.setAttribute("senha_atual", atual.getSenha());
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -335,34 +340,32 @@ else{
 
 <!-- Modal Structure -->
 <div id="modal1" class="modal border-radius-6" tabindex="0">
-  <div class="modal-content">
-    <h5 class="mt-0">Nova Mensagem</h5>
-    <hr>
-    <div class="row">
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix"> person_outline </i>
-            <input placeholder="Destinatário(s)" type="text" class="validate">
-          </div>
-          <div class="input-field col s12">
-            <i class="material-icons prefix"> title </i>
-            <input placeholder="Assunto" type="text" class="validate">
-          </div>
-          <div class="input-field col s12">
-            <textarea name="content" id="editor"></textarea>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a class="btn modal-close waves-effect waves-light mr-2 red">
-      <i class="material-icons">cancel</i> Cancelar
-    </a>
-    <a class="btn modal-close waves-effect waves-light mr-2 green">
-      <i class="material-icons">send</i> Enviar
-    </a>
+	<form action="enviar_email.jsp" method="POST">
+	  <div class="modal-content">
+	    <h5 class="mt-0">Nova Mensagem</h5>
+	    <hr>
+	    <div class="row">
+	        <div class="row">
+	          <div class="input-field col s12">
+	            <i class="material-icons prefix"> person_outline </i>
+	            <input placeholder="Destinatário(s)" type="text" class="validate" name="destinatario">
+	          </div>
+	          <div class="input-field col s12">
+	            <i class="material-icons prefix"> title </i>
+	            <input placeholder="Assunto" type="text" class="validate" name="assunto">
+	          </div>
+	          <div class="input-field col s12">
+	            <textarea id="editorMsg" name="mensagem" ></textarea>
+	          </div>
+	        </div>
+	    </div>
+	  </div>
+	  <div class="modal-footer">
+	    <a class="btn modal-close waves-effect waves-light mr-2 red">
+	      <i class="material-icons">cancel</i> Cancelar
+	    </a>
+	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Enviar"/>
+	 </form>
   </div>
 </div>
 
@@ -491,8 +494,9 @@ else{
     <!-- BEGIN VENDOR JS-->
      <script src="files/vendors.min.js" type="text/javascript"></script>
     <!-- BEGIN PAGE LEVEL JS-->
-    <!-- BEGIN: Footer-->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
     <script type="text/javascript">
+    tinymce.init({selector:'#editorMsg'});
 
       M.toast({html: '<%= request.getParameter("erro") %>'});
 
@@ -518,7 +522,6 @@ else{
     	    $('.modal').modal();
 
     	    $('select').formSelect();
-    	    $('select').material_select();
     	    
     	    $('.emailBimba').click(function(e) {
     	    	var a = e.target;
@@ -526,11 +529,22 @@ else{
     	    	
     	    	b.click();
     	    });
+    	    
+    	    tinymce.init({
+    	        selector: "textarea",
+    	        setup: function (editor) {
+    	            editor.on('change', function () {
+    	                editor.save();
+    	            });
+    	        mode : "textareas" 
+    	        }
+    	    });
     	  });
       
       ClassicEditor.create( document.querySelector( '#editor' ) ).catch( error => {
           console.error( error );
       } );
+     
     </script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
@@ -540,7 +554,6 @@ else{
     <script src="files/app-email.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS-->
     <%
-    
     if (a){
     	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
     }

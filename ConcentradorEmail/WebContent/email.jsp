@@ -113,7 +113,7 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
                   <div class="back-to-mails">
                     <a href="adm_email.jsp"><i class="material-icons">arrow_back</i></a>
                   </div>
-                  <div class="email-title"><%= mensagem.getSubject() %></div>
+                  <div class="email-title"><%= (mensagem.getSubject()==null)?"Sem assunto":mensagem.getSubject() %></div>
                 </div>
                 <div class="header-action">
                   <div class="favorite">
@@ -150,7 +150,7 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
               <hr>
               <!-- Email Footer -->
               <div class="email-footer">
-                <h6 class="footer-title">Attachments (<%= qtdAnexo %>)</h6>
+                <h6 class="footer-title">Anexos (<%= qtdAnexo %>)</h6>
                 <div class="footer-action">
                   <div class="attachment-list">
                   <% 
@@ -161,7 +161,7 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
 						if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) 
 						{
 							tamanhoArq = (part.getSize())/1000;
-							part.saveFile((request.getContextPath() + "/anexos/" + part.getFileName()).toString());
+							//part.saveFile((request.getContextPath() + "/anexos/" + part.getFileName()).toString());
 							
 							
 							
