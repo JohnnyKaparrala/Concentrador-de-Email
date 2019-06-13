@@ -190,33 +190,25 @@ public class Usuarios {
     public static Usuario getUsuarioNick (String nick) throws Exception
     {
         Usuario usu;
+    
+        String sql;
+
+        sql = "select * from USUARIO where nick = ?";
+
+        BDSQLServer.COMANDO.prepareStatement (sql);
+
+        BDSQLServer.COMANDO.setString (1, nick);
+
+        MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+
+        if (!resultado.first())
+            throw new Exception ("Nao cadastrado");
         
-        try
-        {
-            String sql;
-
-            sql = "select * from USUARIO where nick = ?";
-
-            BDSQLServer.COMANDO.prepareStatement (sql);
-
-            BDSQLServer.COMANDO.setString (1, nick);
-
-            MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
-
-            if (!resultado.first())
-                throw new Exception ("Nao cadastrado");
+        usu = new Usuario  (resultado.getInt("id"),
+                            resultado.getString("nick"),
+                            resultado.getString("email"),
+                            resultado.getString("senha"));
             
-            usu = new Usuario  (resultado.getInt("id"),
-                                resultado.getString("nick"),
-                                resultado.getString("email"),
-                                resultado.getString("senha"));
-            
-        }
-        catch (SQLException erro)
-        {
-            throw new Exception (erro.getMessage());
-        }
-
         return usu;
     }   
        

@@ -49,10 +49,10 @@ else{
 	    emails.getString("porta"),
 	    emails.getString("senha"),
 		emails.getBoolean("tem_ssl"));
-		
-		session.setAttribute("emailAtual",atual);
 	}
 }
+
+session.setAttribute("emailAtual",atual);
 
 session.setAttribute("email_atual", atual.getEmail());
 session.setAttribute("host_atual", atual.getHost());
@@ -62,8 +62,13 @@ session.setAttribute("senha_atual", atual.getSenha());
 
 Session s = Session.getDefaultInstance(new Properties( ));
 Store store = s.getStore("imaps");
-store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-Folder[] pastas = store.getDefaultFolder().list();
+Folder[] pastas = new Folder[0];
+
+if(atual.getId() != -1)
+{
+	store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+	pastas = store.getDefaultFolder().list();
+}
 	
 
 %>
@@ -260,7 +265,7 @@ Folder[] pastas = store.getDefaultFolder().list();
           </div>
           <div id="emails" class="collection email-collection ps ps--active-y" style="max-height: 454px !important;">
           <%   
-          	if(atual.getId() == -1) {
+          	if(atual.getId() == -1) { 
           		%>
           		
           		Sem conta de email cadastrado
@@ -401,7 +406,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 	       <div class="input-field col s12">
 		    <select class="browser-default" name="emailSelect">
 		      <%
-		      	emails.first();
+		      	if(emails.first())                                                 
 		      	do {
 		      	  	%> <option value="<%= emails.getInt("id") %>"><%= emails.getString("email") %></option> <%
 		      	} while (emails.next());

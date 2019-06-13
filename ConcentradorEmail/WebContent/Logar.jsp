@@ -13,16 +13,15 @@
 		try{
 			Usuario usu = Usuarios.getUsuarioNick(request.getParameter("user"));
 			if(usu.getSenha().equals(request.getParameter("senha"))){
-				session.setAttribute("usuario",usu);				
+				session.setAttribute("usuario",usu);	
+				session.setAttribute("pasta_atual", "inbox");			
 				response.sendRedirect("adm_email.jsp");
-				session.setAttribute("pasta_atual", "inbox");
 			}
 			else{
 				response.sendRedirect("login.jsp?erro=usuario+sem+cadastro");
 			}
 		}catch(Exception ex){
 			response.sendRedirect("login.jsp?erro="+ex.getMessage().replaceAll("\\s+","+"));
-			response.sendRedirect("login.jsp?erro=deu+erro");
 		}
 	%>
 
