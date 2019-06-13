@@ -8,6 +8,7 @@ if (session.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 }
 else{
+	
 MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
 Email atual;
 if(!emails.first()){
@@ -47,6 +48,8 @@ else{
 	    emails.getString("porta"),
 	    emails.getString("senha"),
 		emails.getBoolean("tem_ssl"));
+		
+		session.setAttribute("emailAtual",atual);
 	}
 }
 
@@ -165,8 +168,11 @@ session.setAttribute("senha_atual", atual.getSenha());
 	    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
 	    	            	
 				        Folder[] pastas = store.getDefaultFolder().list();
-			            for(int i=1;i<pastas.length-1;i++)
+			            for(int i=1;i<pastas.length;i++)
 			    		{
+			            	if(pastas[i].toString().equals("[Gmail]")){
+			            		continue;
+			            	}
 			    			%>		
 			    				<li id="<%=pastas[i].toString()%>">
 						           	<form method="post" class="text-sub">
@@ -184,7 +190,7 @@ session.setAttribute("senha_atual", atual.getSenha());
 			            
 		            }
 	            %>    
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> create_new_folder </i> Criar pasta</a></li>
+            <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
@@ -348,7 +354,7 @@ session.setAttribute("senha_atual", atual.getSenha());
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> person_outline </i>
-	            <input placeholder="Destinatário(s)" type="text" class="validate" name="destinatario">
+	            <input placeholder="Destinatï¿½rio(s)" type="text" class="validate" name="destinatario">
 	          </div>
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> title </i>
@@ -476,7 +482,32 @@ session.setAttribute("senha_atual", atual.getSenha());
     </div>
   </div>
 </div>
-
+<!-- Modal Structure -->
+<div id="modalCriarPasta" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content">
+    <h5 class="mt-0">Criar Pasta</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12" method="POST" action="criarPasta.jsp">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix"> folder </i>
+            <input id="nomePasta" placeholder="nome da pasta" type="text" class="validate" name="nomePasta" id="nomePasta">
+          </div>
+        </div>
+		  <div class="modal-footer">
+		    <a class="btn modal-close waves-effect waves-light mr-2 red">
+		      <i class="material-icons">cancel</i> Cancelar
+		    </a>
+		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
+		      <i class="material-icons">create_new_folder</i><input type="submit" value="Criar Pasta">
+		    </a>
+		  </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  -->
           </div>
         </div>
       </div>
@@ -484,7 +515,7 @@ session.setAttribute("senha_atual", atual.getSenha());
 
     <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
       <div class="footer-copyright">
-        <div class="container"><span>© 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
+        <div class="container"><span>ï¿½ 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
 </body>
@@ -496,10 +527,14 @@ session.setAttribute("senha_atual", atual.getSenha());
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
     <script type="text/javascript">
-    tinymce.init({selector:'#editorMsg'});
-
-      M.toast({html: '<%= request.getParameter("erro") %>'});
-
+		tinymce.init({selector:'#editorMsg'});
+    <%
+			if(request.getParameter("erro")!=null){
+			%>
+					M.toast({html: '<%= request.getParameter("erro") %>'});
+				<%
+			}
+    %>
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;
         input = document.getElementById("email_filter");
@@ -555,7 +590,7 @@ session.setAttribute("senha_atual", atual.getSenha());
     <!-- END PAGE LEVEL JS-->
     <%
     if (a){
-    	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
+    	%><script>M.toast({html: 'Nï¿½o hï¿½ emails cadastrados na sua conta! Cadastre-os!'})</script><%
     }
     %><script>
     </script>
