@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
+    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*, org.jsoup.*"%>
 <!DOCTYPE html>
 <%
 boolean a = false;
@@ -262,15 +262,33 @@ session.setAttribute("senha_atual", atual.getSenha());
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = pasta.getMessages();
+		          int tam1 = pasta.getMessageCount();
+		          int tam2;
+		          if (tam1 > 10) {
+		        	  tam2 = 10;
+		          } else {
+		        	  tam2 = tam1;
+		          }
 		          
-		          int tam = messages.length;
-		          if (tam > 10) {
-		        	  tam = 10;
-		          } 
+		          System.out.println("-------");
+		          System.out.println(tam1);
+		          System.out.println(tam2);
+		          System.out.println("-------");
 		          
-		          for ( int i = tam-1; i>=0; i-- ) {
-		        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
-		       	%>
+		          for ( int i = tam1-1; i >= tam1-tam2; i-- ) {
+		        	System.out.println(i);
+		        	String content;
+		        	content = (String)messages[i].getContent().toString();
+		        	if (messages[i].isMimeType("text/plain")) {
+		        		content = (String)messages[i].getContent().toString();
+		        	} else if (messages[i].isMimeType("text/html")) {
+		        		content = (String)messages[i].getContent();
+		        		content = Jsoup.parse(content).toString();
+		        	} else if (messages[i].isMimeType("multipart/*")) {
+		        		content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());	  
+		        	}
+							        	  
+		        %>
 		       	<a href="#" class="collection-item animate fadeUp delay-1">
 		              <div class="list-left">
 		                <label>
@@ -354,7 +372,7 @@ session.setAttribute("senha_atual", atual.getSenha());
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> person_outline </i>
-	            <input placeholder="Destinatï¿½rio(s)" type="text" class="validate" name="destinatario">
+	            <input placeholder="Destinatário(s)" type="text" class="validate" name="destinatario">
 	          </div>
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> title </i>
@@ -515,7 +533,7 @@ session.setAttribute("senha_atual", atual.getSenha());
 
     <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
       <div class="footer-copyright">
-        <div class="container"><span>ï¿½ 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
+        <div class="container"><span>@ 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
 </body>
