@@ -8,6 +8,7 @@ if (session.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 }
 else{
+	
 MeuResultSet emails = Emails.getEmailsDono(((Usuario)session.getAttribute("usuario")).getId());
 Email atual;
 if(!emails.first()){
@@ -47,6 +48,8 @@ else{
 	    emails.getString("porta"),
 	    emails.getString("senha"),
 		emails.getBoolean("tem_ssl"));
+		
+		session.setAttribute("emailAtual",atual);
 	}
 }
 %>
@@ -160,8 +163,11 @@ else{
 	    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
 	    	            	
 				        Folder[] pastas = store.getDefaultFolder().list();
-			            for(int i=1;i<pastas.length-1;i++)
+			            for(int i=1;i<pastas.length;i++)
 			    		{
+			            	if(pastas[i].toString().equals("[Gmail]")){
+			            		continue;
+			            	}
 			    			%>		
 			    				<li id="<%=pastas[i].toString()%>">
 						           	<form method="post" class="text-sub">
@@ -179,7 +185,7 @@ else{
 			            
 		            }
 	            %>    
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> create_new_folder </i> Criar pasta</a></li>
+            <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
@@ -473,7 +479,32 @@ else{
     </div>
   </div>
 </div>
-
+<!-- Modal Structure -->
+<div id="modalCriarPasta" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content">
+    <h5 class="mt-0">Criar Pasta</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12" method="POST" action="criarPasta.jsp">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix"> folder </i>
+            <input id="nomePasta" placeholder="nome da pasta" type="text" class="validate" name="nomePasta" id="nomePasta">
+          </div>
+        </div>
+		  <div class="modal-footer">
+		    <a class="btn modal-close waves-effect waves-light mr-2 red">
+		      <i class="material-icons">cancel</i> Cancelar
+		    </a>
+		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
+		      <i class="material-icons">create_new_folder</i><input type="submit" value="Criar Pasta">
+		    </a>
+		  </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  -->
           </div>
         </div>
       </div>
@@ -493,9 +524,13 @@ else{
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- BEGIN: Footer-->
     <script type="text/javascript">
-
+    <%
+	if(request.getParameter("erro")!=null){
+	%>
       M.toast({html: '<%= request.getParameter("erro") %>'});
-
+    <%
+	}
+    %>
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;
         input = document.getElementById("email_filter");
