@@ -697,14 +697,20 @@ Folder[] pastas = store.getDefaultFolder().list();
     	    });
     	    
     	    tinymce.init({
+    	    	plugins: [
+    	            "advlist autolink lists link image charmap print preview anchor",
+    	            "searchreplace visualblocks code fullscreen",
+    	            "insertdatetime media table contextmenu paste"
+    	        ],
+    	    	toolbar: "insertfile undo redo | link image | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
     	        selector: "textarea",
     	        setup: function (editor) {
     	            editor.on('change', function () {
     	                editor.save();
     	            });
-    	        mode : "textareas" 
     	        }
     	    });
+    	    
     	  });
       
       ClassicEditor.create( document.querySelector( '#editor' ) ).catch( error => {
