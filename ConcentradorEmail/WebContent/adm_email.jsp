@@ -60,10 +60,10 @@ session.setAttribute("porta_atual", atual.getPorta());
 session.setAttribute("senha_atual", atual.getSenha());
 
 
-Session sess = Session.getDefaultInstance(new Properties( ));
-Store str = sess.getStore("imaps");
-str.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-Folder[] psts = str.getDefaultFolder().list();
+Session s = Session.getDefaultInstance(new Properties( ));
+Store store = s.getStore("imaps");
+store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+Folder[] pastas = store.getDefaultFolder().list();
 	
 
 %>
@@ -88,6 +88,11 @@ Folder[] psts = str.getDefaultFolder().list();
     <link rel="stylesheet" type="text/css" href="files/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- END: Custom CSS-->
+    <style>
+    	.btn input[type='submit']{
+			color: white !important;
+		}
+    </style>
     
     </head>
   <!-- END: Head-->
@@ -172,23 +177,23 @@ Folder[] psts = str.getDefaultFolder().list();
 	            
 	            
 	            	if(atual.getId() != -1){           	
-			            for(int i=1;i<psts.length;i++)
+			            for(int i=1;i<pastas.length;i++)
 			    		{
-			            	if(psts[i].toString().equals("[Gmail]")){
+			            	if(pastas[i].toString().equals("[Gmail]")){
 			            		continue;
 			            	}
 			    			%>		
-			    				<li id="<%=psts[i].toString()%>">
+			    				<li id="<%=pastas[i].toString()%>">
 						           	<form method="post" class="text-sub">
-						           	<input type="hidden" name="pasta" value="<%=psts[i].toString()%>">
-						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=psts[i].toString()%></a></button>
+						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
+						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
 						           	</form>
 					           	</li>  
 			    				
 			    			<%
 			    			
-			    			if( session.getAttribute("pasta_atual").equals(psts[i].toString())){
-				            	%><script>document.getElementById("<%=psts[i].toString()%>").className += " active green";</script><%
+			    			if( session.getAttribute("pasta_atual").equals(pastas[i].toString())){
+				            	%><script>document.getElementById("<%=pastas[i].toString()%>").className += " active green";</script><%
 			          		}
 			    		}
 			            
@@ -260,10 +265,7 @@ Folder[] psts = str.getDefaultFolder().list();
           		<%
           	}
           	else {
-          		  Session s = Session.getDefaultInstance(new Properties( ));
-		          Store store = s.getStore("imaps");
-		          store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-		          Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
+          		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = pasta.getMessages();
@@ -393,7 +395,9 @@ Folder[] psts = str.getDefaultFolder().list();
 	    <a class="btn modal-close waves-effect waves-light mr-2 red">
 	      <i class="material-icons">cancel</i> Cancelar
 	    </a>
-	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Enviar"/>
+	    <a class="btn waves-effect waves-light mr-2 green" type="submit">
+	      <i class="material-icons">send</i><input type="submit" value="Enviar">
+	    </a>
 	 </form>
   </div>
 </div>
@@ -421,7 +425,7 @@ Folder[] psts = str.getDefaultFolder().list();
 	    <a class="btn modal-close waves-effect waves-light mr-2 red">
 	      <i class="material-icons">cancel</i> Cancelar
 	    </a>
-	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar" style="color: white"/>
+	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar" style="color:white !important"/>
 	 		</div>
 	</form>
 </div>
@@ -547,13 +551,13 @@ Folder[] psts = str.getDefaultFolder().list();
 			  <select name="pasta">
 			  	<option value="" disabled selected>Escolha uma pasta</option>
 			  	<%
-			  	for(int i=1;i<psts.length;i++)
+			  	for(int i=1;i<pastas.length;i++)
 	    		{
-	            	if(psts[i].toString().equals("[Gmail]")){
+	            	if(pastas[i].toString().equals("[Gmail]")){
 	            		continue;
 	            	}
 	    			%>	
-	    				<option values="<%=psts[i].toString()%>"><%=psts[i].toString()%></option>  				
+	    				<option values="<%=pastas[i].toString()%>"><%=pastas[i].toString()%></option>  				
 	    			<%
 	    		}
 			  	%>
@@ -571,7 +575,7 @@ Folder[] psts = str.getDefaultFolder().list();
 	      <i class="material-icons">cancel</i> Cancelar
 	    </a>
 	    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-	      <input type="submit" value="Editar Pasta" style="color:white">
+	      <i class="material-icons">more</i><input type="submit" value="Editar Pasta" style="color:white">
 	    </a>
 	    
 	  </div>

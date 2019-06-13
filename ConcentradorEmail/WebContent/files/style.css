@@ -13,6 +13,10 @@ body {
     flex-direction: column;
 }
 
+input[type='submit'] .btn{
+	color: white !important;
+}
+
 footer {
     padding-left: 0;
 }

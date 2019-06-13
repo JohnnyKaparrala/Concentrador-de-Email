@@ -28,7 +28,7 @@ else{
         <link rel="stylesheet" type="text/css" href="files/login.css">
         <!-- END: Page Level CSS-->
         <!-- BEGIN: Custom CSS-->
-        <!-- END: Custom CSS-->
+        <<!-- END: Custom CSS-->
         
         
         <!-- BEGIN VENDOR JS-->
@@ -45,6 +45,11 @@ else{
 	    <!-- END THEME  JS-->
 	    <!-- BEGIN PAGE LEVEL JS-->
 	    <!-- END PAGE LEVEL JS-->
+	    <style>
+	    	.btn input[type='submit']{
+				color: white !important;
+			}
+	    </style>
     </head>
   <!-- END: Head-->
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 1-column login-bg  blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
