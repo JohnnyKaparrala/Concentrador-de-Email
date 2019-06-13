@@ -711,6 +711,8 @@ if(atual.getId() != -1)
     	        }
     	    });
     	    
+    	    $(".tox-notification").css({"display":"none");
+    	    
     	  });
       
       ClassicEditor.create( document.querySelector( '#editor' ) ).catch( error => {
