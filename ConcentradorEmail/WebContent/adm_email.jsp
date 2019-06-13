@@ -67,7 +67,7 @@ Folder[] pastas = new Folder[0];
 if(atual.getId() != -1)
 {
 	store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-	pastas = store.getDefaultFolder().list();
+	pastas = store.getDefaultFolder().list("*");
 }
 	
 
@@ -135,59 +135,18 @@ if(atual.getId() != -1)
             <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
             <li><a class="text-sub modal-trigger" href="#modalDeletarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">delete_sweep</i>  Deletar Pasta</a></li>
             <li class="sidebar-title">Pastas</li>
-            <li id="Inbox">
-	           	<form method="get" class="text-sub">
-	           	<input type="hidden" name="pasta" value="inbox">
-	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Inbox</a></button>
-	           	</form>
-           	</li>
-            <li id="Enviados">
-	           	<form method="get" class="text-sub">
-	           	<input type="hidden" name="pasta" value="[Gmail]/E-mails enviados">
-	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> send </i>Enviados</a></button>
-	           	</form>
-           	</li>
-            <li id="Rascunhos">
-	           	<form method="get" class="text-sub">
-	           	<input type="hidden" name="pasta" value="[Gmail]/Rascunhos">
-	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> description </i>Rascunhos</a></button>
-	           	</form>
-           	</li>
-            <li id="Spam">
-	           	<form method="get" class="text-sub">
-	           	<input type="hidden" name="pasta" value="[Gmail]/Spam">
-	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Spam</a></button>
-	           	</form>
-           	</li>
-            <li id="Lixeira">
-	           	<form method="get" class="text-sub">
-	           	<input type="hidden" name="pasta" value="[Gmail]/Lixeira">
-	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> delete </i>Lixeira</a></button>
-	           	</form>
-           	</li>
+            
 	            <%
 	            if(request.getParameter("pasta") != null) {
 	            	session.setAttribute("pasta_atual", request.getParameter("pasta"));
 	            } else {
 	            	session.setAttribute("pasta_atual", "inbox");
-	            }
-	            
-	            if( session.getAttribute("pasta_atual").equals("inbox") ){
-	            	%><script>document.getElementById("Inbox").className += " active green";</script><%
-          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/E-mails enviados")){
-	            	%><script>document.getElementById("Enviados").className += " active green";</script><%
-          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/Rascunhos")){
-	            	%><script>document.getElementById("Rascunhos").className += " active green";</script><%
-          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/Spam")){
-	            	%><script>document.getElementById("Spam").className += " active green";</script><%
-          		}else if( session.getAttribute("pasta_atual").equals("[Gmail]/Lixeira")){
-	            	%><script>document.getElementById("Lixeira").className += " active green";</script><%
-          		}
-	            
+	            }         	            
 	            
 	            	if(atual.getId() != -1){           	
-			            for(int i=1;i<pastas.length;i++)
+			            for(int i=0;i<pastas.length;i++)
 			    		{
+			            	System.out.println(pastas[i].toString());
 			            	if(pastas[i].toString().equals("[Gmail]")){
 			            		continue;
 			            	}
@@ -195,7 +154,7 @@ if(atual.getId() != -1)
 			    				<li id="<%=pastas[i].toString()%>">
 						           	<form method="get" class="text-sub">
 						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
-						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
+						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString().replace("[Gmail]/","")%></a></button>
 						           	</form>
 					           	</li>			    				
 			    			<%
@@ -264,7 +223,6 @@ if(atual.getId() != -1)
           	}
           	else {
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
-          		  System.out.println(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = pasta.getMessages();
@@ -276,13 +234,13 @@ if(atual.getId() != -1)
 		        	  tam2 = tam1;
 		          }
 		          
-		          System.out.println("-------");
+		          /*System.out.println("-------");
 		          System.out.println(tam1);
 		          System.out.println(tam2);
-		          System.out.println("-------");
+		          System.out.println("-------");*/
 		          
 		          for ( int i = tam1-1; i >= tam1-tam2; i-- ) {
-		        	System.out.println(i);
+		        	//System.out.println(i);
 		        	String content;
 		        	content = (String)messages[i].getContent().toString();
 		        	if (messages[i].isMimeType("text/plain")) {
@@ -536,13 +494,16 @@ if(atual.getId() != -1)
 			  <select name="pasta">
 			  	<option value="" disabled selected>Escolha uma pasta</option>
 			  	<%
-			  	for(int i=1;i<pastas.length;i++)
+			  	for(int i=0;i<pastas.length;i++)
 	    		{
-	            	if(pastas[i].toString().equals("[Gmail]")){
+			  		if(pastas[i].toString().contains("[Gmail]")){
+	            		continue;
+	            	}
+			  		if(pastas[i].toString().equals("INBOX")){
 	            		continue;
 	            	}
 	    			%>	
-	    				<option values="<%=pastas[i].toString()%>"><%=pastas[i].toString()%></option>  				
+	    				<option values="<%=pastas[i].toString()%>"><%=pastas[i].toString().replace("[Gmail]/","")%></option>  				
 	    			<%
 	    		}
 			  	%>
@@ -584,11 +545,14 @@ if(atual.getId() != -1)
 			  	<%
 			  	for(int i=1;i<pastas.length;i++)
 	    		{
-	            	if(pastas[i].toString().equals("[Gmail]")){
+	            	if(pastas[i].toString().contains("[Gmail]")){
+	            		continue;
+	            	}
+			  		if(pastas[i].toString().equals("INBOX")){
 	            		continue;
 	            	}
 	    			%>	
-	    				<option values="<%=pastas[i].toString()%>"><%=pastas[i].toString()%></option>  				
+	    				<option values="<%=pastas[i].toString()%>"><%=pastas[i].toString().replace("[Gmail]/","")%></option>  				
 	    			<%
 	    		}
 			  	%>

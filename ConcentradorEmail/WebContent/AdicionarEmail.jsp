@@ -17,12 +17,7 @@
 			String protocolo = request.getParameter("protocolo");
 			String host = request.getParameter("host");
 			String porta = request.getParameter("porta");
-			String senha = request.getParameter("senha");
-			
-			Session s = Session.getDefaultInstance(new Properties( ));
-            Store store = s.getStore(protocolo);
-            store.connect(host, Integer.parseInt(porta), email, senha);
-	          			
+			String senha = request.getParameter("senha");	          			
 			
 			if(!(email.contains("@") && email.contains(".")))
 				response.sendRedirect("adm_email.jsp?erro=Email%20invalido");
@@ -44,7 +39,7 @@
 				response.sendRedirect("adm_email.jsp");
 			}
 		}catch(Exception ex){
-			response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage());
+			response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage().replaceAll(" ","%20"));
 		}
 	%>
 

@@ -32,10 +32,10 @@ public class Emails {
 
             BDSQLServer.COMANDO.setInt   (1, em.getId_dono());
             BDSQLServer.COMANDO.setString(2, em.getEmail()); 
-            BDSQLServer.COMANDO.setString(3, em.getSenha());
-            BDSQLServer.COMANDO.setString(4, em.getProtocolo());
-            BDSQLServer.COMANDO.setString(5, em.getHost());
-            BDSQLServer.COMANDO.setString(6, em.getPorta());            
+            BDSQLServer.COMANDO.setString(3, em.getProtocolo());
+            BDSQLServer.COMANDO.setString(4, em.getHost());
+            BDSQLServer.COMANDO.setString(5, em.getPorta());
+            BDSQLServer.COMANDO.setString(6, em.getSenha());          
             BDSQLServer.COMANDO.setBoolean(7, em.isTem_ssl());
 
             BDSQLServer.COMANDO.executeUpdate ();
