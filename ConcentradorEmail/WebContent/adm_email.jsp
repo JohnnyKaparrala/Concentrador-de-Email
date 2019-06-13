@@ -130,6 +130,10 @@ if(atual.getId() != -1)
       <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft ps ps--active-y">
         <div class="sidebar-list-padding app-sidebar" id="email-sidenav">
           <ul class="email-list display-grid">
+	        <li class="sidebar-title">Opções</li>
+            <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
+            <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
+            <li><a class="text-sub modal-trigger" href="#modalDeletarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">delete_sweep</i>  Deletar Pasta</a></li>
             <li class="sidebar-title">Pastas</li>
             <li id="Inbox">
 	           	<form method="post" class="text-sub">
@@ -203,12 +207,6 @@ if(atual.getId() != -1)
 			            
 		            }
 	            %>    
-            <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
-            <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
-            <li><a class="text-sub modal-trigger" href="#modalDeletarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">delete_sweep</i>  Deletar Pasta</a></li>
-            <li class="sidebar-title">Filtros</li>
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
-            <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
           	
           </ul>
           
@@ -251,7 +249,6 @@ if(atual.getId() != -1)
               </span>
               <span class="action-icons">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
-                <i class="material-icons">folder_open</i>
                 <i class="material-icons delete-mails">delete</i>
               </span>
             </div>
