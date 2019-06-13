@@ -52,6 +52,7 @@ else{
 	}
 }
 
+
 session.setAttribute("emailAtual",atual);
 
 session.setAttribute("email_atual", atual.getEmail());
@@ -130,7 +131,7 @@ if(atual.getId() != -1)
       <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft ps ps--active-y">
         <div class="sidebar-list-padding app-sidebar" id="email-sidenav">
           <ul class="email-list display-grid">
-	        <li class="sidebar-title">Opções</li>
+	        <li class="sidebar-title">Opï¿½ï¿½es</li>
             <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
             <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
             <li><a class="text-sub modal-trigger" href="#modalDeletarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">delete_sweep</i>  Deletar Pasta</a></li>
@@ -209,6 +210,10 @@ if(atual.getId() != -1)
               <span class="action-icons">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
                 <i class="material-icons delete-mails">delete</i>
+                <form method="POST" >
+                 	<input type="number" name="pag" value="<%= request.getAttribute("pag") %>"/>
+                 	<input type="submit" value="mudar pagina"/>
+                </form>
               </span>
             </div>
             <div class="list-content"></div>
@@ -222,6 +227,7 @@ if(atual.getId() != -1)
           		<%
           	}
           	else {
+          			int pag = Integer.parseInt(session.getAttribute("pag_atual").toString());
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
@@ -238,8 +244,11 @@ if(atual.getId() != -1)
 		          System.out.println(tam1);
 		          System.out.println(tam2);
 		          System.out.println("-------");*/
+
 		          
-		          for ( int i = tam1-1; i >= tam1-tam2; i-- ) {
+		          int var = tam1 - 10 * pag; 
+		          
+		          for ( int i = var-1; i >= var-tam2 && i >= 0; i-- ) {
 		        	//System.out.println(i);
 		        	String content;
 		        	content = (String)messages[i].getContent().toString();
@@ -317,7 +326,7 @@ if(atual.getId() != -1)
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> person_outline </i>
-	            <input placeholder="Destinatário(s)" type="text" class="validate" name="destinatario">
+	            <input placeholder="Destinatï¿½rio(s)" type="text" class="validate" name="destinatario">
 	          </div>
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> title </i>
@@ -675,6 +684,8 @@ if(atual.getId() != -1)
     	            });
     	        }
     	    });
+    	    await sleep(2000);
+    	    $(".tox-notification").css({"display":"none"});
     	    
     	  });
       
@@ -692,7 +703,7 @@ if(atual.getId() != -1)
     <!-- END PAGE LEVEL JS-->
     <%
     if (a){
-    	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
+    	%><script>M.toast({html: 'Nï¿½o hï¿½ emails cadastrados na sua conta! Cadastre-os!'})</script><%
     }
     %><script>
     </script>
