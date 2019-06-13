@@ -8,20 +8,44 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Consultar</title>
+<title></title>
 </head>
 <body>
 
 	<%
-		int codigo = Integer.parseInt(request.getParameter("codigo"));
-		String nome = request.getParameter("nome");
-		Float preco = Float.parseFloat(request.getParameter("preco")); 
+	try{
+		boolean tem_ssl = request.getParameter("protocoloA").contains("s");
+		String email = (String)request.getParameter("emailA");
+		String protocolo = request.getParameter("protocoloA");
+		String host = request.getParameter("hostA");
+		String porta = request.getParameter("portaA");
+		String senha = request.getParameter("senhaA");
+		
+		
+		if(!(email.contains("@") && email.contains(".")))
+			response.sendRedirect("adm_email.jsp?erro=Email%20invalido");
+		else
+		if(protocolo.trim().equals("") ||  host.trim().equals("") || porta.trim().equals("") ||
+				senha.trim().equals(""))
+			response.sendRedirect("adm_email.jsp?erro=Digite%20todos%20os%20campos");
+		else{
+		
+			Email eml = new Email(	((int)session.getAttribute("atualId")),
+									(((Usuario)session.getAttribute("usuario")).getId()),
+									email,
+				  					protocolo,
+				  					host,
+				  					porta,
+				  					senha,
+				  					tem_ssl);
+		
+			Emails.alterar(eml);
+			response.sendRedirect("adm_email.jsp");
+		}
+	}catch(Exception ex){
+		response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage());
+	}
 		
 	%>
-	
-	<p>Nome: <%=   %> </p>
-	<p>Preco:<%= %> </p>
-	<p>Alterado com sucesso</p>
-
 </body>
 </html>

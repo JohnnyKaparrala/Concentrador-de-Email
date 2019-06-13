@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="bd.*,bd.daos.*,bd.dbos.*,bd.core.*"
+    pageEncoding="ISO-8859-1" import="bd.*,bd.daos.*,bd.dbos.*,bd.core.*, javax.mail.*,  java.util.*"
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +19,10 @@
 			String porta = request.getParameter("porta");
 			String senha = request.getParameter("senha");
 			
+			Session s = Session.getDefaultInstance(new Properties( ));
+            Store store = s.getStore(protocolo);
+            store.connect(host, Integer.parseInt(porta), email, senha);
+	          			
 			
 			if(!(email.contains("@") && email.contains(".")))
 				response.sendRedirect("adm_email.jsp?erro=Email%20invalido");
