@@ -52,6 +52,7 @@ else{
 	}
 }
 
+
 session.setAttribute("emailAtual",atual);
 
 session.setAttribute("email_atual", atual.getEmail());
@@ -250,6 +251,10 @@ if(atual.getId() != -1)
               <span class="action-icons">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
                 <i class="material-icons delete-mails">delete</i>
+                <form method="POST" >
+                 	<input type="number" name="pag" value="<%= request.getAttribute("pag") %>"/>
+                 	<input type="submit" value="mudar pagina"/>
+                </form>
               </span>
             </div>
             <div class="list-content"></div>
@@ -263,6 +268,7 @@ if(atual.getId() != -1)
           		<%
           	}
           	else {
+          			int pag = Integer.parseInt(session.getAttribute("pag_atual").toString());
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
           		  System.out.println(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
@@ -276,13 +282,15 @@ if(atual.getId() != -1)
 		        	  tam2 = tam1;
 		          }
 		          
-		          System.out.println("-------");
+		          /*System.out.println("-------");
 		          System.out.println(tam1);
 		          System.out.println(tam2);
-		          System.out.println("-------");
+		          System.out.println("-------");*/
 		          
-		          for ( int i = tam1-1; i >= tam1-tam2; i-- ) {
-		        	System.out.println(i);
+		          int var = tam1 - 10 * pag; 
+		          
+		          for ( int i = var-1; i >= var-tam2 && i >= 0; i-- ) {
+		        	//System.out.println(i);
 		        	String content;
 		        	content = (String)messages[i].getContent().toString();
 		        	if (messages[i].isMimeType("text/plain")) {
