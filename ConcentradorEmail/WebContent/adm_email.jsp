@@ -188,8 +188,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
 						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
 						           	</form>
-					           	</li>  
-			    				
+					           	</li>			    				
 			    			<%
 			    			
 			    			if( session.getAttribute("pasta_atual").equals(pastas[i].toString())){
@@ -201,6 +200,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 	            %>    
             <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
             <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
+            <li><a class="text-sub modal-trigger" href="#modalDeletarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">delete_sweep</i>  Deletar Pasta</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
@@ -425,7 +425,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 	    <a class="btn modal-close waves-effect waves-light mr-2 red">
 	      <i class="material-icons">cancel</i> Cancelar
 	    </a>
-	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar" style="color:white !important"/>
+	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar"/>
 	 		</div>
 	</form>
 </div>
@@ -464,7 +464,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 		      <i class="material-icons">cancel</i> Cancelar
 		    </a>
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-		      <i class="material-icons">person_add</i><input type="submit" value="Alterar Email" style="color: white">
+		      <i class="material-icons">person_add</i><input type="submit" value="Alterar Email">
 		    </a>
 		  </div>
       </form>
@@ -506,7 +506,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 		      <i class="material-icons">cancel</i> Cancelar
 		    </a>
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-		      <i class="material-icons">person_add</i><input type="submit" value="Adicionar Email" style="color: white">
+		      <i class="material-icons">person_add</i><input type="submit" value="Adicionar Email">
 		    </a>
 		  </div>
       </form>
@@ -531,7 +531,7 @@ Folder[] pastas = store.getDefaultFolder().list();
 		      <i class="material-icons">cancel</i> Cancelar
 		    </a>
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-		      <i class="material-icons">create_new_folder</i><input type="submit" value="Criar Pasta" style="color:white">
+		      <i class="material-icons">create_new_folder</i><input type="submit" value="Criar Pasta">
 		    </a>
 		  </div>
       </form>
@@ -575,7 +575,48 @@ Folder[] pastas = store.getDefaultFolder().list();
 	      <i class="material-icons">cancel</i> Cancelar
 	    </a>
 	    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-	      <i class="material-icons">more</i><input type="submit" value="Editar Pasta" style="color:white">
+	      <i class="material-icons">more</i><input type="submit" value="Editar Pasta">
+	    </a>
+	    
+	  </div>
+		  
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal Structure -->
+<div id="modalDeletarPasta" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content">
+    <h5 class="mt-0">Deletar Pasta</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12" method="POST" action="deletarPasta.jsp">
+        <div class="row">       	
+        	<div class="input-field col s12">
+        	<i class="material-icons prefix"> folder </i>
+			  <select name="pasta">
+			  	<option value="" disabled selected>Escolha uma pasta</option>
+			  	<%
+			  	for(int i=1;i<pastas.length;i++)
+	    		{
+	            	if(pastas[i].toString().equals("[Gmail]")){
+	            		continue;
+	            	}
+	    			%>	
+	    				<option values="<%=pastas[i].toString()%>"><%=pastas[i].toString()%></option>  				
+	    			<%
+	    		}
+			  	%>
+			  </select>			  	
+		 	</div>
+		</div>
+        
+	  <div class="modal-footer">
+	    <a class="btn modal-close waves-effect waves-light mr-2 red">
+	      <i class="material-icons">cancel</i> Cancelar
+	    </a>
+	    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
+	      <i class="material-icons">delete</i><input type="submit" value="Deletar Pasta">
 	    </a>
 	    
 	  </div>

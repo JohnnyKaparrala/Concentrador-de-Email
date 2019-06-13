@@ -9,7 +9,7 @@
 <body>
 <%
 try{
-	String old  = request.getParameter("pasta").trim();
+	String old  = request.getParameter("pasta");
 	String novo = request.getParameter("nomePasta").trim();
 	
 	Email atual = (Email)session.getAttribute("emailAtual");
