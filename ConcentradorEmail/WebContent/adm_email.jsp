@@ -440,23 +440,23 @@ Folder[] pastas = store.getDefaultFolder().list();
         <div class="row">
           <div class="input-field col s6">
             <i class="material-icons prefix"> mail </i>
-            <input id="email" placeholder="Email" type="text" class="validate" name="emailA" id="emailA" value="<%=((Email)session.getAttribute("emailAtual")).getEmail()%>">
+            <input placeholder="Email" type="text" class="validate" name="emailA" id="emailA" value="<%=((Email)session.getAttribute("emailAtual")).getEmail()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> lock </i>
-            <input id="email_senha" placeholder="Senha" type="password" class="validate" name="senhaA" id="senhaA" value="<%=((Email)session.getAttribute("emailAtual")).getSenha()%>">
+            <input placeholder="Senha" type="password" class="validate" name="senhaA" id="senhaA" value="<%=((Email)session.getAttribute("emailAtual")).getSenha()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> cloud </i>
-            <input id="servidor" placeholder="Servidor" type="text" class="validate" name="hostA" id="hostA" value="<%=((Email)session.getAttribute("emailAtual")).getHost()%>">
+            <input placeholder="Servidor" type="text" class="validate" name="hostA" id="hostA" value="<%=((Email)session.getAttribute("emailAtual")).getHost()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> free_breakfast </i>
-            <input id="porta" placeholder="Porta" type="text" class="validate" name="portaA" id="portaA" value="<%=((Email)session.getAttribute("emailAtual")).getPorta()%>">
+            <input placeholder="Porta" type="text" class="validate" name="portaA" id="portaA" value="<%=((Email)session.getAttribute("emailAtual")).getPorta()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> language </i>
-            <input id="protocolo" placeholder="Protocolo" type="text" class="validate" name="protocoloA" id="protocoloA" value="<%=((Email)session.getAttribute("emailAtual")).getProtocolo()%>">
+            <input placeholder="Protocolo" type="text" class="validate" name="protocoloA" id="protocoloA" value="<%=((Email)session.getAttribute("emailAtual")).getProtocolo()%>">
           </div>
         </div>
 		  <div class="modal-footer">
@@ -482,23 +482,28 @@ Folder[] pastas = store.getDefaultFolder().list();
         <div class="row">
           <div class="input-field col s6">
             <i class="material-icons prefix"> mail </i>
-            <input id="email" placeholder="Email" type="text" class="validate" name="email" id="email">
+            <input placeholder="Email" type="text" class="validate" name="email" id="email" onkeyup="hostRemendado()">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> lock </i>
-            <input id="email_senha" placeholder="Senha" type="password" class="validate" name="senha" id="senha">
+            <input placeholder="Senha" type="password" class="validate" name="senha" id="senha">
+          </div>       
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> language </i>
+            
+			<select id="protocolo" name="protocolo" onchange="hostRemendado(); portaRecomendada();">
+				<option value="" disabled selected>Escolha um Protocolo</option>
+				<option value="imaps">IMAPs (Recomendado)</option>
+				<option value="pop3s">POP3s (Uma bosta)</option>
+			</select>
+		  </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix"> free_breakfast </i>
+            <input placeholder="Porta" type="text" class="validate" name="porta" id="porta">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> cloud </i>
-            <input id="servidor" placeholder="Servidor" type="text" class="validate" name="host" id="host">
-          </div>
-          <div class="input-field col s6">
-            <i class="material-icons prefix"> free_breakfast </i>
-            <input id="porta" placeholder="Porta" type="text" class="validate" name="porta" id="porta">
-          </div>
-          <div class="input-field col s6">
-            <i class="material-icons prefix"> language </i>
-            <input id="protocolo" placeholder="Protocolo" type="text" class="validate" name="protocolo" id="protocolo">
+            <input placeholder="Servidor" type="text" class="validate" name="host" id="host">
           </div>
         </div>
 		  <div class="modal-footer">
@@ -677,6 +682,22 @@ Folder[] pastas = store.getDefaultFolder().list();
             }
         }
     }
+      function hostRemendado()
+      {
+    	 if($("#protocolo").val() != null)
+    	 	$("#host").val($("#protocolo").val().split("s")[0] + "." + $("#email").val().split("@")[$("#email").val().split("@").length-1]);
+    	 else
+    		 $("#host").val("." + $("#email").val().split("@")[$("#email").val().split("@").length-1]);
+      }
+      
+      function portaRecomendada()
+      {
+    	 if($("#protocolo").val() == "imaps")
+    		 $("#porta").val("993");
+    	 else
+    		 $("#porta").val("escolha o imaps");
+    	 	
+      }
       
       $(document).ready(function(){
     	  	$('.dropdown-trigger').dropdown();

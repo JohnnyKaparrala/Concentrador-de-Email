@@ -18,6 +18,15 @@
 		String email = (String)request.getParameter("emailA");
 		String protocolo = request.getParameter("protocoloA");
 		String host = request.getParameter("hostA");
+		
+		try{
+			Integer.parseInt("porta");
+		}
+		catch(Exception err)
+		{
+			throw new Exception("Porta deve ser um inteiro");
+		}
+		
 		String porta = request.getParameter("portaA");
 		String senha = request.getParameter("senhaA");
 		
