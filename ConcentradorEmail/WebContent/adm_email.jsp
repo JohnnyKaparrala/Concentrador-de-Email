@@ -4,6 +4,7 @@
 <%
 boolean a = false;
 
+
 if (session.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 }
@@ -57,6 +58,14 @@ session.setAttribute("email_atual", atual.getEmail());
 session.setAttribute("host_atual", atual.getHost());
 session.setAttribute("porta_atual", atual.getPorta());
 session.setAttribute("senha_atual", atual.getSenha());
+
+
+Session sess = Session.getDefaultInstance(new Properties( ));
+Store str = sess.getStore("imaps");
+str.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+Folder[] psts = str.getDefaultFolder().list();
+	
+
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -163,34 +172,30 @@ session.setAttribute("senha_atual", atual.getSenha());
 	            
 	            
 	            	if(atual.getId() != -1){           	
-	            		Session s = Session.getDefaultInstance(new Properties( ));
-	    	            Store store = s.getStore("imaps");
-	    	            store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-	    	            	
-				        Folder[] pastas = store.getDefaultFolder().list();
-			            for(int i=1;i<pastas.length;i++)
+			            for(int i=1;i<psts.length;i++)
 			    		{
-			            	if(pastas[i].toString().equals("[Gmail]")){
+			            	if(psts[i].toString().equals("[Gmail]")){
 			            		continue;
 			            	}
 			    			%>		
-			    				<li id="<%=pastas[i].toString()%>">
+			    				<li id="<%=psts[i].toString()%>">
 						           	<form method="post" class="text-sub">
-						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
-						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
+						           	<input type="hidden" name="pasta" value="<%=psts[i].toString()%>">
+						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=psts[i].toString()%></a></button>
 						           	</form>
 					           	</li>  
 			    				
 			    			<%
 			    			
-			    			if( session.getAttribute("pasta_atual").equals(pastas[i].toString())){
-				            	%><script>document.getElementById("<%=pastas[i].toString()%>").className += " active green";</script><%
+			    			if( session.getAttribute("pasta_atual").equals(psts[i].toString())){
+				            	%><script>document.getElementById("<%=psts[i].toString()%>").className += " active green";</script><%
 			          		}
 			    		}
 			            
 		            }
 	            %>    
             <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
+            <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
             <li class="sidebar-title">Filtros</li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> star_border </i> Marcados</a></li>
             <li><a href="#" class="text-sub"><i class="material-icons mr-2"> label_outline </i> Importante</a></li>
@@ -500,14 +505,61 @@ session.setAttribute("senha_atual", atual.getSenha());
 		      <i class="material-icons">cancel</i> Cancelar
 		    </a>
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-		      <i class="material-icons">create_new_folder</i><input type="submit" value="Criar Pasta">
+		      <i class="material-icons">create_new_folder</i><input type="submit" value="Criar Pasta" style="color:white">
 		    </a>
 		  </div>
       </form>
     </div>
   </div>
 </div>
+<!-- Modal Structure -->
+<div id="modalEditarPasta" class="modal border-radius-6" tabindex="0">
+  <div class="modal-content">
+    <h5 class="mt-0">Editar Pastas</h5>
+    <hr>
+    <div class="row">
+      <form class="col s12" method="POST" action="editarPasta.jsp">
+        <div class="row">       	
+        	<div class="input-field col s12">
+        	<i class="material-icons prefix"> folder </i>
+			  <select name="pasta">
+			  	<option value="" disabled selected>Escolha uma pasta</option>
+			  	<%
+			  	for(int i=1;i<psts.length;i++)
+	    		{
+	            	if(psts[i].toString().equals("[Gmail]")){
+	            		continue;
+	            	}
+	    			%>	
+	    				<option values="<%=psts[i].toString()%>"><%=psts[i].toString()%></option>  				
+	    			<%
+	    		}
+			  	%>
+			  </select>
+			  	
+		 	</div>
+		 	<div class="input-field col s12">
+			  	<i class="material-icons prefix"> edit </i>
+            	<input id="nomePasta" placeholder="nome da pasta" type="text" class="validate" name="nomePasta" id="nomePasta">
+          	</div>
+		</div>
+        
+	  <div class="modal-footer">
+	    <a class="btn modal-close waves-effect waves-light mr-2 red">
+	      <i class="material-icons">cancel</i> Cancelar
+	    </a>
+	    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
+	      <input type="submit" value="Editar Pasta" style="color:white">
+	    </a>
+	    
+	  </div>
+		  
+      </form>
+    </div>
+  </div>
+</div>
 <!--  -->
+
           </div>
         </div>
       </div>
@@ -554,6 +606,8 @@ session.setAttribute("senha_atual", atual.getSenha());
     }
       
       $(document).ready(function(){
+    	  	$('.dropdown-trigger').dropdown();
+    	  
     	    $('.modal').modal();
 
     	    $('select').formSelect();
