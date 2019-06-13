@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"  import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, javax.mail.internet.InternetAddress, javax.mail.internet.MimeMessage, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
+    pageEncoding="ISO-8859-1"  import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, javax.mail.internet.MimeBodyPart, javax.mail.internet.InternetAddress, javax.mail.internet.MimeMessage, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +48,7 @@
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-		//response.sendRedirect("adm_email.jsp");
+		response.sendRedirect("adm_email.jsp");
 %>
 
 <%= dest %>
