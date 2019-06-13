@@ -710,8 +710,8 @@ if(atual.getId() != -1)
     	            });
     	        }
     	    });
-    	    
-    	    $(".tox-notification").css({"display":"none");
+    	    await sleep(2000);
+    	    $(".tox-notification").css({"display":"none"});
     	    
     	  });
       
