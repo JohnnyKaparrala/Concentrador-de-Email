@@ -324,11 +324,11 @@ Folder[] pastas = store.getDefaultFolder().list();
 		                <div class="list-desc"><span class="emailcoisa"><%= content.toString() %></span></div>
 		              </div>
 		              <div class="list-right">
-		                <div class="list-date"> <%= messages[i].getSentDate().getHours() + ":" + messages[i].getSentDate().getMinutes() + " em " + messages[i].getSentDate().getDay() + "/" + messages[i].getSentDate().getMonth() + "/" + messages[i].getSentDate().getYear()%> </div>
+		                <div class="list-date"> <%= String.format("%02d", messages[i].getSentDate().getHours()) + ":" + String.format("%02d", messages[i].getSentDate().getMinutes()) + " em " + String.format("%02d", messages[i].getSentDate().getDay()) + "/" + String.format("%02d", messages[i].getSentDate().getMonth()) + "/" + (messages[i].getSentDate().getYear() + 1900)%> </div>
 		              </div>
 		       		<form  action="email.jsp" method="GET">
 		              <input name="id_email" style="display:none" value="<%= i %>">
-		              <input type="submit" class="inpot" value="Abrir email">
+		              <input type="submit" class="inpot" value="Abrir email" style="display:none">
 		           </form>
 	            </a>
 	
@@ -615,6 +615,9 @@ Folder[] pastas = store.getDefaultFolder().list();
 			else{
 				%>
 				M.toast({html: 'Bem vindo!'});<%}
+    
+    		store.close();
+    		
     %>
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;
@@ -646,6 +649,10 @@ Folder[] pastas = store.getDefaultFolder().list();
     	    	var b = a.find('.inpot')[0];
     	    	
     	    	b.click();
+    	    });
+    	    
+    	    $('.collection-item').click(function (e) {
+    	    	$(this).find('.inpot')[0].click();
     	    });
     	    
     	    tinymce.init({

@@ -1,5 +1,5 @@
 <%@page import="com.sun.corba.se.pept.protocol.MessageMediator"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*, javax.mail.internet.MimeBodyPart, javax.mail.internet.MimeMultipart, javax.mail.Part"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*, javax.mail.internet.MimeBodyPart, javax.mail.internet.MimeMultipart, javax.mail.Part, org.jsoup.*"%>
 <!DOCTYPE html>
 <%
 boolean a = false;
@@ -61,9 +61,22 @@ Message[] messages = inbox.getMessages();
 int index = Integer.parseInt(request.getParameter("id_email"));
 
 Message mensagem = messages[index];
-String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)mensagem.getContent());
-
-int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
+//String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)mensagem.getContent());
+int qtdAnexo;
+try {
+	qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
+} catch (Exception e) {
+	qtdAnexo = -1;
+}
+String content = (String)mensagem.getContent().toString();
+if (mensagem.isMimeType("text/plain")) {
+	content = (String)mensagem.getContent().toString();
+} else if (mensagem.isMimeType("text/html")) {
+	content = mensagem.getContent().toString();
+	content = Jsoup.parse(content).toString();
+} else if (mensagem.isMimeType("multipart/*")) {
+	content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)mensagem.getContent());	  
+}
 %>
 <html class="loading" lang="en" data-textdirection="ltr"><!-- BEGIN: Head--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -137,19 +150,20 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
                     </div>
                   </div>
                   <div class="title-right">
-                    <span class="mail-time"><%= mensagem.getSentDate().getHours() + ":" + mensagem.getSentDate().getMinutes() + " em " + mensagem.getSentDate().getDay() + "/" + mensagem.getSentDate().getMonth() + "/" +mensagem.getSentDate().getYear() %></span>
+                    <span class="mail-time"><%= String.format("%02d", mensagem.getSentDate().getHours()) + ":" + String.format("%02d", mensagem.getSentDate().getMinutes()) + " em " + String.format("%02d", mensagem.getSentDate().getDay()) + "/" + String.format("%02d", mensagem.getSentDate().getMonth()) + "/" + (mensagem.getSentDate().getYear() + 1900)%></span>
                     <i class="material-icons">reply</i>
                     <i class="material-icons">more_vert</i>
                   </div>
                 </div>
                 <div class="email-desc">
-                  <p><%= content.toString() %></p>
+                  <p><%= content %></p>
                 </div>
               </div>
               <!-- Email Content Ends -->
               <hr>
               <!-- Email Footer -->
               <div class="email-footer">
+              <% if (qtdAnexo != -1) { %>
                 <h6 class="footer-title">Anexos (<%= qtdAnexo %>)</h6>
                 <div class="footer-action">
                   <div class="attachment-list">
@@ -162,8 +176,6 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
 						{
 							tamanhoArq = (part.getSize())/1000;
 							//part.saveFile((request.getContextPath() + "/anexos/" + part.getFileName()).toString());
-							
-							
 							
                   %>
                   	<script>console.log("<%= ("/ConcentracorEmail/WebContent/anexos/" + part.getFileName()).toString().replace(" ", "%20") %>");</script>
@@ -188,6 +200,7 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
                     <a class="btn forward green"><i class="material-icons left">reply</i>Encaminhar</a>
                   </div>
                 </div>
+             <% } %>
                 <div class="reply-box d-none">
                   <form action="#">
                     <div class="input-field col s12">
@@ -235,7 +248,7 @@ int qtdAnexo = EmailMethods.getQtdAnexo((MimeMultipart)mensagem.getContent());
 
     <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
       <div class="footer-copyright">
-        <div class="container"><span>� 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
+        <div class="container"><span>@ 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
 </body>

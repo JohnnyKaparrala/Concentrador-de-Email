@@ -21,6 +21,8 @@ footer {
     padding-left: 0;
 }
 
+strong { font-weight: bold; }
+
 .gradient-45deg-indigo-purple {
     background: #319f30;
     background: -webkit-linear-gradient(45deg, #303f9f, #7b1fa2) !important;
