@@ -132,31 +132,31 @@ if(atual.getId() != -1)
           <ul class="email-list display-grid">
             <li class="sidebar-title">Pastas</li>
             <li id="Inbox">
-	           	<form method="post" class="text-sub">
+	           	<form method="get" class="text-sub">
 	           	<input type="hidden" name="pasta" value="inbox">
 	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Inbox</a></button>
 	           	</form>
            	</li>
             <li id="Enviados">
-	           	<form method="post" class="text-sub">
+	           	<form method="get" class="text-sub">
 	           	<input type="hidden" name="pasta" value="[Gmail]/E-mails enviados">
 	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> send </i>Enviados</a></button>
 	           	</form>
            	</li>
             <li id="Rascunhos">
-	           	<form method="post" class="text-sub">
+	           	<form method="get" class="text-sub">
 	           	<input type="hidden" name="pasta" value="[Gmail]/Rascunhos">
 	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> description </i>Rascunhos</a></button>
 	           	</form>
            	</li>
             <li id="Spam">
-	           	<form method="post" class="text-sub">
+	           	<form method="get" class="text-sub">
 	           	<input type="hidden" name="pasta" value="[Gmail]/Spam">
 	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> mail_outline </i>Spam</a></button>
 	           	</form>
            	</li>
             <li id="Lixeira">
-	           	<form method="post" class="text-sub">
+	           	<form method="get" class="text-sub">
 	           	<input type="hidden" name="pasta" value="[Gmail]/Lixeira">
 	           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> delete </i>Lixeira</a></button>
 	           	</form>
@@ -189,7 +189,7 @@ if(atual.getId() != -1)
 			            	}
 			    			%>		
 			    				<li id="<%=pastas[i].toString()%>">
-						           	<form method="post" class="text-sub">
+						           	<form method="get" class="text-sub">
 						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
 						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString()%></a></button>
 						           	</form>
@@ -267,6 +267,7 @@ if(atual.getId() != -1)
           	}
           	else {
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
+          		  System.out.println(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = pasta.getMessages();
