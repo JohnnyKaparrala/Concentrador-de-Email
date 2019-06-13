@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*"%>
+    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*, org.jsoup.*"%>
 <!DOCTYPE html>
 <%
 boolean a = false;
@@ -267,15 +267,33 @@ Folder[] psts = str.getDefaultFolder().list();
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
 		          Message[] messages = pasta.getMessages();
+		          int tam1 = pasta.getMessageCount();
+		          int tam2;
+		          if (tam1 > 10) {
+		        	  tam2 = 10;
+		          } else {
+		        	  tam2 = tam1;
+		          }
 		          
-		          int tam = messages.length;
-		          if (tam > 10) {
-		        	  tam = 10;
-		          } 
+		          System.out.println("-------");
+		          System.out.println(tam1);
+		          System.out.println(tam2);
+		          System.out.println("-------");
 		          
-		          for ( int i = tam-1; i>=0; i-- ) {
-		        	  String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());
-		       	%>
+		          for ( int i = tam1-1; i >= tam1-tam2; i-- ) {
+		        	System.out.println(i);
+		        	String content;
+		        	content = (String)messages[i].getContent().toString();
+		        	if (messages[i].isMimeType("text/plain")) {
+		        		content = (String)messages[i].getContent().toString();
+		        	} else if (messages[i].isMimeType("text/html")) {
+		        		content = (String)messages[i].getContent();
+		        		content = Jsoup.parse(content).toString();
+		        	} else if (messages[i].isMimeType("multipart/*")) {
+		        		content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)messages[i].getContent());	  
+		        	}
+							        	  
+		        %>
 		       	<a href="#" class="collection-item animate fadeUp delay-1">
 		              <div class="list-left">
 		                <label>
@@ -359,7 +377,7 @@ Folder[] psts = str.getDefaultFolder().list();
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> person_outline </i>
-	            <input placeholder="Destinatï¿½rio(s)" type="text" class="validate" name="destinatario">
+	            <input placeholder="Destinatário(s)" type="text" class="validate" name="destinatario">
 	          </div>
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> title </i>
@@ -403,7 +421,7 @@ Folder[] psts = str.getDefaultFolder().list();
 	    <a class="btn modal-close waves-effect waves-light mr-2 red">
 	      <i class="material-icons">cancel</i> Cancelar
 	    </a>
-	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar"/>
+	    <input type="submit" class="btn waves-effect waves-light mr-2 green" value="Trocar" style="color: white"/>
 	 		</div>
 	</form>
 </div>
@@ -414,35 +432,39 @@ Folder[] psts = str.getDefaultFolder().list();
     <h5 class="mt-0">Editar email</h5>
     <hr>
     <div class="row">
-      <form class="col s12">
+      <form class="col s12" method="POST" action="Alterar.jsp">
         <div class="row">
           <div class="input-field col s6">
+            <i class="material-icons prefix"> mail </i>
+            <input id="email" placeholder="Email" type="text" class="validate" name="emailA" id="emailA" value="<%=((Email)session.getAttribute("emailAtual")).getEmail()%>">
+          </div>
+          <div class="input-field col s6">
             <i class="material-icons prefix"> lock </i>
-            <input placeholder="Senha" type="password" class="validate">
+            <input id="email_senha" placeholder="Senha" type="password" class="validate" name="senhaA" id="senhaA" value="<%=((Email)session.getAttribute("emailAtual")).getSenha()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> cloud </i>
-            <input placeholder="Servidor" type="password" class="validate">
+            <input id="servidor" placeholder="Servidor" type="text" class="validate" name="hostA" id="hostA" value="<%=((Email)session.getAttribute("emailAtual")).getHost()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> free_breakfast </i>
-            <input placeholder="Porta" type="password" class="validate">
+            <input id="porta" placeholder="Porta" type="text" class="validate" name="portaA" id="portaA" value="<%=((Email)session.getAttribute("emailAtual")).getPorta()%>">
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix"> language </i>
-            <input placeholder="Protocolo" type="password" class="validate">
+            <input id="protocolo" placeholder="Protocolo" type="text" class="validate" name="protocoloA" id="protocoloA" value="<%=((Email)session.getAttribute("emailAtual")).getProtocolo()%>">
           </div>
         </div>
+		  <div class="modal-footer">
+		    <a class="btn modal-close waves-effect waves-light mr-2 red">
+		      <i class="material-icons">cancel</i> Cancelar
+		    </a>
+		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
+		      <i class="material-icons">person_add</i><input type="submit" value="Alterar Email" style="color: white">
+		    </a>
+		  </div>
       </form>
     </div>
-  </div>
-  <div class="modal-footer">
-    <a class="btn modal-close waves-effect waves-light mr-2 red">
-      <i class="material-icons">cancel</i> Cancelar
-    </a>
-    <a class="btn modal-close waves-effect waves-light mr-2 green">
-      <i class="material-icons">edit</i> Editar Email
-    </a>
   </div>
 </div>
 
@@ -480,7 +502,7 @@ Folder[] psts = str.getDefaultFolder().list();
 		      <i class="material-icons">cancel</i> Cancelar
 		    </a>
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
-		      <i class="material-icons">person_add</i><input type="submit" value="Adicionar Email">
+		      <i class="material-icons">person_add</i><input type="submit" value="Adicionar Email" style="color: white">
 		    </a>
 		  </div>
       </form>
@@ -567,7 +589,7 @@ Folder[] psts = str.getDefaultFolder().list();
 
     <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
       <div class="footer-copyright">
-        <div class="container"><span>ï¿½ 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
+        <div class="container"><span>@ 2019          <a href="#" target="_blank">Mali Inc.</a> Todos direitos reservados.</span><span class="right hide-on-small-only">Desenvolvido por <a href="#">Mali Inc.</a></span></div>
       </div>
     </footer>
 </body>
@@ -586,6 +608,9 @@ Folder[] psts = str.getDefaultFolder().list();
 					M.toast({html: '<%= request.getParameter("erro") %>'});
 				<%
 			}
+			else{
+				%>
+				M.toast({html: 'Bem vindo!'});<%}
     %>
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;

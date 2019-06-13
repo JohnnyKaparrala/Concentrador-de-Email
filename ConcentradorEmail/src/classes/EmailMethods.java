@@ -23,7 +23,7 @@ public class EmailMethods {
 	          } else 
 	            if (bodyPart.isMimeType("text/html")) 
 	            {
-	                String html = (String) bodyPart.getContent();
+	            	result = (String) bodyPart.getContent();
 	            }
 	            else
 	              if (bodyPart.getContent() instanceof MimeMultipart)
