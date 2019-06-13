@@ -251,17 +251,11 @@ if(atual.getId() != -1)
               </span>
               <span class="action-icons">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
-                <i class="material-icons">mail_outline</i>
-                <i class="material-icons">label_outline</i>
                 <i class="material-icons">folder_open</i>
-                <i class="material-icons">info_outline</i>
                 <i class="material-icons delete-mails">delete</i>
               </span>
             </div>
             <div class="list-content"></div>
-            <div class="email-action">
-              <span class="email-options"><i class="material-icons grey-text">more_vert</i></span>
-            </div>
           </div>
           <div id="emails" class="collection email-collection ps ps--active-y" style="max-height: 454px !important;">
           <%   
@@ -309,12 +303,6 @@ if(atual.getId() != -1)
 		                  <input type="checkbox" name="foo">
 		                  <span></span>
 		                </label>
-		                <div class="favorite">
-		                  <i class="material-icons">star_border</i>
-		                </div>
-		                <div class="email-label">
-		                  <i class="material-icons">label_outline</i>
-		                </div>
 		              </div>
 		              <div class="list-content">
 		                <div class="list-title-area">
@@ -742,7 +730,7 @@ if(atual.getId() != -1)
     <!-- END PAGE LEVEL JS-->
     <%
     if (a){
-    	%><script>M.toast({html: 'Nï¿½o hï¿½ emails cadastrados na sua conta! Cadastre-os!'})</script><%
+    	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
     }
     %><script>
     </script>
