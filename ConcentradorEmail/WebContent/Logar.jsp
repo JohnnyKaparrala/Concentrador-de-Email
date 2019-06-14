@@ -16,7 +16,9 @@
 				session.setAttribute("usuario",usu);	
 				session.setAttribute("pasta_atual", "INBOX");
 				
-				response.sendRedirect("adm_email.jsp?pagina_email=0");
+				session.setAttribute("bem_vindo", "s");
+				
+				response.sendRedirect("adm_email.jsp?pagina_email=1");
 			}
 			else{
 				response.sendRedirect("login.jsp?erro=usuario+sem+cadastro");

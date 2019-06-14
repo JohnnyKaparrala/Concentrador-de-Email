@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, classes.*, bd.dbos.*, bd.daos.*, bd.core.*, org.jsoup.*"%>
+    pageEncoding="ISO-8859-1" import="javax.mail.*, javax.mail.search.FlagTerm, java.util.*, javax.mail.internet.MimeMultipart, javax.mail.internet.MimeMessage, classes.*, bd.dbos.*, bd.daos.*, bd.core.*, org.jsoup.*"%>
 <!DOCTYPE html>
 <%
 boolean a = false;
@@ -60,10 +60,14 @@ session.setAttribute("host_atual", atual.getHost());
 session.setAttribute("porta_atual", atual.getPorta());
 session.setAttribute("senha_atual", atual.getSenha());
 
-int pagina_email = 0;
-if (request.getAttribute("pagina_email") != null) {
-	pagina_email = Integer.parseInt(request.getAttribute("pagina_email").toString());
+int pagina_email = 1;
+if (request.getParameter("pagina_email").toString() != null) {
+	pagina_email = Integer.parseInt(request.getParameter("pagina_email").toString());
 }
+
+pagina_email--;
+
+
 
 Session s = Session.getDefaultInstance(new Properties( ));
 Store store = s.getStore("imaps");
@@ -211,13 +215,11 @@ if(atual.getId() != -1)
                   <span></span>
                 </label>
               </span>
-              <span class="action-icons">
+              <span class="action-icons" style="display:inline-block">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
                 <i class="material-icons delete-mails">delete</i>
-               <!-- <form method="POST" >
-                 	<input type="number" name="pag" value="<%= request.getAttribute("pag") %>"/>
-                 	<input type="submit" value="mudar pagina"/>
-                </form>-->
+                <i id="volta" class="material-icons">navigate_before</i>
+                <i id="avanca" class="material-icons">navigate_next</i>
               </span>
             </div>
             <div class="list-content"></div>
@@ -233,8 +235,7 @@ if(atual.getId() != -1)
           	else {
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
-		          // Fetch unseen messages from inbox folder
-		          Message[] messages = pasta.getMessages();
+		          
 		          int tam1 = pasta.getMessageCount();
 		          int tam2;
 		          if (tam1 > 10) {
@@ -243,15 +244,16 @@ if(atual.getId() != -1)
 		        	  tam2 = tam1;
 		          }
 		          
-		          /*System.out.println("-------");
-		          System.out.println(tam1);
-		          System.out.println(tam2);
-		          System.out.println("-------");*/
+		          int qtdEmail = pagina_email * 10;
 		          
-		          for ( int i = tam1-1; i >= tam1-tam2 && i >= 0; i-- ) {
-		        	//System.out.println(i);
+
+		          Message[] messages = pasta.getMessages(qtdEmail + 1, tam1);
+		          
+		          for ( int i = tam1 - qtdEmail -1; i >= tam1 - tam2 - qtdEmail && i >= 0; i-- ) {
+	        	  	MimeMessage cmsg = new MimeMessage((MimeMessage)messages[i]);
 		        	String content;
-		        	content = (String)messages[i].getContent().toString();
+        			content = cmsg.getContent().toString(); 
+		        	  
 		        	if (messages[i].isMimeType("text/plain")) {
 		        		content = (String)messages[i].getContent().toString();
 		        	} else if (messages[i].isMimeType("text/html")) {
@@ -611,9 +613,10 @@ if(atual.getId() != -1)
 					M.toast({html: '<%= request.getParameter("erro") %>'});
 				<%
 			}
-			else{
-				%>
-				M.toast({html: 'Bem vindo!'});<%}
+			else if ( session.getAttribute("bem_vindo")!= null && session.getAttribute("bem_vindo").equals("s")){
+				%> M.toast({html: 'Bem vindo!'}); <%
+				session.setAttribute("bem_vindo", "n");
+			}
     
     		store.close();
     		
@@ -652,7 +655,39 @@ if(atual.getId() != -1)
     	 	
       }
       
+      function findGetParameter(parameterName) {
+    	    var result = null,
+    	        tmp = [];
+    	    var items = location.search.substr(1).split("&");
+    	    for (var index = 0; index < items.length; index++) {
+    	        tmp = items[index].split("=");
+    	        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    	    }
+    	    return result;
+    	}
+      
       $(document).ready(function(){
+    	function muda_pag(passo) {
+       	  let pag = findGetParameter("pagina_email");
+       	  
+       	  if (passo < 0 && pag + passo > 0) {
+       		  	let sum = parseInt(pag) + parseInt(passo);
+       	  		window.location.href= location.protocol + '//' + location.host + location.pathname + "?pagina_email=" + sum;
+       	  }
+       	  else {
+     		  	let sum = parseInt(pag) + parseInt(passo);
+       		  window.location.href= location.protocol + '//' + location.host + location.pathname + "?pagina_email=" + sum;
+       	  }
+        }
+    	
+    		$("#avanca").click(function(e) {
+    			muda_pag(1);
+    		})
+          
+    		$("#volta").click(function(e) {
+    			muda_pag(-1);
+    		})
+          
     	  	$('.dropdown-trigger').dropdown();
     	  
     	    $('.modal').modal();
@@ -669,6 +704,8 @@ if(atual.getId() != -1)
     	    $('.collection-item').click(function (e) {
     	    	$(this).find('.inpot')[0].click();
     	    });
+    	    
+    	    console.log(<%= pagina_email%> );
     	    
     	    tinymce.init({
     	    	plugins: [
@@ -689,9 +726,6 @@ if(atual.getId() != -1)
     	    
     	  });
       
-      ClassicEditor.create( document.querySelector( '#editor' ) ).catch( error => {
-          console.error( error );
-      } );
      
     </script>
     <!-- BEGIN VENDOR JS-->
