@@ -238,7 +238,7 @@ if(atual.getId() != -1)
 		          
 		          int tam1 = pasta.getMessageCount();
 		          
-		          %><script>let limite = <%= Math.ceil(tam1 / 10) %>;</script><%
+		          %><script>let limite = <%= Math.ceil((double)pasta.getMessages().length / (double)10) %>;</script><%
 		          
 		          int tam2;
 		          if (tam1 > 10) {
