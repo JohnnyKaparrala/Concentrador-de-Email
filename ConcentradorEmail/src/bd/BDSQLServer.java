@@ -21,7 +21,7 @@ public class BDSQLServer
         }
         catch (Exception erro)
         {
-            System.err.println (erro.getMessage() + "Visual é neoNazista");
+            System.err.println (erro.getMessage());
             System.exit(0); // aborta o programa
         }
         

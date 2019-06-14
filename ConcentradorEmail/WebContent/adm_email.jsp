@@ -60,6 +60,10 @@ session.setAttribute("host_atual", atual.getHost());
 session.setAttribute("porta_atual", atual.getPorta());
 session.setAttribute("senha_atual", atual.getSenha());
 
+int pagina_email = 0;
+if (request.getAttribute("pagina_email") != null) {
+	pagina_email = Integer.parseInt(request.getAttribute("pagina_email").toString());
+}
 
 Session s = Session.getDefaultInstance(new Properties( ));
 Store store = s.getStore("imaps");
@@ -131,18 +135,18 @@ if(atual.getId() != -1)
       <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft ps ps--active-y">
         <div class="sidebar-list-padding app-sidebar" id="email-sidenav">
           <ul class="email-list display-grid">
-	        <li class="sidebar-title">Opï¿½ï¿½es</li>
+	        <li class="sidebar-title">Opções</li>
             <li><a class="text-sub modal-trigger" href="#modalCriarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">create_new_folder</i>  Criar pasta</a></li>
             <li><a class="text-sub modal-trigger" href="#modalEditarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">dns</i>  Editar Pastas</a></li>
             <li><a class="text-sub modal-trigger" href="#modalDeletarPasta" data-position="bottom" data-tooltip="Criar pasta"><i class="material-icons">delete_sweep</i>  Deletar Pasta</a></li>
             <li class="sidebar-title">Pastas</li>
             
 	            <%
-	            if(request.getParameter("pasta") != null) {
-	            	session.setAttribute("pasta_atual", request.getParameter("pasta"));
+	            if(request.getParameter("pasta_atual") != null) {
+	            	session.setAttribute("pasta_atual", request.getParameter("pasta_atual"));
 	            } else {
-	            	session.setAttribute("pasta_atual", "inbox");
-	            }         	            
+	            	session.setAttribute("pasta_atual", "INBOX");
+	            }
 	            
 	            	if(atual.getId() != -1){           	
 			            for(int i=0;i<pastas.length;i++)
@@ -153,7 +157,7 @@ if(atual.getId() != -1)
 			            	}
 			    			%>		
 			    				<li id="<%=pastas[i].toString()%>">
-						           	<form method="get" class="text-sub">
+						           	<form method="POST" class="text-sub">
 						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
 						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString().replace("[Gmail]/","")%></a></button>
 						           	</form>
@@ -210,10 +214,10 @@ if(atual.getId() != -1)
               <span class="action-icons">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
                 <i class="material-icons delete-mails">delete</i>
-                <form method="POST" >
+               <!-- <form method="POST" >
                  	<input type="number" name="pag" value="<%= request.getAttribute("pag") %>"/>
                  	<input type="submit" value="mudar pagina"/>
-                </form>
+                </form>-->
               </span>
             </div>
             <div class="list-content"></div>
@@ -227,7 +231,6 @@ if(atual.getId() != -1)
           		<%
           	}
           	else {
-          			int pag = Integer.parseInt(session.getAttribute("pag_atual").toString());
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
 		          // Fetch unseen messages from inbox folder
@@ -244,11 +247,8 @@ if(atual.getId() != -1)
 		          System.out.println(tam1);
 		          System.out.println(tam2);
 		          System.out.println("-------");*/
-
 		          
-		          int var = tam1 - 10 * pag; 
-		          
-		          for ( int i = var-1; i >= var-tam2 && i >= 0; i-- ) {
+		          for ( int i = tam1-1; i >= tam1-tam2 && i >= 0; i-- ) {
 		        	//System.out.println(i);
 		        	String content;
 		        	content = (String)messages[i].getContent().toString();
@@ -684,7 +684,7 @@ if(atual.getId() != -1)
     	            });
     	        }
     	    });
-    	    await sleep(2000);
+    	    
     	    $(".tox-notification").css({"display":"none"});
     	    
     	  });
@@ -703,7 +703,7 @@ if(atual.getId() != -1)
     <!-- END PAGE LEVEL JS-->
     <%
     if (a){
-    	%><script>M.toast({html: 'Nï¿½o hï¿½ emails cadastrados na sua conta! Cadastre-os!'})</script><%
+    	%><script>M.toast({html: 'Não há emails cadastrados na sua conta! Cadastre-os!'})</script><%
     }
     %><script>
     </script>
