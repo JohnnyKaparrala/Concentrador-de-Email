@@ -237,6 +237,9 @@ if(atual.getId() != -1)
 		          pasta.open( Folder.READ_ONLY );
 		          
 		          int tam1 = pasta.getMessageCount();
+		          
+		          %><script>let limite = <%= Math.ceil(tam1 / 10) %>;</script><%
+		          
 		          int tam2;
 		          if (tam1 > 10) {
 		        	  tam2 = 10;
@@ -247,7 +250,7 @@ if(atual.getId() != -1)
 		          int qtdEmail = pagina_email * 10;
 		          
 
-		          Message[] messages = pasta.getMessages(qtdEmail + 1, tam1);
+		          Message[] messages = pasta.getMessages();
 		          
 		          for ( int i = tam1 - qtdEmail -1; i >= tam1 - tam2 - qtdEmail && i >= 0; i-- ) {
 	        	  	MimeMessage cmsg = new MimeMessage((MimeMessage)messages[i]);
@@ -619,8 +622,9 @@ if(atual.getId() != -1)
 			}
     
     		store.close();
-    		
     %>
+    
+    
       function filtrar() {
         var input, filter, ul, li, a, i, txtValue;
         input = document.getElementById("email_filter");
@@ -670,12 +674,12 @@ if(atual.getId() != -1)
     	function muda_pag(passo) {
        	  let pag = findGetParameter("pagina_email");
        	  
-       	  if (passo < 0 && pag + passo > 0) {
-       		  	let sum = parseInt(pag) + parseInt(passo);
+       		let sum = parseInt(pag) + parseInt(passo);
+       	  if (passo < 0 && sum > 0) {
        	  		window.location.href= location.protocol + '//' + location.host + location.pathname + "?pagina_email=" + sum;
        	  }
-       	  else {
-     		  	let sum = parseInt(pag) + parseInt(passo);
+       	   
+       	  if (passo > 0 && sum <= limite) {
        		  window.location.href= location.protocol + '//' + location.host + location.pathname + "?pagina_email=" + sum;
        	  }
         }
