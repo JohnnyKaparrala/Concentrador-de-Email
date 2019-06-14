@@ -16,12 +16,12 @@ public class BDSQLServer
             comando =
             new MeuPreparedStatement (
             "com.microsoft.sqlserver.jdbc.SQLServerDriver",
-            "jdbc:sqlserver://regulus:1433;databasename=BD17186",
+            "jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databasename=BD17186",
             "BD17186", "BD17186");
         }
         catch (Exception erro)
         {
-            System.err.println ("Problemas de conexao com o BD");
+            System.err.println (erro.getMessage() + "Visual é neoNazista");
             System.exit(0); // aborta o programa
         }
         
