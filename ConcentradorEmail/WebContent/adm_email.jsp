@@ -61,7 +61,7 @@ session.setAttribute("porta_atual", atual.getPorta());
 session.setAttribute("senha_atual", atual.getSenha());
 
 int pagina_email = 1;
-if (request.getParameter("pagina_email").toString() != null) {
+if (request.getParameter("pagina_email") != null) {
 	pagina_email = Integer.parseInt(request.getParameter("pagina_email").toString());
 }
 
@@ -218,6 +218,7 @@ if(atual.getId() != -1)
               <span class="action-icons" style="display:inline-block">
                 <i class="material-icons" onclick="window.location.reload();">refresh</i>
                 <i class="material-icons delete-mails">delete</i>
+                <i id="volta" class="material-icons">folder</i>
                 <i id="volta" class="material-icons">navigate_before</i>
                 <i id="avanca" class="material-icons">navigate_next</i>
               </span>
