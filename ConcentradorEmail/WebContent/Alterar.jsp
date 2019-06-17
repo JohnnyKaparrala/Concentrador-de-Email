@@ -56,7 +56,7 @@
 			response.sendRedirect("adm_email.jsp");
 		}
 	}catch(Exception ex){
-		response.sendRedirect("adm_email.jsp?erro="  + ex.getMessage()/*.replaceAll(" ", "%20")*/);
+		response.sendRedirect("adm_email.jsp?erro="  + ex.getMessage().replaceAll(" ", "%20"));
 	}
 		
 	%>
