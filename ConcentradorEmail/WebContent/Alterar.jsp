@@ -18,16 +18,17 @@
 		String email = (String)request.getParameter("emailA");
 		String protocolo = request.getParameter("protocoloA");
 		String host = request.getParameter("hostA");
+
+		String porta = request.getParameter("portaA");
 		
 		try{
-			Integer.parseInt("porta");
+			Integer.parseInt(porta);
 		}
 		catch(Exception err)
 		{
 			throw new Exception("Porta deve ser um inteiro");
 		}
 		
-		String porta = request.getParameter("portaA");
 		String senha = request.getParameter("senhaA");
 		
 		
@@ -39,8 +40,11 @@
 			response.sendRedirect("adm_email.jsp?erro=Digite%20todos%20os%20campos");
 		else{
 		
-			Email eml = new Email(	((int)session.getAttribute("atualId")),
-									(((Usuario)session.getAttribute("usuario")).getId()),
+			int atualId = ((int)session.getAttribute("atual_id"));
+			int usu = (((Usuario)session.getAttribute("usuario")).getId());
+			
+			Email eml = new Email(	atualId,
+									usu,
 									email,
 				  					protocolo,
 				  					host,
@@ -52,7 +56,7 @@
 			response.sendRedirect("adm_email.jsp");
 		}
 	}catch(Exception ex){
-		response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage().replaceAll(" ", "%20"));
+		response.sendRedirect("adm_email.jsp?erro="  + ex.getMessage()/*.replaceAll(" ", "%20")*/);
 	}
 		
 	%>

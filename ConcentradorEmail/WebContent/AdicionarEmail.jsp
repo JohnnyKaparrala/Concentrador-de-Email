@@ -17,6 +17,15 @@
 			String protocolo = request.getParameter("protocolo");
 			String host = request.getParameter("host");
 			String porta = request.getParameter("porta");
+			
+			try{
+				Integer.parseInt(porta);
+			}
+			catch(Exception err)
+			{
+				throw new Exception("Porta deve ser um inteiro");
+			}
+			
 			String senha = request.getParameter("senha");	          			
 			
 			if(!(email.contains("@") && email.contains(".")))

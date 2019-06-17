@@ -61,6 +61,7 @@ Message[] messages = inbox.getMessages();
 int index = Integer.parseInt(request.getParameter("id_email"));
 
 Message mensagem = messages[index];
+//mensagem.setFlag(Flags.Flag.SEEN, true);
 //String content = EmailMethods.getTextFromMimeMultipart((MimeMultipart)mensagem.getContent());
 int qtdAnexo;
 try {

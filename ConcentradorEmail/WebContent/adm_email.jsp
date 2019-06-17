@@ -73,10 +73,18 @@ Session s = Session.getDefaultInstance(new Properties( ));
 Store store = s.getStore("imaps");
 Folder[] pastas = new Folder[0];
 
+boolean conectou = true;
+
 if(atual.getId() != -1)
 {
-	store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
-	pastas = store.getDefaultFolder().list("*");
+	try{
+		store.connect(emails.getString("host"), Integer.parseInt(emails.getString("porta")), emails.getString("email"), emails.getString("senha"));
+		pastas = store.getDefaultFolder().list("*");
+	}
+	catch(Exception err)
+	{
+		conectou = false;
+	}
 }
 	
 
@@ -152,7 +160,7 @@ if(atual.getId() != -1)
 	            	session.setAttribute("pasta_atual", "INBOX");
 	            }
 	            
-	            	if(atual.getId() != -1){           	
+	            	if(atual.getId() != -1 && conectou){           	
 			            for(int i=0;i<pastas.length;i++)
 			    		{
 			            	System.out.println(pastas[i].toString());
@@ -233,6 +241,13 @@ if(atual.getId() != -1)
           		Sem conta de email cadastrado
           		<%
           	}
+          if(!conectou){
+        	  %>
+        		
+        		Não foi possivel conectar no servidor do email atual. 
+        		Talvez tenha alguma informação errada.
+        		<%
+          }
           	else {
           		  Folder pasta = store.getFolder(session.getAttribute("pasta_atual").toString());
 		          pasta.open( Folder.READ_ONLY );
@@ -268,7 +283,7 @@ if(atual.getId() != -1)
 		        	}
 							        	  
 		        %>
-		       	<a href="#" class="collection-item animate fadeUp delay-1">
+		       	<a href="#" class="collection-item animate fadeUp delay-1" >
 		              <div class="list-left">
 		                <label>
 		                  <input type="checkbox" name="foo">
@@ -279,7 +294,7 @@ if(atual.getId() != -1)
 		                <div class="list-title-area">
 		                  <div class="user-media">
 		                    <img src="files/profilepic.png" alt="" class="circle z-depth-2 responsive-img avtar">
-		                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %></div>
+		                    <div class="list-title"><%= (messages[i].getFrom()[0]).toString() %> <% if(messages[i].getFlags().contains(Flags.Flag.SEEN)) { %> (Visto) <% } %></div>
 		                  </div>
 		                  <div class="title-right">
 		                    <span class="attach-file">
@@ -419,8 +434,13 @@ if(atual.getId() != -1)
 		    <a class="btn modal-close waves-effect waves-light mr-2 green" type="submit">
 		      <i class="material-icons">person_add</i><input type="submit" value="Alterar Email">
 		    </a>
-		  </div>
+		</div>
       </form>
+      <form method="POST" action="Deletar.jsp">
+		    	<a class="btn modal-close waves-effect waves-light mr-2 red" type="submit">
+		    		<i class="material-icons">delete</i><input type="submit" value="Deletar Atual"> 
+		    	</a>
+	   </form>
     </div>
   </div>
 </div>

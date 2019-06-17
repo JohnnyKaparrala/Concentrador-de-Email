@@ -8,16 +8,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Consultar</title>
+<title></title>
 </head>
 <body>
 
 	<%
-		int codigo = Integer.parseInt(request.getParameter("codigo"));
-		Livros.excluir(codigo);
-	%>
+	try{
+		Emails.excluir((int)session.getAttribute("atual_id"));
+		response.sendRedirect("adm_email.jsp");
 	
-	<p> Deleta isso </p>
-
+	}catch(Exception ex){
+		response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage()/*.replaceAll(" ", "%20")*/);
+	}
+		
+	%>
 </body>
 </html>

@@ -53,24 +53,17 @@ public class Emails {
     
     public static void excluir (int id) throws Exception
     {
-        try
-        {
-            String sql;
+        String sql;
 
-            sql = "DELETE FROM EMAIL " +
-                  "WHERE ID=?";
+        sql = "DELETE FROM EMAIL " +
+              "WHERE ID=?";
 
-            BDSQLServer.COMANDO.prepareStatement (sql);
+        BDSQLServer.COMANDO.prepareStatement (sql);
 
-            BDSQLServer.COMANDO.setInt(1, id);
+        BDSQLServer.COMANDO.setInt(1, id);
 
-            BDSQLServer.COMANDO.executeUpdate ();
-            BDSQLServer.COMANDO.commit        ();
-        }
-        catch (SQLException erro)
-        {
-            throw new Exception (erro.getMessage());
-        }    
+        BDSQLServer.COMANDO.executeUpdate ();
+        BDSQLServer.COMANDO.commit        ();  
     }
     
     public static void alterar (Email em) throws Exception
@@ -79,33 +72,27 @@ public class Emails {
             throw new Exception ("email nao fornecido");
         if  (em.getId()<=0)
             throw new Exception ("ID de email inválido: deve ser maior que 0");
-        try
-        {
-            String sql;
 
-            sql = "update email set id_dono=?, email=?, protocolo=?,"
-                    + " host=?, porta=?, senha=?, tem_ssl=? "
-                    + "where id = ?";
-                                    
+        String sql;
 
-            BDSQLServer.COMANDO.prepareStatement (sql);
+        sql = "update email set id_dono=?, email=?, protocolo=?,"
+                + " host=?, porta=?, senha=?, tem_ssl=? "
+                + "where id = ?";
+                                
 
-            BDSQLServer.COMANDO.setInt    (1, em.getId_dono());
-            BDSQLServer.COMANDO.setString (2, em.getEmail());
-            BDSQLServer.COMANDO.setString (3, em.getProtocolo());
-            BDSQLServer.COMANDO.setString (4, em.getHost());
-            BDSQLServer.COMANDO.setString (5, em.getPorta());
-            BDSQLServer.COMANDO.setString (6, em.getSenha());
-            BDSQLServer.COMANDO.setBoolean(7, em.isTem_ssl());
-            BDSQLServer.COMANDO.setInt    (8, em.getId()); 
+        BDSQLServer.COMANDO.prepareStatement (sql);
 
-            BDSQLServer.COMANDO.executeUpdate ();
-            BDSQLServer.COMANDO.commit        ();
-        }
-        catch (SQLException erro)
-        {
-            throw new Exception (erro.getMessage());
-        }
+        BDSQLServer.COMANDO.setInt    (1, em.getId_dono());
+        BDSQLServer.COMANDO.setString (2, em.getEmail());
+        BDSQLServer.COMANDO.setString (3, em.getProtocolo());
+        BDSQLServer.COMANDO.setString (4, em.getHost());
+        BDSQLServer.COMANDO.setString (5, em.getPorta());
+        BDSQLServer.COMANDO.setString (6, em.getSenha());
+        BDSQLServer.COMANDO.setBoolean(7, em.isTem_ssl());
+        BDSQLServer.COMANDO.setInt    (8, em.getId()); 
+
+        BDSQLServer.COMANDO.executeUpdate ();
+        BDSQLServer.COMANDO.commit        ();
     }
 
     public static Email getEmailId (int id) throws Exception
