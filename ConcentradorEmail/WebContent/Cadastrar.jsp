@@ -11,6 +11,7 @@
 <body>
   
 	<%
+	try{
 		if(!request.getParameter("senha").equals(request.getParameter("senha_cnf"))){
 			response.sendRedirect("cadastro.jsp?erro=Senhas+diferem");
 	    }else{
@@ -26,6 +27,11 @@
 				response.sendRedirect("cadastro.jsp?erro=Email+ja+cadastrado");
 			}
 		}
+	}
+	catch(Exception erro)
+	{
+		response.sendRedirect("cadastro.jsp?erro="+ erro.getMessage().replaceAll(" ", "+"));
+	}
 	%>
 
 </body>

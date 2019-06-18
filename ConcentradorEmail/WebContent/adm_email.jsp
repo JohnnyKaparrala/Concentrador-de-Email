@@ -242,6 +242,7 @@ if(atual.getId() != -1)
           		Sem conta de email cadastrado
           		<%
           	}
+          	else
           if(!conectou){
         	  %>
         		
