@@ -246,8 +246,8 @@ if(atual.getId() != -1)
           if(!conectou){
         	  %>
         		
-        		Não foi possivel conectar no servidor do email atual. 
-        		Talvez tenha alguma informação errada.
+        		Não foi possivel conectar no servidor do email atual. <br/>
+        		Talvez tenha alguma informação do email atual errada. <br/>
         		<%
           }
           	else {
