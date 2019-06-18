@@ -228,6 +228,7 @@ if(atual.getId() != -1)
                 <i class="material-icons delete-mails">delete</i>
                 <i id="volta" class="material-icons">folder</i>
                 <i id="volta" class="material-icons">navigate_before</i>
+                <span class=""><%= (pagina_email + 1) %></span>
                 <i id="avanca" class="material-icons">navigate_next</i>
               </span>
             </div>
@@ -347,7 +348,7 @@ if(atual.getId() != -1)
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> person_outline </i>
-	            <input placeholder="Destinatï¿½rio(s)" type="text" class="validate" name="destinatario">
+	            <input placeholder="Destinatário(s)" type="text" class="validate" name="destinatario">
 	          </div>
 	          <div class="input-field col s12">
 	            <i class="material-icons prefix"> title </i>
