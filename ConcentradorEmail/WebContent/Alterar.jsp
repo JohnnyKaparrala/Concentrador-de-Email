@@ -40,7 +40,7 @@
 			response.sendRedirect("adm_email.jsp?erro=Digite%20todos%20os%20campos");
 		else{
 		
-			int atualId = ((int)session.getAttribute("atual_id"));
+			int atualId = (Integer.parseInt((String)session.getAttribute("atual_id")));
 			int usu = (((Usuario)session.getAttribute("usuario")).getId());
 			
 			Email eml = new Email(	atualId,

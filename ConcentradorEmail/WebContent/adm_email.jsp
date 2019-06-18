@@ -170,7 +170,7 @@ if(atual.getId() != -1)
 			    			%>		
 			    				<li id="<%=pastas[i].toString()%>">
 						           	<form method="POST" class="text-sub">
-						           	<input type="hidden" name="pasta" value="<%=pastas[i].toString()%>">
+						           	<input type="hidden" name="pasta_atual" value="<%=pastas[i].toString()%>">
 						           	<button type="submit" class="text-sub" style="text-align:left !important;width:100%; padding: 0;border: none;background: none;"><a><i class="material-icons mr-2"> folder </i><%=pastas[i].toString().replace("[Gmail]/","")%></a></button>
 						           	</form>
 					           	</li>			    				

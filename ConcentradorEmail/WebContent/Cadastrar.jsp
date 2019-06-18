@@ -18,9 +18,12 @@
 			Usuario usu = new Usuario(request.getParameter("nick"),
 				  					request.getParameter("email"),
 				  					request.getParameter("senha"));
-			try{
+			try{				
 				Usuarios.incluir(usu);
-				session.setAttribute("usuario",usu);
+				
+				Usuario get = Usuarios.getUsuarioNick(usu.getNick());
+				
+				session.setAttribute("usuario",get);
 				session.setAttribute("pasta_atual", "inbox");	
 				response.sendRedirect("adm_email.jsp");
 			}catch(Exception ex){

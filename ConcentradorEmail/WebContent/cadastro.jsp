@@ -78,7 +78,7 @@
       <div class="row">
         <div class="input-field col s12">
           <input type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" style="
-          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" value="Desculpa, value"/>
+          background: linear-gradient(45deg, #c2b280, #52bbb1) !important;" value="Cadastrar"/>
         </div>
       </div>
       <%

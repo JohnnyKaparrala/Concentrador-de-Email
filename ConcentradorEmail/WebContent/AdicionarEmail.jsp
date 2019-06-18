@@ -48,7 +48,8 @@
 				response.sendRedirect("adm_email.jsp");
 			}
 		}catch(Exception ex){
-			response.sendRedirect("adm_email.jsp?erro=" + ex.getMessage().replaceAll(" ","%20"));
+			System.out.println(ex.getMessage());
+			response.sendRedirect("adm_email.jsp?erro=Deu+erro");
 		}
 	%>
 
