@@ -25,7 +25,7 @@ public class Emails {
         {
             String sql;
             
-            sql = "insert into EMAIL values" +
+            sql = "insert into EMAIL(id_dono,email,protocolo,host,porta,senha,tem_ssl) values" +
                   "(?,?,?,?,?,?,?)";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
@@ -36,7 +36,7 @@ public class Emails {
             BDSQLServer.COMANDO.setString(4, em.getHost());
             BDSQLServer.COMANDO.setString(5, em.getPorta());
             BDSQLServer.COMANDO.setString(6, em.getSenha());          
-            BDSQLServer.COMANDO.setBoolean(7, em.isTem_ssl());
+            BDSQLServer.COMANDO.setInt(7, em.isTem_ssl()?1:0);
 
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();

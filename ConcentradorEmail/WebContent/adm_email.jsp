@@ -468,8 +468,7 @@ if(atual.getId() != -1)
             
 			<select id="protocolo" name="protocolo" onchange="hostRemendado(); portaRecomendada();">
 				<option value="" disabled selected>Escolha um Protocolo</option>
-				<option value="imaps">IMAPs (Recomendado)</option>
-				<option value="pop3s">POP3s (Uma bosta)</option>
+				<option value="imaps">IMAPs</option>
 			</select>
 		  </div>
           <div class="input-field col s6">
